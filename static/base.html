@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<!--[if IE 7]> <html lang="en" class="ie7"> <![endif]-->
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="zh"> <!--<![endif]-->
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="description"
+          content="留学生日报,留学,留学生,留学申请,北美,北美留学,北美留学生,美国"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="keywords" content="留学生日报,留学,留学生,留学申请,北美,北美留学,北美留学生,美国">
+    <meta name="description" content="留学生日报, 留学生自己发声的媒体, 分享有趣而真实的留学生活,你值得关注!">
+    <meta name="author" content="Haocheng Shen, CollegeCloud.co">
+    <meta name="baidu_union_verify" content="2a53f5a5a2131f442a764a4e4c251c7c">
+    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport"/>
+    <meta name="baidu-site-verification" content="NP9Au1LLts" />
+
+    {% block meta %}
+    {% endblock %}
+
+    {% block head %}
+
+    <link rel="shortcut icon" href="/assets/source/favicon.ico" >
+    <link rel="stylesheet" href="/assets/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/animate.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/simple-line-icons.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/font.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/app.css" type="text/css"/>
+
+    {% endblock %}
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/js/stickUp.min.js"></script>
+    <title>{% block title %}北美留学生日报{% endblock %}</title>
+</head>
+<body>
+
+
+<div class="app app-header-fixed " id="app">
+
+    <div class="app-header navbar ">
+        <div class="container">
+            <!-- navbar header -->
+            <div class="navbar-header bg-info">
+                <button class="pull-right visible-xs" data-toggle="collapse" data-target="#navbar-collapse-menu"
+                        ui-scroll="app">
+                    <i class="glyphicon glyphicon-align-justify"></i>
+                </button>
+                <!-- brand -->
+                <a href="/" class="navbar-brand text-lt">
+                    <img src="/assets/source/logo.png" alt="." class="left">
+                    <span class="hidden-folded m-l-xs">北美留学生日报</span>
+                </a>
+                <!-- / brand -->
+            </div>
+            <!-- / navbar header -->
+
+            <!-- navbar collapse -->
+            <div class="collapse  navbar-collapse  bg-white-only" id="navbar-collapse-menu">
+                <ul class="nav navbar-nav hidden-sm ">
+
+                    <!--li class="dropdown">
+                        <a href="/category/" data-toggle="dropdown" class="dropdown-toggle">
+                            <i class="fa fa-fw fa-plus visible-xs-inline-block"></i>
+                            <span translate="header.navbar.new.NEW">分类浏览</span> <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" translate="header.navbar.new.PROJECT">Projects</a></li>
+                            <li>
+                                <a href="">
+                                    <span class="badge bg-info pull-right">5</span>
+                                    <span translate="header.navbar.new.TASK">Task</span>
+                                </a>
+                            </li>
+                            <li><a href="" translate="header.navbar.new.USER">User</a></li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="">
+                                    <span class="badge bg-danger pull-right">4</span>
+                                    <span translate="header.navbar.new.EMAIL">Email</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li-->
+
+                     <li class="">
+                        <a href="/category/">
+                            <span translate="header.navbar.new.NEW">分类浏览</span> </span>
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a href="/activity/">
+                            <span translate="header.navbar.new.NEW">近期活动</span> </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/hotrec/">
+                            <span translate="header.navbar.new.NEW">热门推荐</span> </span>
+                        </a>
+
+                    </li>
+                </ul>
+                <!-- / link and dropdown -->
+
+                <!-- search form -->
+                <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo"
+                      data-target=".navbar-collapse" role="search" ng-controller="TypeaheadDemoCtrl" action="/search/">
+                    <div class="form-group">
+                        <div  class="input-group">
+                            <input name="q" type="text" ng-model="selected"
+                                   typeahead="state for state in states | filter:$viewValue | limitTo:8"
+                                   class="form-control input-sm bg-light no-border rounded padder input_search"
+                                   placeholder=按标题或者日期搜索>
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
+              </span>
+                        </div>
+                    </div>
+                </form>
+                <!-- / search form -->
+
+
+                        {% if user.is_authenticated %}
+                            <ul class="nav navbar-nav navbar-right">
+
+
+
+
+
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle clear" aria-expanded="true">
+                          <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                            <!--img src="/assets/img/a0.jpg" alt="..."-->
+                              {% if user.head %}
+                              <img src="{{ user.head.url }}" alt="...">
+                              {% else %}
+                              <img src="/assets/img/a0.jpg" alt="...">
+                              {% endif %}
+
+                            <i class="on md b-white bottom"></i>
+                          </span>
+                            <span class="hidden-sm hidden-md font-normal text-muted">
+                                {% if user.nickname %}
+                                {{user.nickname}}
+                                 {% else %}
+                                 {{user.username}}
+                                 {% endif %}
+                            </span> <b
+                                class="caret"></b>
+                        </a>
+                        <!-- dropdown -->
+                        <ul class="dropdown-menu animated fadeInRight w">
+                            <span class="arrow top"></span>
+                            <li class="">
+                                <a href="/list/">我的文章</a>
+                            </li>
+                            <li class="b-t">
+                                <a href="/modify/">个人设置</a>
+                            </li>
+                            <li class="b-t">
+                                <a href="/signout/">退出</a>
+                            </li>
+
+                        </ul>
+                        <!-- / dropdown -->
+                    </li>
+                </ul>
+                            {% else %}
+                                           <!-- nabar right -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="#" class="clear">
+                      <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm">
+                        <img src="/assets/img/a0.jpg" alt="...">
+                        <i class="on md b-white bottom"></i>
+                      </span>
+                        </a>
+                    </li>
+                    <li class="">
+                            <a href="/login/" class="color-green">登陆</a>
+                      </li>
+                        {% endif %}
+                        <!--<div class="m-t-md m-b-md"><a href="#" class=" ">登陆</a>
+                            / <a class=" " title=" ">注册</a>
+                        </div-->
+
+
+                    <!--<li class="">-->
+                    <!--<a href="#" class="clear">-->
+                    <!--<span class="hidden-sm hidden-md">注册</span>-->
+                    <!--</a>-->
+
+                    <!--</li>-->
+                </ul>
+                <!-- / navbar right -->
+
+            </div>
+            <!-- / navbar collapse -->
+        </div>
+
+    </div>
+    <div class="app-content container">
+        {% block content %}
+        {% endblock %}
+
+
+    </div>
+
+
+
+{% block footer %}
+<div class="foot-container bg-white-only" >
+    <div class="row ">
+        <div class="col-md-4">
+            <div class="list-p-d-md">
+                <h5 class="m-t-xs m-b-xs font-title">北美留学生日报</h5>
+                <ul class="list-group no-bg no-borders pull-in">
+
+                    <li class="list-group-item ">
+                        <a href="">
+                            关于北美留学生日报
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">
+                            <!--<b class="badge bg-info pull-right">9</b>-->
+                            加入我们
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">
+                            联系我们
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">
+                            友情链接
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="list-p-d-md">
+                <h5 class="m-t-xs m-b-xs font-title">投稿吧</h5>
+                <ul class="list-group no-bg no-borders pull-in">
+
+                    <li class="list-group-item ">
+                        <a href="">北美留学生日报提供第一手的留学生相关资讯欢迎优秀的原创稿件
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">
+                            <!--<b class="badge bg-info pull-right">9</b>-->
+                            Email: editor@collegedaily.cn
+                        </a>
+                    </li>
+
+                </ul>
+                <h5 class="m-t-xs m-b-xs font-title">邮件订阅</h5>
+
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="填写Email地址">
+                    <span class="input-group-addon  btn btn-info">订阅</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="list-p-d-md">
+                <h5 class="m-t-xs m-b-xs font-title">客户端下载</h5>
+
+                <div class="m-t-md">
+                          <span class="pull-left thumb-md avatar m-r">
+                            <img src="/assets/source/logo.png" alt="...">
+                          </span>
+                          <span class="clear wrapper-xs-10">
+                            <span>手机下载app</span>
+                            <span class="text-base clear text-ellipsis">Android 4.0 | iOS 6.0 +</span>
+                          </span>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+ {% endblock %}
+
+{% block copyright %}
+<div class="footer wrapper b-t bg-black-opacity  text-center bg-footer-light-blue ">
+    <span class="pull-right text-center font-bold"></span>
+    2013© 北美留学生日报 .ALL Rights Reserved.
+</div>
+ {% endblock %}
+<script>
+
+    $(function(){
+        $('.input_search').focus(function(){
+            $(this).css('width','110%');
+        });
+
+        $('.input_search').focusout(function(){
+            $(this).css('width','100%');
+        });
+
+
+    })
+
+
+
+</script>
+</body>
+</html>

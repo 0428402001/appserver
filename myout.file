@@ -1,0 +1,449 @@
+nohup: ignoring input
+WARNING:tornado.access:404 GET /favicon.ico (101.38.58.83) 1.52ms
+ERROR:tornado.application:Uncaught exception GET /blog/711 (118.194.193.227)
+HTTPServerRequest(protocol='http', host='121.43.230.143:8011', method='GET', uri='/blog/711', version='HTTP/1.1', remote_ip='118.194.193.227', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'Host': '121.43.230.143:8011', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'Connection': 'keep-alive', 'Cookie': 'sessionid=usail81edc7atfbusdu951xvnu321mov; csrftoken=Y1vq8go6GhaatAvbRw6j0snJsHt2ksLQ', 'Upgrade-Insecure-Requests': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 574, in get
+    blog['comment_count'] = comment_cnt
+TypeError: list indices must be integers, not str
+ERROR:tornado.access:500 GET /blog/711 (118.194.193.227) 14.46ms
+WARNING:tornado.access:404 GET /favicon.ico (118.194.193.227) 0.87ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/1de56c0c-563a-4c91-be59-d929b545f8c9.png/%22 (118.194.193.227) 0.67ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/43654257-e0fe-481b-b5b7-8c73bbfcf264.jpeg/%22 (118.194.193.227) 0.37ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/9cfe6930-7e19-4f53-af07-8584b81d0d6c.jpeg/%22 (118.194.193.227) 0.58ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/0f5af102-0780-41d9-b4e6-d473c69c4ec3.png/%22 (118.194.193.227) 0.38ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/163be3f1-5e8b-42bc-92e6-a74fc381e899.jpeg/%22 (118.194.193.227) 0.34ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/ac3f5f02-1fc3-4223-b5ba-63e967b8092a.png/%22 (118.194.193.227) 0.33ms
+ERROR:tornado.application:Uncaught exception GET /blog/711 (118.194.193.227)
+HTTPServerRequest(protocol='http', host='121.43.230.143:8011', method='GET', uri='/blog/711', version='HTTP/1.1', remote_ip='118.194.193.227', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'Host': '121.43.230.143:8011', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'Connection': 'keep-alive', 'Cookie': 'sessionid=usail81edc7atfbusdu951xvnu321mov; csrftoken=Y1vq8go6GhaatAvbRw6j0snJsHt2ksLQ', 'Upgrade-Insecure-Requests': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 574, in get
+    blog['comment_count'] = comment_cnt
+TypeError: list indices must be integers, not str
+ERROR:tornado.access:500 GET /blog/711 (118.194.193.227) 20.29ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/43654257-e0fe-481b-b5b7-8c73bbfcf264.jpeg/%22 (118.194.193.227) 0.83ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/1de56c0c-563a-4c91-be59-d929b545f8c9.png/%22 (118.194.193.227) 0.39ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/0f5af102-0780-41d9-b4e6-d473c69c4ec3.png/%22 (118.194.193.227) 0.38ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/163be3f1-5e8b-42bc-92e6-a74fc381e899.jpeg/%22 (118.194.193.227) 0.37ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/9cfe6930-7e19-4f53-af07-8584b81d0d6c.jpeg/%22 (118.194.193.227) 0.38ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/ac3f5f02-1fc3-4223-b5ba-63e967b8092a.png/%22 (118.194.193.227) 0.54ms
+WARNING:tornado.access:404 GET / (42.156.250.112) 0.81ms
+WARNING:tornado.access:404 OPTIONS / (42.156.250.112) 0.48ms
+WARNING:tornado.access:404 GET /nice%20ports%2C/Tri%6Eity.txt%2ebak (42.156.250.112) 1.17ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/1de56c0c-563a-4c91-be59-d929b545f8c9.png/%22 (118.194.193.227) 0.64ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/43654257-e0fe-481b-b5b7-8c73bbfcf264.jpeg/%22 (118.194.193.227) 0.35ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/9cfe6930-7e19-4f53-af07-8584b81d0d6c.jpeg/%22 (118.194.193.227) 0.37ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/163be3f1-5e8b-42bc-92e6-a74fc381e899.jpeg/%22 (118.194.193.227) 0.34ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/0f5af102-0780-41d9-b4e6-d473c69c4ec3.png/%22 (118.194.193.227) 0.38ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/ac3f5f02-1fc3-4223-b5ba-63e967b8092a.png/%22 (118.194.193.227) 0.65ms
+WARNING:tornado.access:404 GET /favicon.ico (118.194.193.227) 0.79ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/1de56c0c-563a-4c91-be59-d929b545f8c9.png/%22 (118.194.193.227) 0.73ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/163be3f1-5e8b-42bc-92e6-a74fc381e899.jpeg/%22 (118.194.193.227) 0.62ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/ac3f5f02-1fc3-4223-b5ba-63e967b8092a.png/%22 (118.194.193.227) 0.52ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/43654257-e0fe-481b-b5b7-8c73bbfcf264.jpeg/%22 (118.194.193.227) 0.55ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/9cfe6930-7e19-4f53-af07-8584b81d0d6c.jpeg/%22 (118.194.193.227) 0.59ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/0f5af102-0780-41d9-b4e6-d473c69c4ec3.png/%22 (118.194.193.227) 0.66ms
+WARNING:tornado.access:404 GET /favicon.ico (118.194.193.227) 0.92ms
+ERROR:tornado.application:Uncaught exception GET /blog/711 (118.194.193.227)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8011', method='GET', uri='/blog/711', version='HTTP/1.0', remote_ip='118.194.193.227', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'X-Forwarded-For': '118.194.193.227', 'Host': '127.0.0.1:8011', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'Connection': 'close', 'Cookie': '__utma=165608749.797501956.1431044832.1431044832.1431044832.1', 'X-Real-Ip': '118.194.193.227', 'Upgrade-Insecure-Requests': '1', 'Route-Hop': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 574, in get
+    blog['comment_count'] = comment_cnt
+TypeError: list indices must be integers, not str
+ERROR:tornado.access:500 GET /blog/711 (118.194.193.227) 10.97ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/1de56c0c-563a-4c91-be59-d929b545f8c9.png/%22 (118.194.193.227) 0.76ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/43654257-e0fe-481b-b5b7-8c73bbfcf264.jpeg/%22 (118.194.193.227) 0.67ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/0f5af102-0780-41d9-b4e6-d473c69c4ec3.png/%22 (118.194.193.227) 0.61ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/163be3f1-5e8b-42bc-92e6-a74fc381e899.jpeg/%22 (118.194.193.227) 0.45ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/9cfe6930-7e19-4f53-af07-8584b81d0d6c.jpeg/%22 (118.194.193.227) 0.46ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/ac3f5f02-1fc3-4223-b5ba-63e967b8092a.png/%22 (118.194.193.227) 0.46ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 1.30ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.68ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.66ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 1.27ms
+WARNING:tornado.access:404 GET /ad (61.158.148.95) 0.67ms
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py:3778: SAWarning: Textual SQL expression 'app_favorate.author_id = ...' should be explicitly declared as text('app_favorate.author_id = ...') (this warning may be suppressed after 10 occurrences)
+  {"expr": util.ellipses_string(element)})
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.58ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.72ms
+ERROR:tornado.application:Uncaught exception GET /blog/711 (118.194.193.227)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8011', method='GET', uri='/blog/711', version='HTTP/1.0', remote_ip='118.194.193.227', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'X-Forwarded-For': '118.194.193.227', 'Host': '127.0.0.1:8011', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'Connection': 'close', 'Cookie': '__utma=165608749.797501956.1431044832.1431044832.1431044832.1', 'X-Real-Ip': '118.194.193.227', 'Upgrade-Insecure-Requests': '1', 'Route-Hop': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 574, in get
+    blog['comment_count'] = comment_cnt
+TypeError: list indices must be integers, not str
+ERROR:tornado.access:500 GET /blog/711 (118.194.193.227) 12.46ms
+ERROR:tornado.application:Uncaught exception GET /blog/711 (112.90.82.218)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8011', method='GET', uri='/blog/711', version='HTTP/1.0', remote_ip='112.90.82.218', headers={'Accept-Language': 'zh-cn', 'Accept-Encoding': 'deflate, gzip', 'X-Forwarded-For': '112.90.82.218', 'Host': '127.0.0.1:8011', 'Accept': '*/*', 'User-Agent': 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7', 'Connection': 'close', 'X-Real-Ip': '112.90.82.218', 'Route-Hop': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 574, in get
+    blog['comment_count'] = comment_cnt
+TypeError: list indices must be integers, not str
+ERROR:tornado.access:500 GET /blog/711 (112.90.82.218) 10.67ms
+ERROR:tornado.application:Uncaught exception GET /blog/711 (113.105.95.122)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8011', method='GET', uri='/blog/711', version='HTTP/1.0', remote_ip='113.105.95.122', headers={'Accept-Language': 'zh-cn, zh', 'X-Forwarded-For': '113.105.95.122', 'Host': '127.0.0.1:8011', 'Accept': '*/*', 'User-Agent': 'Mozilla/5.0 (Linux; U; Android 4.4.2; zh-cn; GT-I9500 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko)Version/4.0 MQQBrowser/5.0 QQ-URL-Manager Mobile Safari/537.36', 'Accept-Charset': 'GB2312,utf-8;q=0.7,*;q=0.7', 'Connection': 'close', 'X-Real-Ip': '113.105.95.122', 'Route-Hop': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 574, in get
+    blog['comment_count'] = comment_cnt
+TypeError: list indices must be integers, not str
+ERROR:tornado.access:500 GET /blog/711 (113.105.95.122) 10.80ms
+ERROR:tornado.application:Uncaught exception GET /blog/711 (101.226.33.201)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8011', method='GET', uri='/blog/711', version='HTTP/1.0', remote_ip='101.226.33.201', headers={'Accept-Language': 'zh-cn, zh', 'X-Forwarded-For': '101.226.33.201', 'Host': '127.0.0.1:8011', 'Accept': '*/*', 'User-Agent': 'Mozilla/5.0 (Linux; U; Android 4.4.2; zh-cn; GT-I9500 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko)Version/4.0 MQQBrowser/5.0 QQ-URL-Manager Mobile Safari/537.36', 'Accept-Charset': 'GB2312,utf-8;q=0.7,*;q=0.7', 'Connection': 'close', 'X-Real-Ip': '101.226.33.201', 'Route-Hop': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 574, in get
+    blog['comment_count'] = comment_cnt
+TypeError: list indices must be integers, not str
+ERROR:tornado.access:500 GET /blog/711 (101.226.33.201) 11.43ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.89ms
+ERROR:tornado.application:Uncaught exception GET /blog/711 (106.39.222.46)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8011', method='GET', uri='/blog/711', version='HTTP/1.0', remote_ip='106.39.222.46', headers={'Accept-Language': 'zh-cn', 'Accept-Encoding': 'gzip, deflate', 'X-Forwarded-For': '106.39.222.46', 'Host': '127.0.0.1:8011', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238 QQ/6.3.3.432 V1_IPH_SQ_6.3.3_1_APP_A Pixel/640 Core/UIWebView NetType/WIFI Mem/201', 'Connection': 'close', 'X-Real-Ip': '106.39.222.46', 'Route-Hop': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 574, in get
+    blog['comment_count'] = comment_cnt
+TypeError: list indices must be integers, not str
+ERROR:tornado.access:500 GET /blog/711 (106.39.222.46) 11.92ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.70ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.67ms
+WARNING:tornado.access:404 GET /blogview757 (14.17.18.144) 0.73ms
+WARNING:tornado.access:404 GET /blogview757 (180.153.6.103) 0.69ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.88ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.65ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.90ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.54ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.67ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.64ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.66ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.72ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.69ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 1.02ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.71ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.69ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.72ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.57ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.57ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.91ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.66ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.64ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.66ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 1.50ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.68ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.86ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.70ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.66ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.83ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.64ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.64ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.67ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.85ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.69ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.65ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.70ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.58ms
+WARNING:tornado.access:404 GET /favicon.ico (117.114.147.14) 1.06ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.69ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.87ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.65ms
+WARNING:tornado.access:404 GET /ad (114.242.248.28) 0.58ms
+WARNING:tornado.access:404 GET /ad (114.242.248.28) 0.93ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.70ms
+WARNING:tornado.access:404 GET /blog/(null)?uid=556 (114.242.248.28) 0.96ms
+WARNING:tornado.access:404 GET /blog/(null)?uid=556 (114.242.248.28) 0.94ms
+WARNING:tornado.access:404 GET /tag/(null) (114.242.248.28) 0.66ms
+WARNING:tornado.access:404 GET /ad (114.242.248.28) 0.56ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.81ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.68ms
+WARNING:tornado.access:404 GET /ad (117.114.147.14) 0.92ms
+WARNING:tornado.access:404 GET /ad (114.242.248.28) 0.96ms
+WARNING:tornado.access:404 GET /ad (114.242.248.28) 0.57ms
+WARNING:tornado.access:404 GET /ad (117.114.147.14) 0.89ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.71ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.57ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.69ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.78ms
+WARNING:tornado.access:404 GET /ad (117.114.147.14) 0.65ms
+WARNING:tornado.access:404 GET /blog/(null)?uid=556 (117.114.147.14) 1.04ms
+WARNING:tornado.access:404 GET /tag/(null) (117.114.147.14) 0.69ms
+WARNING:tornado.access:404 GET /blog/(null)?uid=556 (117.114.147.14) 0.49ms
+WARNING:tornado.access:404 GET /comment/(null)?page=1&uid=556 (117.114.147.14) 0.69ms
+WARNING:tornado.access:404 GET /blog/(null)?uid=556 (117.114.147.14) 0.70ms
+WARNING:tornado.access:404 GET /ad (117.114.147.14) 0.73ms
+WARNING:tornado.access:404 GET /ad (117.114.147.14) 0.87ms
+WARNING:tornado.access:404 GET /ad (117.114.147.14) 0.94ms
+WARNING:tornado.access:404 GET /ad (117.114.147.14) 0.75ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.61ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.97ms
+WARNING:tornado.access:404 GET /ad (117.114.147.14) 0.91ms
+WARNING:tornado.access:404 GET /ad (117.114.147.14) 0.87ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 1.41ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.64ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.66ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.92ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.72ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.89ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.85ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.67ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.64ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.93ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.69ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.82ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.90ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.74ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.67ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.58ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 1.22ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.99ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.74ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.90ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.64ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 1.30ms
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py:3778: SAWarning: Textual SQL expression 'app_favorate.author_id = ...' should be explicitly declared as text('app_favorate.author_id = ...') (this warning may be suppressed after 10 occurrences)
+  {"expr": util.ellipses_string(element)})
+WARNING:tornado.access:404 GET /blog/%E7%BE%8E%E5%9B%BD (117.114.147.14) 0.71ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.65ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.71ms
+WARNING:tornado.access:405 GET /comment (117.114.147.14) 0.97ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.90ms
+WARNING:tornado.access:404 GET /ad (117.114.147.14) 0.66ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.68ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.65ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.83ms
+ERROR:tornado.application:Uncaught exception GET /blog/736 (117.114.147.14)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8011', method='GET', uri='/blog/736', version='HTTP/1.0', remote_ip='117.114.147.14', headers={'Accept-Language': 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'X-Forwarded-For': '117.114.147.14', 'Host': '127.0.0.1:8011', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0', 'Connection': 'close', 'X-Real-Ip': '117.114.147.14', 'Route-Hop': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 552, in get
+    blog['comment_count'] = comment_cnt
+TypeError: list indices must be integers, not str
+ERROR:tornado.access:500 GET /blog/736 (117.114.147.14) 16.84ms
+WARNING:tornado.access:404 GET /favicon.ico (117.114.147.14) 1.11ms
+WARNING:tornado.access:404 GET /757?uid=399 (117.114.147.14) 0.93ms
+WARNING:tornado.access:404 GET /blog/%5C%22http://upload-images.jianshu.io/upload_images/678992-427079727190577f?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\%22 (117.114.147.14) 0.73ms
+WARNING:tornado.access:404 GET /blog/%5C%22http://upload-images.jianshu.io/upload_images/678992-4fab3ff94eca3d44?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\%22 (117.114.147.14) 0.71ms
+WARNING:tornado.access:404 GET /blog/%5C%22http://upload-images.jianshu.io/upload_images/678992-9b1e467f22e969f2?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\%22 (117.114.147.14) 0.47ms
+WARNING:tornado.access:404 GET /blog/%5C%22http://upload-images.jianshu.io/upload_images/678992-64b6ca849c4ea3dd?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\%22 (117.114.147.14) 0.48ms
+WARNING:tornado.access:404 GET /%22http://upload-images.jianshu.io/upload_images/678992-427079727190577f?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\%22 (117.114.147.14) 1.01ms
+WARNING:tornado.access:404 GET /%22http://upload-images.jianshu.io/upload_images/678992-4fab3ff94eca3d44?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\%22 (117.114.147.14) 0.78ms
+WARNING:tornado.access:404 GET /%22http://upload-images.jianshu.io/upload_images/678992-9b1e467f22e969f2?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\%22 (117.114.147.14) 1.06ms
+WARNING:tornado.access:404 GET /%22http://upload-images.jianshu.io/upload_images/678992-64b6ca849c4ea3dd?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\%22 (117.114.147.14) 0.49ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.66ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.97ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 1.35ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.84ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.64ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 1.13ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.65ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.91ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.90ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.56ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.63ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.63ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.53ms
+ERROR:tornado.application:Uncaught exception GET /blog?page=1&per_page=20 (218.9.123.199)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8011', method='GET', uri='/blog?page=1&per_page=20', version='HTTP/1.0', remote_ip='218.9.123.199', headers={'Accept-Language': 'zh-cn', 'Accept-Encoding': 'gzip, deflate', 'X-Forwarded-For': '218.9.123.199', 'Host': '127.0.0.1:8011', 'Accept': '*/*', 'User-Agent': '\xc3\xa7\xc2\x95\xc2\x99\xc3\xa5\xc2\xad\xc2\xa6\xc3\xa7\xc2\x94\xc2\x9f\xc3\xa6\xc2\x97\xc2\xa5\xc3\xa6\xc2\x8a\xc2\xa5 1.3 rv:20150722 (iPhone; iPhone OS 9.2.1; zh_CN)', 'Connection': 'close', 'X-Real-Ip': '218.9.123.199', 'Route-Hop': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 391, in get
+    json_res = get_info(self.request, args, kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/business_logic.py", line 160, in get_info
+    json_res = dal._get_blog(p)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/dal.py", line 98, in _get_blog
+    clu = Session.query(ContentBlog.id, ContentBlog.title, ContentBlog.author, func.replace(ContentBlog.cover,'covers', '%s/covers'%URL.image_base_url).label('cover'), func.replace(ContentBlog.thumb, 'thumb/', '%s/thumb/'%URL.image_base_url).label('thumb'), ContentBlog.date, ContentBlog.abstract, ContentBlog.category_id, ContentBlog.is_out, ContentBlog.is_big, ContentBlog.index_pic, ContentBlog.source, ContentBlog.source_url, ContentCategory.name.label("category_name"), ContentTag.name.label("tag_name") ).join(ContentCategory, ContentBlog.category_id == ContentCategory.id).join(ContentTag, ContentBlog.category_id == ContentTag.id).order_by(ContentBlog.date.desc()).offset(p[0]).limit(p[1]).all()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2588, in all
+    return list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2732, in __iter__
+    context = self._compile_context()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 3226, in _compile_context
+    context.statement = self._simple_statement(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 3319, in _simple_statement
+    **self._select_args
+  File "<string>", line 2, in select
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/selectable.py", line 2477, in __init__
+    GenerativeSelect.__init__(self, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/selectable.py", line 1718, in __init__
+    self._limit_clause = _offset_or_limit_clause(limit)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/selectable.py", line 81, in _offset_or_limit_clause
+    value = util.asint(element)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/langhelpers.py", line 1005, in asint
+    return int(value)
+TypeError: int() argument must be a string or a number, not 'list'
+ERROR:tornado.access:500 GET /blog?page=1&per_page=20 (218.9.123.199) 25.11ms
+ERROR:tornado.application:Uncaught exception GET /blog?page=1&per_page=20 (218.9.123.199)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8011', method='GET', uri='/blog?page=1&per_page=20', version='HTTP/1.0', remote_ip='218.9.123.199', headers={'Accept-Language': 'zh-cn', 'Accept-Encoding': 'gzip, deflate', 'X-Forwarded-For': '218.9.123.199', 'Host': '127.0.0.1:8011', 'Accept': '*/*', 'User-Agent': '\xc3\xa7\xc2\x95\xc2\x99\xc3\xa5\xc2\xad\xc2\xa6\xc3\xa7\xc2\x94\xc2\x9f\xc3\xa6\xc2\x97\xc2\xa5\xc3\xa6\xc2\x8a\xc2\xa5 1.3 rv:20150722 (iPhone; iPhone OS 9.2.1; zh_CN)', 'Connection': 'close', 'X-Real-Ip': '218.9.123.199', 'Route-Hop': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 391, in get
+    json_res = get_info(self.request, args, kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/business_logic.py", line 160, in get_info
+    json_res = dal._get_blog(p)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/dal.py", line 98, in _get_blog
+    clu = Session.query(ContentBlog.id, ContentBlog.title, ContentBlog.author, func.replace(ContentBlog.cover,'covers', '%s/covers'%URL.image_base_url).label('cover'), func.replace(ContentBlog.thumb, 'thumb/', '%s/thumb/'%URL.image_base_url).label('thumb'), ContentBlog.date, ContentBlog.abstract, ContentBlog.category_id, ContentBlog.is_out, ContentBlog.is_big, ContentBlog.index_pic, ContentBlog.source, ContentBlog.source_url, ContentCategory.name.label("category_name"), ContentTag.name.label("tag_name") ).join(ContentCategory, ContentBlog.category_id == ContentCategory.id).join(ContentTag, ContentBlog.category_id == ContentTag.id).order_by(ContentBlog.date.desc()).offset(p[0]).limit(p[1]).all()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2588, in all
+    return list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2732, in __iter__
+    context = self._compile_context()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 3226, in _compile_context
+    context.statement = self._simple_statement(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 3319, in _simple_statement
+    **self._select_args
+  File "<string>", line 2, in select
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/selectable.py", line 2477, in __init__
+    GenerativeSelect.__init__(self, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/selectable.py", line 1718, in __init__
+    self._limit_clause = _offset_or_limit_clause(limit)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/selectable.py", line 81, in _offset_or_limit_clause
+    value = util.asint(element)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/langhelpers.py", line 1005, in asint
+    return int(value)
+TypeError: int() argument must be a string or a number, not 'list'
+ERROR:tornado.access:500 GET /blog?page=1&per_page=20 (218.9.123.199) 2.80ms
+ERROR:tornado.application:Uncaught exception GET /blog?page=1&per_page=20 (218.9.123.199)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8011', method='GET', uri='/blog?page=1&per_page=20', version='HTTP/1.0', remote_ip='218.9.123.199', headers={'Accept-Language': 'zh-cn', 'Accept-Encoding': 'gzip, deflate', 'X-Forwarded-For': '218.9.123.199', 'Host': '127.0.0.1:8011', 'Accept': '*/*', 'User-Agent': '\xc3\xa7\xc2\x95\xc2\x99\xc3\xa5\xc2\xad\xc2\xa6\xc3\xa7\xc2\x94\xc2\x9f\xc3\xa6\xc2\x97\xc2\xa5\xc3\xa6\xc2\x8a\xc2\xa5 1.3 rv:20150722 (iPhone; iPhone OS 9.2.1; zh_CN)', 'Connection': 'close', 'X-Real-Ip': '218.9.123.199', 'Route-Hop': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 391, in get
+    json_res = get_info(self.request, args, kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/business_logic.py", line 160, in get_info
+    json_res = dal._get_blog(p)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/dal.py", line 98, in _get_blog
+    clu = Session.query(ContentBlog.id, ContentBlog.title, ContentBlog.author, func.replace(ContentBlog.cover,'covers', '%s/covers'%URL.image_base_url).label('cover'), func.replace(ContentBlog.thumb, 'thumb/', '%s/thumb/'%URL.image_base_url).label('thumb'), ContentBlog.date, ContentBlog.abstract, ContentBlog.category_id, ContentBlog.is_out, ContentBlog.is_big, ContentBlog.index_pic, ContentBlog.source, ContentBlog.source_url, ContentCategory.name.label("category_name"), ContentTag.name.label("tag_name") ).join(ContentCategory, ContentBlog.category_id == ContentCategory.id).join(ContentTag, ContentBlog.category_id == ContentTag.id).order_by(ContentBlog.date.desc()).offset(p[0]).limit(p[1]).all()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2588, in all
+    return list(self)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 2732, in __iter__
+    context = self._compile_context()
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 3226, in _compile_context
+    context.statement = self._simple_statement(context)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/orm/query.py", line 3319, in _simple_statement
+    **self._select_args
+  File "<string>", line 2, in select
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/selectable.py", line 2477, in __init__
+    GenerativeSelect.__init__(self, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/selectable.py", line 1718, in __init__
+    self._limit_clause = _offset_or_limit_clause(limit)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/selectable.py", line 81, in _offset_or_limit_clause
+    value = util.asint(element)
+  File "/usr/local/lib/python2.7/dist-packages/sqlalchemy/util/langhelpers.py", line 1005, in asint
+    return int(value)
+TypeError: int() argument must be a string or a number, not 'list'
+ERROR:tornado.access:500 GET /blog?page=1&per_page=20 (218.9.123.199) 3.07ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.54ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.66ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.62ms
+Traceback (most recent call last):
+  File "main.py", line 68, in <module>
+    port  = sys.argv[1]
+NameError: name 'sys' is not defined
+nohup: ignoring input
+8012 <type 'str'>
+Traceback (most recent call last):
+  File "main.py", line 71, in <module>
+    main(port)
+  File "main.py", line 63, in main
+    srv.bind(port)
+  File "/usr/local/lib/python2.7/dist-packages/tornado/tcpserver.py", line 171, in bind
+    backlog=backlog)
+  File "/usr/local/lib/python2.7/dist-packages/tornado/netutil.py", line 196, in bind_sockets
+    sock.bind(sockaddr)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+nohup: ignoring input
+8012 <type 'str'>
+Traceback (most recent call last):
+  File "main.py", line 71, in <module>
+    main(port)
+  File "main.py", line 63, in main
+    srv.bind(port)
+  File "/usr/local/lib/python2.7/dist-packages/tornado/tcpserver.py", line 171, in bind
+    backlog=backlog)
+  File "/usr/local/lib/python2.7/dist-packages/tornado/netutil.py", line 196, in bind_sockets
+    sock.bind(sockaddr)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+nohup: ignoring input
+8013 <type 'str'>
+Traceback (most recent call last):
+  File "main.py", line 71, in <module>
+    main(port)
+  File "main.py", line 65, in main
+    tornado.ioloop.IOLoop.instance().start()
+  File "/usr/local/lib/python2.7/dist-packages/tornado/ioloop.py", line 858, in start
+    event_pairs = self._impl.poll(poll_timeout)
+KeyboardInterrupt
+nohup: ignoring input
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.46ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.44ms
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py:3778: SAWarning: Textual SQL expression 'app_favorate.author_id = ...' should be explicitly declared as text('app_favorate.author_id = ...') (this warning may be suppressed after 10 occurrences)
+  {"expr": util.ellipses_string(element)})
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.48ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.45ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.47ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.49ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.44ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.65ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.47ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.77ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.76ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.75ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.45ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.79ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.46ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.87ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.56ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.55ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.54ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.44ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.78ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.76ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.76ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.64ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.63ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.45ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.44ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.79ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.67ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.53ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.52ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.68ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.44ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.44ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.44ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.49ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.59ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.45ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.73ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.76ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.44ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.48ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.77ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.48ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.45ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.83ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.44ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.44ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.44ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.45ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.79ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.44ms
+WARNING:tornado.access:404 GET /category/ (101.38.58.83) 0.63ms
+WARNING:tornado.access:404 GET /favicon.ico (101.38.58.83) 1.60ms

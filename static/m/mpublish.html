@@ -1,0 +1,60 @@
+{% extends "m/mbase.html" %}
+
+{% block meta %}
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://www.collegedaily.cn/"/>
+
+  <meta name="description"
+          content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+{% endblock %}
+
+{% block content %}
+<div class="app-content-body fade-in-up ">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col ">
+            <div class="wrapper-llg-sm ">
+
+                <div class="row m-t">
+                    <div class="panel panel-default">
+                        <div class="panel-heading font-bold "><h4 class="text-info">发表文章</h4></div>
+                        <div class="panel-body">
+                            <form class="bs-example " enctype="multipart/form-data" method="post"  action="/publish/">
+                                <!--div class="form-group">
+                                    <label for="inputTitle"><h4>标题</h4></label>
+                                    <input type="text" class="form-control padder-v-25" id="inputTitle" name="title">
+                                </div-->
+                                <!--div class="form-group"-->
+                                    <!--label><h4>内容</h4></label>
+                                    <div ui-jq="wysiwyg" name="content" class="form-control" style="height:300px;max-height:300px" contenteditable="true"-->
+                                    {{ form.media }}
+                                    {{ form.as_div }}
+                                 <!--/div-->
+                                    <!--div class="form-group">
+                                        <input type="text" name="tag" class="form-control padder-v-25 text-muted" id="" placeholder="添加相关标签，用逗号或回车分割">
+                                    </div-->
+                                    <div class="form-group">
+                                        <!--div class=" left">
+                                            <button type="submit" class="btn btn-default"><span class="text-muted">取消</span></button>
+                                        </div-->
+                                        <div class=" right ">
+                                            <!--button type="submit" class="btn m-b-xs w-xs btn-default"><span class="text-muted">保存草稿</span></button>
+                                            <button type="submit" class="btn m-b-xs w-xs btn-default"><span class="text-muted">预览</span></button-->
+                                            <button type="submit" class="btn m-b-xs w-xs btn-info text-muted">发布</button>
+                                        </div>
+                                    </div>
+
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+    {% block meta %}
+  <meta name="description"
+          content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+{% endblock %}
+{% block content %}
+
+
+<div class="container m-t-lg">
+    <div class="container w-xxl w-auto-xs text-center">
+        <div  class="thumb-md  m-t-xxl ">
+            <img src="/assets/source/logo.jpg">
+        </div>
+
+        <div class="m-b-lg">
+            <div class="wrapper text-center">
+                <strong>真实&nbsp;&nbsp;有趣&nbsp;&nbsp;有观点</strong>
+            </div>
+            <form name="form" class="form-validation"   action="/signup/" method="post">
+                <div class="text-danger wrapper text-center"  >
+
+                </div>
+                <div class="list-group list-group-sm">
+                    <div class="list-group-item">
+                        <input type="email" id="emailname" name="username" placeholder="邮箱" class="form-control no-border" >
+                    </div>
+                    <div class="list-group-item">
+                        <input type="password" id="txtPwd" name="password" placeholder="密码" class="form-control no-border">
+                    </div>
+                    <div class="list-group-item">
+                        <input type="password" id="txtPwd2" placeholder="确认密码" class="form-control no-border" onblur="validatePWD()">
+                    </div>
+                    {% if error %}
+                        <div id="div3" style="font-size:12px;color:red">{{ error }}</div>
+                    {% else %}
+                    <div id="div3"></div>
+                    {% endif %}
+                </div>
+                <button type="submit" id="submitid"  class="btn btn-lg btn-info btn-block"
+                        >注册
+                </button>
+            <input type="hidden" name="next" value="{{ next }}">
+
+            </form>
+
+                </div>
+
+
+                <h4>已有账号?</h4>
+                <p><a class="color-green" href="/login/">点此登录</a></p>
+        </div>
+
+    </div>
+
+</div>
+<script type="text/javascript">
+function validatePWD()
+{
+    var txtPwd = $("#txtPwd");
+    var txtPwd2 = $("#txtPwd2");
+
+   if(txtPwd.val() != txtPwd2.val()){
+        $("#div3").text("密码不一致，请重新输入").css({"font-size":"12px","color":"red"});
+        $("#submitid").attr("disabled",true) ;
+        return;
+    }
+    else{
+        $("#div3").text("");
+         $("#submitid").attr("disabled",false) ;
+    }
+}
+</script>
+
+{% endblock %}
+

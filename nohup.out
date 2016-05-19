@@ -1,0 +1,19 @@
+ERROR:tornado.application:Uncaught exception GET /blog/711 (118.194.193.227)
+HTTPServerRequest(protocol='http', host='app.collegedaily.cn', method='GET', uri='/blog/711', version='HTTP/1.0', remote_ip='118.194.193.227', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'X-Forwarded-For': '118.194.193.227', 'Host': 'app.collegedaily.cn', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36', 'Connection': 'close', 'Cookie': '__utma=165608749.797501956.1431044832.1431044832.1431044832.1', 'X-Real-Ip': '118.194.193.227', 'Upgrade-Insecure-Requests': '1', 'Route-Hop': '1'})
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/tornado/web.py", line 1443, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "/home/liujun/dev/collegeapp/liujun/liujun/ting.py", line 552, in get
+    blog['comment_count'] = comment_cnt
+TypeError: list indices must be integers, not str
+ERROR:tornado.access:500 GET /blog/711 (118.194.193.227) 26.14ms
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py:3778: SAWarning: Textual SQL expression 'app_favorate.author_id = ...' should be explicitly declared as text('app_favorate.author_id = ...') (this warning may be suppressed after 10 occurrences)
+  {"expr": util.ellipses_string(element)})
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/9cfe6930-7e19-4f53-af07-8584b81d0d6c.jpeg/%22 (118.194.193.227) 0.43ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/ac3f5f02-1fc3-4223-b5ba-63e967b8092a.png/%22 (118.194.193.227) 0.43ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.76ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.90ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.73ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.43ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.69ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.45ms

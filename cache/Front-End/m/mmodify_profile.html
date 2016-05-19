@@ -1,0 +1,84 @@
+{% extends "m/mbase.html" %}
+
+{% block meta %}
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://www.collegedaily.cn/"/>
+
+  <meta name="description"
+          content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+{% endblock %}
+
+{% block content %}
+<div class="app-content-body fade-in-up ">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col ">
+            <div class="wrapper-llg-sm ">
+
+                <div class="row m-t">
+                    <div class="panel panel-default">
+                        <div class="panel-heading font-bold "><h4 class="text-info">个人设置</h4></div>
+                        <div class="panel-body">
+
+
+
+                            <form class=" form-horizontal" enctype="multipart/form-data" action="/modify/" method="post">
+                                <div class="form-group">
+
+                                    <label class="col-lg-2 control-label">设置头像：</label>
+
+                                    <div class="col-lg-10">
+                                        <input type="file" name="head" class="form-control" placeholder="{{ user.head }}" value="{{ user.head }}"
+                                               accept="image/gif,image/jpeg,,image/bmp,,image/png">
+                                        <a href="" class="thumb-md pull-left m-r-sm " data-toggle="modal" data-target="#settingModal">
+
+                                        </a>
+                                        <div class="m-l-lg">
+                                            <span class="text-muted m-t-md m-b-md">支持jpg、gif、png、bmp格式.</span><br />
+                                        </div>
+                                        <!--div class="m-l-lg">
+                                            <button class="btn btn-sm btn-info m-t-xs" >修改头像</button>
+                                        </div-->
+
+                                    </div>
+                                </div>
+                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">修改昵称：</label>
+                                    <div class="col-lg-4">
+                                        <input type="text" name="nickname" class="form-control" placeholder="" value="{{user.nickname}}">
+                                    </div>
+                                </div>
+                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">个人签名：</label>
+                                    <div class="col-lg-10">
+                                        <input name="sign" class="form-control" rows="3" value="{{user.sign}}"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">地区：</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" name="area" class="form-control" placeholder="" value="{{user.area}}">
+                                    </div>
+                                </div>
+
+                                <div class="line line-dashed b-b line-lg pull-in"></div>
+                                <div class="form-group m-t-lg">
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-sm btn-info">保存设置</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

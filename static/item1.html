@@ -1,0 +1,150 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+{{blog.title}}_北美留学生日报_留学生日报,留学,留学生,留学申请,华人,北美,北美留学,北美留学生
+{% endblock %}
+
+{% block meta %}
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="http://www.collegedaily.cc/blog/{{blog.pk}}/" />
+  <meta property="og:title" content="{{blog.title}}" />
+  <meta property="og:description" content="{{blog.abstract | truncatechars:32}}" />
+  <meta property="og:image" content="{{blog.cover.url}}" />
+{% endblock %}
+
+{% block content %}
+
+    <div class="row blog-page blog-item">
+        <!-- Left Sidebar -->
+        <div class="col-md-8 md-margin-bottom-60 col-md-offset-1">
+            <!--Blog Post-->        
+            <div class="blog margin-bottom-40">
+
+                <h2><a href="blog_item_option1.html">{{blog.title}}</a></h2>
+                <div class="blog-post-tags">
+                    <ul class="list-unstyled list-inline blog-info">
+                        <li><i class="icon-calendar"></i> {{blog.date|date:"m/d/Y"}}</li>
+                        <li> {{blog.author}}</li>
+                    </ul>                                             
+                </div>
+                <div class="blog-img">
+                    <img class="img-responsive" src="{{blog.cover.url}}" alt="">
+                </div>
+                <div class="passage">
+                {{blog.content|safe}}
+                </div>                
+            </div>
+            <!--End Blog Post-->        
+
+            <hr>
+            <div class="share">
+                <ul class="list-unstyled text-center">
+                    <li class="btn-u _share_weixin" data-toggle="modal" data-target="#myModal"><i class="icon-weixin-round" style="font-size:20px; margin-left:-5px; margin-bottom:-10px;"></i>分享文章到微信</li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <!-- Recent Comments -->
+            <div class="media" id="post-comment">
+                <h3>评论</h3>
+                {% for comment in blog.comment.all %}
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="/assets/img/placeholder.jpg" alt="" />
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">{% if comment.author %}{{comment.author|truncatechars:12}}{% else %}{{comment.aauthor|truncatechars:12}}{% endif %}</h4>
+                    <p>{{comment.content}}</p>
+                    <hr>
+                </div>
+                {% endfor %}
+            </div><!--/media-->
+            <!-- End Recent Comments -->
+            <!-- Comment Form -->
+            <div class="post-comment">
+                <form action="/blog/comment/{{blog.pk}}/" method="post">
+                    <div class="row margin-bottom-20">
+                        <div class="col-md-11 col-md-offset-0">
+                            <textarea name="content" class="form-control" rows="3"></textarea>
+                        </div>                
+                    </div>
+                    {% if user.is_authenticated %}
+                    <input type="hidden" name="author" value={{user.pk}}>
+                    {% else %}
+                    <input type="hidden" name="aauthor" value={{user.}}>
+                    {% endif %}
+                    {% csrf_token %}
+                    <p><button class="btn-u" type="submit">发布评论</button>
+                    </p>
+                </form>
+            </div>
+            <!-- End Comment Form -->
+        </div>
+        <!-- End Left Sidebar -->
+
+        <!-- Right Sidebar -->
+        <div class="col-md-2 magazine-page hidden-sm hidden-xs">
+            <!-- Blog Tags -->
+            <!--div class="headline headline-md"><h2>文章标签</h2></div>
+            <ul class="list-unstyled blog-tags margin-bottom-30">
+                <li><a href="#"><i class="icon-tags"></i> Business</a></li>
+                <li><a href="#"><i class="icon-tags"></i> Music</a></li>
+                <li><a href="#"><i class="icon-tags"></i> Internet</a></li>
+                <li><a href="#"><i class="icon-tags"></i> Money</a></li>
+            </ul-->
+            <!-- End Blog Tags -->
+
+            <div class="margin-bottom-20">
+                <div class="headline headline-md"><h3>关注微信版日报</h3></div>
+                <img alt="" src="/assets/img/qr.jpg" style="height:160px;">
+            </div>
+
+            <div class="posts margin-bottom-40">
+                <div class="headline headline-md"><h2>相关文章</h2></div>
+                {% for post in related_posts %}
+                <dl class="dl-horizontal">
+                    <dt><a href="/blog/{{post.pk}}/"><img src="{{post.cover.url}}" alt=""></a></dt>
+                    <dd>
+                        <p><a href="/blog/{{post.pk}}/">{{post.title}}</a></p> 
+                    </dd>
+                </dl>
+                {% endfor %}
+            </div>
+
+            <!-- End Social Icons -->
+            <!-- Blog Latest Tweets -->
+            <div class="blog-twitter margin-bottom-30">
+                <div class="headline headline-md"><h2>最新评论</h2></div>
+                {% for hot in hots %}
+                <div class="blog-twitter-inner">
+                    <i class="icon-comment-alt color-green"></i>
+                    <a href="/blog/{{hot.comment.blog_set.all.0.pk}}/">@{{hot.comment.blog_set.all.0.title | truncatechars:12}}</a> 
+                    {{hot.comment.content}} 
+                    <span>{{hot.comment.time | timesince }} 前</span>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- End Blog Latest Tweets -->
+        </div>
+        <!-- End Right Sidebar -->
+    </div><!--/row-->   
+{% endblock %}
+
+{% block additional %}
+    <!-- Modal --> 
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title text-center" id="myModalLabel">扫描二维码分享文章至微信</h4>
+          </div>
+          <div class="modal-body">
+            <div class="center-block">
+                <img class="center-block col-sm-offset-4 col-md-offset-4 col-xs-offset-4" src="http://s.jiathis.com/qrcode.php?url=http://www.collegedaily.cc/blog/{{blog.pk}}/?via=wechat_qr">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End modal --> 
+{% endblock %}

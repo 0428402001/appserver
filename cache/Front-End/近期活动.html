@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="description"
+          content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="css/animate.css" type="text/css"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css"/>
+    <link rel="stylesheet" href="css/simple-line-icons.css" type="text/css"/>
+    <link rel="stylesheet" href="css/font.css" type="text/css"/>
+    <link rel="stylesheet" href="css/app.css" type="text/css"/>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <title>近期活动</title>
+</head>
+<body>
+
+
+<div class="app app-header-fixed " id="app">
+
+    <div class="app-header navbar ">
+        <div class="container">
+            <!-- navbar header -->
+            <div class="navbar-header bg-info">
+                <!--<button class="pull-right visible-xs dk" data-toggle="class:show" data-target="">-->
+                <!--<i class="glyphicon glyphicon-cog"></i>-->
+                <!--</button>-->
+                <button class="pull-right visible-xs" data-toggle="collapse" data-target="#navbar-collapse-menu"
+                        ui-scroll="app">
+                    <i class="glyphicon glyphicon-align-justify"></i>
+                </button>
+                <!-- brand -->
+                <a href="#/" class="navbar-brand text-lt">
+                    <img src="source/logo.png" alt="." class="left">
+                    <span class="hidden-folded m-l-xs">北美留学生日报</span>
+                </a>
+                <!-- / brand -->
+            </div>
+            <!-- / navbar header -->
+
+            <!-- navbar collapse -->
+            <div class="collapse  navbar-collapse  bg-white-only" id="navbar-collapse-menu">
+
+                <ul class="nav navbar-nav hidden-sm ">
+
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                            <i class="fa fa-fw fa-plus visible-xs-inline-block"></i>
+                            <span translate="header.navbar.new.NEW">分类浏览</span> <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" translate="header.navbar.new.PROJECT">Projects</a></li>
+                            <li>
+                                <a href="">
+                                    <span class="badge bg-info pull-right">5</span>
+                                    <span translate="header.navbar.new.TASK">Task</span>
+                                </a>
+                            </li>
+                            <li><a href="" translate="header.navbar.new.USER">User</a></li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="">
+                                    <span class="badge bg-danger pull-right">4</span>
+                                    <span translate="header.navbar.new.EMAIL">Email</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="#">
+                            <span translate="header.navbar.new.NEW">近期活动</span> </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#">
+                            <span translate="header.navbar.new.NEW">热门推荐</span> </span>
+                        </a>
+
+                    </li>
+                </ul>
+                <!-- / link and dropdown -->
+
+                <!-- search form -->
+                <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo"
+                      data-target=".navbar-collapse" role="search" ng-controller="TypeaheadDemoCtrl">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" ng-model="selected"
+                                   typeahead="state for state in states | filter:$viewValue | limitTo:8"
+                                   class="form-control input-sm bg-light no-border rounded padder"
+                                   placeholder=按标题或者日期搜索>
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
+              </span>
+                        </div>
+                    </div>
+                </form>
+                <!-- / search form -->
+
+                <!-- nabar right -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="#" class="clear">
+                      <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm">
+                        <img src="img/a0.jpg" alt="...">
+                        <i class="on md b-white bottom"></i>
+                      </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <div class="m-t-md m-b-md"><a href="#" class=" ">登陆</a>
+                            / <a class=" " title=" ">注册</a>
+                        </div>
+
+                    </li>
+                    <!--<li class="">-->
+                    <!--<a href="#" class="clear">-->
+                    <!--<span class="hidden-sm hidden-md">注册</span>-->
+                    <!--</a>-->
+
+                    <!--</li>-->
+                </ul>
+                <!-- / navbar right -->
+
+            </div>
+            <!-- / navbar collapse -->
+        </div>
+
+    </div>
+    <div class="app-content container">
+        <div class="app-content-body fade-in-up ">
+            <div class="hbox hbox-auto-xs hbox-auto-sm padder-v-25">
+                <div class="col ">
+                    <!--近期活动内容-->
+                    <div class="">
+                        <ul class="timeline">
+                            <li class="tl-header">
+                                <div class="btn btn-info">Now</div>
+                            </li>
+                            <li class="tl-item tl-left">
+                                <div class="tl-wrap b-info">
+                                    <span class="tl-date">04.2014</span>
+
+                                    <div class="tl-content panel padder b-a block">
+                                        <span class="arrow left pull-up hidden-left"></span>
+                                        <span class="arrow right pull-up visible-left"></span>
+
+                                        <div class="m-t-n-md">
+                                            <h3 class="text-lt  inline">01/04</h3> <h4
+                                                class="text-lt  inline text-info">＃北京＃</h4>
+                                        </div>
+
+                                        <div class=" padder-xxs pull-in b-t b-light">
+
+                                            <div class="hbox  bg">
+                                                <div class="col padder-md">
+                                                    <h5 class="text-lt font-bold m-t a-title "><a href="#">万里归国来创业 首届青年留学生海归创业论坛</a></h5>
+
+                                                    <p class="b-t">2014年末Gmail被封的原因引发了多方猜测，中国外交部发言人表示是由于Google的原因导致中国政府的进一步行动，而Google方面则否认是由于自己的原因。<a class="m-l-sm text-info">查看详情</a>
+
+                                                    </p>
+                                                </div>
+
+                                                <div class="col w-md-220 ">
+
+                                                    <img class="wrapper-xxs b-a m-t-sm img-responsive" src="source/article_thumb.jpg" />
+
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="tl-item tl-left">
+                                <div class="tl-wrap b-info">
+                                    <span class="tl-date">04.2014</span>
+
+                                    <div class="tl-content panel padder b-a block">
+                                        <span class="arrow left pull-up hidden-left"></span>
+                                        <span class="arrow right pull-up visible-left"></span>
+
+                                        <div class="m-t-n-md">
+                                            <h3 class="text-lt  inline">01/04</h3> <h4
+                                                class="text-lt  inline text-info">＃北京＃</h4>
+                                        </div>
+
+                                        <div class=" padder-xxs pull-in b-t b-light">
+
+                                            <div class="hbox  bg">
+                                                <div class="col padder-md">
+                                                    <h5 class="text-lt font-bold m-t a-title "><a href="#">万里归国来创业 首届青年留学生海归创业论坛</a></h5>
+
+                                                    <p class="b-t">2014年末Gmail被封的原因引发了多方猜测，中国外交部发言人表示是由于Google的原因导致中国政府的进一步行动，而Google方面则否认是由于自己的原因。<a class="m-l-sm text-info">查看详情</a>
+
+                                                    </p>
+                                                </div>
+
+                                                <div class="col w-md-220 ">
+
+                                                    <img class="wrapper-xxs b-a m-t-sm img-responsive" src="source/article_thumb.jpg" />
+
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="tl-item tl-left">
+                                <div class="tl-wrap b-info">
+                                    <span class="tl-date">04.2014</span>
+
+                                    <div class="tl-content panel padder b-a block">
+                                        <span class="arrow left pull-up hidden-left"></span>
+                                        <span class="arrow right pull-up visible-left"></span>
+
+                                        <div class="m-t-n-md">
+                                            <h3 class="text-lt  inline">01/04</h3> <h4
+                                                class="text-lt  inline text-info">＃北京＃</h4>
+                                        </div>
+
+                                        <div class=" padder-xxs pull-in b-t b-light">
+
+                                            <div class="hbox  bg">
+                                                <div class="col padder-md">
+                                                    <h5 class="text-lt font-bold m-t a-title "><a href="#">万里归国来创业 首届青年留学生海归创业论坛</a></h5>
+
+                                                    <p class="b-t">2014年末Gmail被封的原因引发了多方猜测，中国外交部发言人表示是由于Google的原因导致中国政府的进一步行动，而Google方面则否认是由于自己的原因。<a class="m-l-sm text-info">查看详情</a>
+
+                                                    </p>
+                                                </div>
+
+                                                <div class="col w-md-220 ">
+
+                                                    <img class="wrapper-xxs b-a m-t-sm" src="source/article_thumb.jpg" />
+
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="tl-item tl-left">
+                                <div class="tl-wrap b-info">
+                                    <span class="tl-date">04.2014</span>
+
+                                    <div class="tl-content panel padder b-a block">
+                                        <span class="arrow left pull-up hidden-left"></span>
+                                        <span class="arrow right pull-up visible-left"></span>
+
+                                        <div class="m-t-n-md">
+                                            <h3 class="text-lt  inline">01/04</h3> <h4
+                                                class="text-lt  inline text-info">＃北京＃</h4>
+                                        </div>
+
+                                        <div class=" padder-xxs pull-in b-t b-light">
+
+                                            <div class="hbox  bg">
+                                                <div class="col padder-md">
+                                                    <h5 class="text-lt font-bold m-t a-title "><a href="#">万里归国来创业 首届青年留学生海归创业论坛</a></h5>
+
+                                                    <p class="b-t">2014年末Gmail被封的原因引发了多方猜测，中国外交部发言人表示是由于Google的原因导致中国政府的进一步行动，而Google方面则否认是由于自己的原因。<a class="m-l-sm text-info">查看详情</a>
+
+                                                    </p>
+                                                </div>
+
+                                                <div class="col w-md-220 ">
+                                                    <img class="wrapper-xxs b-a m-t-sm " src="source/article_thumb.jpg" />
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="tl-header">
+                                <div class="btn btn-sm btn-default btn-rounded">2014</div>
+                            </li>
+                            <li class="tl-item">
+                                <div class="tl-wrap">
+                                    <span class="tl-date">10.08.2013</span>
+
+                                    <div class="tl-content panel padder b-a">
+                                        <span class="arrow left pull-up hidden-left"></span>
+                                        <span class="arrow right pull-up visible-left"></span>
+
+                                        <div class="text-lt">A good story to hear.</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="tl-header">
+                                <div class="btn btn-icon btn-rounded btn-default"><i class="fa fa-twitter"></i></div>
+                            </li>
+
+                            <li class="tl-header">
+                                <div class="btn btn-sm btn-info btn-rounded">more</div>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                        <div class="wrapper-md">
+                            <div>
+                                <img src="source/activity-ad.jpg" class="img-full">
+                            </div>
+                        </div>
+
+                </div>
+
+                <div class="col w-lg wrapper-sm lter bg-auto">
+
+                    <div class="panel panel-default">
+                        <img src="source/left-ad_1.jpg" alt="..." class="img-thumbnail ">
+                    </div>
+                    <button class="btn m-b-xs w-xs btn-info btn-rounded">热门文章</button>
+
+                    <div class="panel b-a">
+
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="" class="thumb-article-md m-r">
+                                    <img src="img/a2.jpg" class="r r-2x">
+                                </a>
+
+                                <div class="article-des">
+                                    <p class=""><a href="" class="text m-xs">禁枪为什么在美国不现实</a></p>
+
+                                    <p>
+                                        <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>2014/12/11
+                                        </a>
+                                        <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>1239</a>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="" class="thumb-article-md m-r">
+                                    <img src="img/a2.jpg" class="r r-2x">
+                                </a>
+
+                                <div class="article-des">
+                                    <p class=""><a href="" class="text m-xs">禁枪为什么在美国不现实</a></p>
+
+                                    <p>
+                                        <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>2014/12/11
+                                        </a>
+                                        <a class="text-muted right"><i class="fa fa-fw fa-comment-o"></i>1239</a>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="" class="thumb-article-md m-r">
+                                    <img src="img/a2.jpg" class="r r-2x">
+                                </a>
+
+                                <div class="article-des">
+                                    <p class=""><a href="" class="text m-xs">禁枪为什么在美国不现实</a></p>
+
+                                    <p>
+                                        <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>2014/12/11
+                                        </a>
+                                        <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>1239</a>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="" class="thumb-article-md m-r">
+                                    <img src="img/a2.jpg" class="r r-2x">
+                                </a>
+
+                                <div class="article-des">
+                                    <p class=""><a href="" class="text m-xs">禁枪为什么在美国不现实</a></p>
+
+                                    <p>
+                                        <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>2014/12/11
+                                        </a>
+                                        <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>1239</a>
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                        <h5 class="font-thin padder text-right"><a href="#">显示更多</a></h5>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="foot-container bg-white-only">
+        <div class="row ">
+            <div class="col-md-4">
+                <div class="list-p-d-md">
+                    <h5 class="m-t-xs m-b-xs font-title">北美留学生日报</h5>
+                    <ul class="list-group no-bg no-borders pull-in">
+
+                        <li class="list-group-item ">
+                            <a href="">
+                                关于北美留学生日报
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="">
+                                <!--<b class="badge bg-info pull-right">9</b>-->
+                                加入我们
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="">
+                                联系我们
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="">
+                                友情链接
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="list-p-d-md">
+                    <h5 class="m-t-xs m-b-xs font-title">投稿吧</h5>
+                    <ul class="list-group no-bg no-borders pull-in">
+
+                        <li class="list-group-item ">
+                            <a href="">北美留学生日报提供第一手的留学生相关资讯欢迎优秀的原创稿件
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="">
+                                <!--<b class="badge bg-info pull-right">9</b>-->
+                                Email: editor@collegedaily.cc
+                            </a>
+                        </li>
+
+                    </ul>
+                    <h5 class="m-t-xs m-b-xs font-title">邮件订阅</h5>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="填写Email地址">
+                        <span class="input-group-addon  btn btn-info">订阅</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="list-p-d-md">
+                    <h5 class="m-t-xs m-b-xs font-title">客户端下载</h5>
+
+                    <div class="m-t-md">
+                          <span class="pull-left thumb-md avatar m-r">
+                            <img src="source/logo.jpg" alt="...">
+                          </span>
+                          <span class="clear wrapper-xs-10">
+                            <span>手机下载app</span>
+                            <span class="text-base clear text-ellipsis">Android 4.0 | iOS 6.0 +</span>
+                          </span>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer wrapper b-t bg-black-opacity  text-center bg-footer-light-blue ">
+        <span class="pull-right text-center font-bold"></span>
+        2013© 北美留学生日报 .ALL Rights Reserved.
+    </div>
+
+</div>
+</body>
+</html>

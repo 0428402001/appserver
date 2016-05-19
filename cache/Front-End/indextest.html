@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+
+
+
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/animate.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/simple-line-icons.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/font.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/app.css" type="text/css"/>
+
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/stickUp.min.js"></script>
+    <title>{% block title %}北美留学生日报{% endblock %}</title>
+</head>
+<body>
+
+
+<div class="app app-header-fixed " id="app">
+
+    <div class="app-header navbar ">
+        <div class="container">
+            <!-- navbar header -->
+            <div class="navbar-header bg-info">
+                <button class="pull-right visible-xs" data-toggle="collapse" data-target="#navbar-collapse-menu"
+                        ui-scroll="app">
+                    <i class="glyphicon glyphicon-align-justify"></i>
+                </button>
+                <!-- brand -->
+                <a href="#/" class="navbar-brand text-lt">
+                    <img src="source/logo.png" alt="." class="left">
+                    <span class="hidden-folded m-l-xs">北美留学生日报</span>
+                </a>
+                <!-- / brand -->
+            </div>
+            <!-- / navbar header -->
+
+            <!-- navbar collapse -->
+            <div class="collapse  navbar-collapse  bg-white-only" id="navbar-collapse-menu">
+                <ul class="nav navbar-nav hidden-sm ">
+
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                            <i class="fa fa-fw fa-plus visible-xs-inline-block"></i>
+                            <span translate="header.navbar.new.NEW">分类浏览</span> <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" translate="header.navbar.new.PROJECT">Projects</a></li>
+                            <li>
+                                <a href="">
+                                    <span class="badge bg-info pull-right">5</span>
+                                    <span translate="header.navbar.new.TASK">Task</span>
+                                </a>
+                            </li>
+                            <li><a href="" translate="header.navbar.new.USER">User</a></li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="">
+                                    <span class="badge bg-danger pull-right">4</span>
+                                    <span translate="header.navbar.new.EMAIL">Email</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="#">
+                            <span translate="header.navbar.new.NEW">近期活动</span> </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#">
+                            <span translate="header.navbar.new.NEW">热门推荐</span> </span>
+                        </a>
+
+                    </li>
+                </ul>
+                <!-- / link and dropdown -->
+
+                <!-- search form -->
+                <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo"
+                      data-target=".navbar-collapse" role="search" ng-controller="TypeaheadDemoCtrl">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" ng-model="selected"
+                                   typeahead="state for state in states | filter:$viewValue | limitTo:8"
+                                   class="form-control input-sm bg-light no-border rounded padder"
+                                   placeholder=按标题或者日期搜索>
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
+              </span>
+                        </div>
+                    </div>
+                </form>
+                <!-- / search form -->
+
+                <!-- nabar right -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="#" class="clear">
+                      <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm">
+                        <img src="/assets/img/a0.jpg" alt="...">
+                        <i class="on md b-white bottom"></i>
+                      </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <div class="m-t-md m-b-md"><a href="#" class=" ">登陆</a>
+                            / <a class=" " title=" ">注册</a>
+                        </div>
+
+                    </li>
+                    <!--<li class="">-->
+                    <!--<a href="#" class="clear">-->
+                    <!--<span class="hidden-sm hidden-md">注册</span>-->
+                    <!--</a>-->
+
+                    <!--</li>-->
+                </ul>
+                <!-- / navbar right -->
+
+            </div>
+            <!-- / navbar collapse -->
+        </div>
+
+    </div>
+    <div class="app-content container">
+        <div class="app-content-body fade-in-up ">
+            <div class="hbox hbox-auto-xs hbox-auto-sm">
+                <div class="col ">
+                    <div class="wrapper-gmd ">
+                        <div class="row m-t" style="overflow: hidden;">
+
+                            <div id="slider">
+                                <div class="slide">
+                                    <img class="diapo" src="/assets/source/main_1.jpg" alt="">
+
+                                    <div class="text">
+                                        <h2 class="font-size-lg">
+                                            海归在北京的生活——鱼龙混杂的圈子 爬向食物链顶端的年轻人
+                                        </h2>
+
+                                        <p class="font-size-sm"> 一小时前@ 村长爱吃羊</p>
+                                    </div>
+                                </div>
+                                <div class="slide">
+                                    <img class="diapo" src="/assets/source/main_2.jpg" alt="">
+
+                                    <div class="text">
+                                        <h2 class="font-size-lg">
+                                            海归在北京的生活——鱼龙混杂的圈子 爬向食物链顶端的年轻人
+                                        </h2>
+
+                                        <p class="font-size-sm"> 一小时前@ 村长爱吃羊</p>
+                                    </div>
+                                </div>
+                                <div class="slide">
+                                    <img class="diapo" src="/assets/source/main_3.jpg" alt="">
+
+                                    <div class="text">
+                                        <h2 class="font-size-lg">
+                                            海归在北京的生活——鱼龙混杂的圈子 爬向食物链顶端的年轻人
+                                        </h2>
+
+                                        <p class="font-size-sm"> 一小时前@ 村长爱吃羊</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row m-t">
+                            <div class="main-content">
+                                <div class="tab-container">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="active"><a href="#tab1" data-toggle="tab">最新发布 <span
+                                                class="badge badge-sm m-l-xs">16</span></a></li>
+                                        <li><a href="#tab2" data-toggle="tab">WHAT'S HOT <span
+                                                class="badge bg-danger badge-sm m-l-xs">6</span></a></li>
+
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab1">
+                                            <div class="articles">
+                                                <article class="posts post-1 cf">
+
+                                                    <div class="info cf">
+                                                        <div class="topic left">
+                                                            <span><a href="#" class="breaking">专栏 </a> / column
+                                                            </span>
+                                                        </div>
+                                                        <div class="postmeta right"><a href="/sincera"
+                                                                                       class="uname user_sinCera">Dallily</a>
+                                                            / <span class="timeago" title=" ">刚刚</span></div>
+                                                    </div>
+                                                    <div class="left left-col">
+                                                        <div class="image feature-img thumb-180"><a href="#"
+                                                                                                    class="thumbnail"><img
+                                                                alt="Blank" class="image lazyload loaded"
+                                                                src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="right-col">
+                                                        <h1><a>电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了</a></h1>
+
+                                                        <p>抄完苹果抄 LG。</p>
+                                                    </div>
+
+                                                </article>
+
+                                                <article class="posts post-1 cf">
+
+                                                    <div class="info cf">
+                                                        <div class="topic left">
+                                                            <span><a href="#" class="breaking">专栏 </a> / column
+                                                            </span>
+                                                        </div>
+                                                        <div class="postmeta right"><a href="/sincera"
+                                                                                       class="uname user_sinCera">sinCera</a>
+                                                            / <span class="timeago" title=" ">1小时前</span></div>
+                                                    </div>
+                                                    <div class="left left-col">
+                                                        <div class="image feature-img thumb-180 "><a class="thumbnail"
+                                                                                                     href="#"><img
+                                                                alt="Blank" class="image lazyload loaded"
+                                                                src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="right-col">
+                                                        <h1><a>电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了</a></h1>
+
+                                                        <p>抄完苹果抄 LG。</p>
+                                                    </div>
+
+                                                </article>
+
+                                                <article class="posts post-1 cf">
+
+                                                    <div class="info cf">
+                                                        <div class="topic left">
+                                                            <span><a href="#" class="cooking">留学厨房 </a> / Study in the kitchen
+                                                            </span>
+                                                        </div>
+                                                        <div class="postmeta right"><a href="/sincera"
+                                                                                       class="uname user_sinCera">sinCera</a>
+                                                            / <span class="timeago" title=" ">1小时前</span></div>
+                                                    </div>
+                                                    <div class="left left-col">
+                                                        <div class="image feature-img thumb-180 "><a class="thumbnail"
+                                                                                                     href="#"><img
+                                                                alt="Blank" class="image lazyload loaded"
+                                                                src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="right-col">
+                                                        <h1><a>电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了</a></h1>
+
+                                                        <p>抄完苹果抄 LG。</p>
+                                                    </div>
+
+                                                </article>
+
+                                                <section>
+                                                    <div class="panel">
+                                                        <div>
+                                                            <img src="/assets/img/c0.jpg" class="img-full">
+                                                        </div>
+                                                    </div>
+                                                </section>
+
+                                                <article class="posts post-1 cf">
+
+                                                    <div class="info cf">
+                                                        <div class="topic left">
+                                                            <span><a href="#" class="entainment">吐槽 </a> / ridicule
+                                                            </span>
+                                                        </div>
+                                                        <div class="postmeta right"><a href="/sincera"
+                                                                                       class="uname user_sinCera">sinCera</a>
+                                                            / <span class="timeago" title=" ">1小时前</span></div>
+                                                    </div>
+                                                    <div class="left left-col">
+                                                        <div class="image feature-img thumb-180 "><a class="thumbnail"
+                                                                                                     href="#"><img
+                                                                alt="Blank" class="image lazyload loaded"
+                                                                src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="right-col">
+                                                        <h1><a>电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了</a></h1>
+
+                                                        <p>抄完苹果抄 LG。</p>
+                                                    </div>
+
+                                                </article>
+
+
+                                                <article class="posts last post-1 cf">
+
+                                                    <div class="info cf">
+                                                        <div class="topic left">
+                                                            <span><a href="#" class="entainment">爱情 </a> / love
+                                                            </span>
+                                                        </div>
+                                                        <div class="postmeta right"><a href="/sincera"
+                                                                                       class="uname user_sinCera">sinCera</a>
+                                                            / <span class="timeago" title=" ">1小时前</span></div>
+                                                    </div>
+                                                    <div class="left left-col">
+                                                        <div class="image feature-img thumb-180 "><a class="thumbnail"
+                                                                                                     href="#"><img
+                                                                alt="Blank" class="image lazyload loaded"
+                                                                src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="right-col">
+                                                        <h1><a>电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了</a></h1>
+
+                                                        <p>抄完苹果抄 LG。</p>
+                                                    </div>
+
+                                                </article>
+
+
+                                            </div>
+
+
+                                        </div>
+                                        <div class="tab-pane" id="tab2">
+
+
+                                            <div class="articles">
+                                                <article class="posts post-1 cf">
+
+                                                    <div class="info cf">
+                                                        <div class="topic left">
+                                                            <span><a href="#" class="breaking">专栏 </a> / column
+                                                            </span>
+                                                        </div>
+                                                        <div class="postmeta right"><a href="/sincera"
+                                                                                       class="uname user_sinCera">Dallily</a>
+                                                            / <span class="timeago" title=" ">刚刚</span></div>
+                                                    </div>
+                                                    <div class="left left-col">
+                                                        <div class="image feature-img thumb-180"><a href="#"
+                                                                                                    class="thumbnail"><img
+                                                                alt="Blank" class="image lazyload loaded"
+                                                                src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="right-col">
+                                                        <h1><a>what's hot，明年所有智能产品都要用 Tizen 了</a></h1>
+
+                                                        <p>抄完苹果抄 LG。</p>
+                                                    </div>
+
+                                                </article>
+
+                                                <article class="posts post-1 cf">
+
+                                                    <div class="info cf">
+                                                        <div class="topic left">
+                                                            <span><a href="#" class="breaking">专栏 </a> / column
+                                                            </span>
+                                                        </div>
+                                                        <div class="postmeta right"><a href="/sincera"
+                                                                                       class="uname user_sinCera">sinCera</a>
+                                                            / <span class="timeago" title=" ">1小时前</span></div>
+                                                    </div>
+                                                    <div class="left left-col">
+                                                        <div class="image feature-img thumb-180 "><a class="thumbnail"
+                                                                                                     href="#"><img
+                                                                alt="Blank" class="image lazyload loaded"
+                                                                src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="right-col">
+                                                        <h1><a>hat's hot电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了</a></h1>
+
+                                                        <p>抄完苹果抄 LG。</p>
+                                                    </div>
+
+                                                </article>
+
+                                                <article class="posts post-1 cf">
+
+                                                    <div class="info cf">
+                                                        <div class="topic left">
+                                                            <span><a href="#" class="cooking">留学厨房 </a> / Study in the kitchen
+                                                            </span>
+                                                        </div>
+                                                        <div class="postmeta right"><a href="/sincera"
+                                                                                       class="uname user_sinCera">sinCera</a>
+                                                            / <span class="timeago" title=" ">1小时前</span></div>
+                                                    </div>
+                                                    <div class="left left-col">
+                                                        <div class="image feature-img thumb-180 "><a class="thumbnail"
+                                                                                                     href="#"><img
+                                                                alt="Blank" class="image lazyload loaded"
+                                                                src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="right-col">
+                                                        <h1><a>hat's hot电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了</a></h1>
+
+                                                        <p>抄完苹果抄 LG。</p>
+                                                    </div>
+
+                                                </article>
+
+                                                <section>
+                                                    <div class="panel">
+                                                        <div>
+                                                            <img src="/assets/img/c0.jpg" class="img-full">
+                                                        </div>
+                                                    </div>
+                                                </section>
+
+                                                <article class="posts post-1 cf">
+
+                                                    <div class="info cf">
+                                                        <div class="topic left">
+                                                            <span><a href="#" class="entainment">吐槽 </a> / ridicule
+                                                            </span>
+                                                        </div>
+                                                        <div class="postmeta right"><a href="/sincera"
+                                                                                       class="uname user_sinCera">sinCera</a>
+                                                            / <span class="timeago" title=" ">1小时前</span></div>
+                                                    </div>
+                                                    <div class="left left-col">
+                                                        <div class="image feature-img thumb-180 "><a class="thumbnail"
+                                                                                                     href="#"><img
+                                                                alt="Blank" class="image lazyload loaded"
+                                                                src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="right-col">
+                                                        <h1><a>电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了</a></h1>
+
+                                                        <p>抄完苹果抄 LG。</p>
+                                                    </div>
+
+                                                </article>
+
+
+                                                <article class="posts last post-1 cf">
+
+                                                    <div class="info cf">
+                                                        <div class="topic left">
+                                                            <span><a href="#" class="entainment">爱情 </a> / love
+                                                            </span>
+                                                        </div>
+                                                        <div class="postmeta right"><a href="/sincera"
+                                                                                       class="uname user_sinCera">sinCera</a>
+                                                            / <span class="timeago" title=" ">1小时前</span></div>
+                                                    </div>
+                                                    <div class="left left-col">
+                                                        <div class="image feature-img thumb-180 "><a class="thumbnail"
+                                                                                                     href="#"><img
+                                                                alt="Blank" class="image lazyload loaded"
+                                                                src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="right-col">
+                                                        <h1><a>电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了</a></h1>
+
+                                                        <p>抄完苹果抄 LG。</p>
+                                                    </div>
+
+                                                </article>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="text-center m-t-xs m-b-xs">
+                                    <ul class="pagination pagination-md">
+                                        <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
+                                        <li class="active"><a href="">1</a></li>
+                                        <li><a href="">2</a></li>
+                                        <li><a href="">3</a></li>
+                                        <li><a href="">4</a></li>
+                                        <li><a href="">5</a></li>
+                                        <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="tag-aside">
+                                <button class="btn m-b-xs w-xs btn-info btn-rounded">TAGS</button>
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <a href="">
+                                            <!--<b class="badge bg-info pull-right">9</b>-->
+                                            Angular is Awesome
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="">
+                                            <b class="badge bg-info pull-right">9</b>
+                                            What a hot day
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="">
+                                            <b class="badge bg-info pull-right">9</b>
+                                            留学生日报
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="">
+                                            <b class="badge bg-info pull-right">9</b>
+                                            北美留学生日报
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="">
+                                            <!--<b class="badge bg-info pull-right">9</b>-->
+                                            Angular is Awesome
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="">
+                                            <b class="badge bg-info pull-right">9</b>
+                                            What a hot day
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="">
+                                            <b class="badge bg-info pull-right">9</b>
+                                            留学生日报
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="">
+                                            <b class="badge bg-info pull-right">9</b>
+                                            北美留学生日报
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="">
+                                            <!--<b class="badge bg-info pull-right">9</b>-->
+                                            Angular is Awesome
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="">
+                                            <b class="badge bg-info pull-right">9</b>
+                                            What a hot day
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="">
+                                            <b class="badge bg-info pull-right">9</b>
+                                            留学生日报
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="">
+                                            <b class="badge bg-info pull-right">9</b>
+                                            北美留学生日报
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <section class="aside-social aside-fixed" id="qRcode">
+
+                                    <div class="image text-center "><img alt="Qrcode" src="/assets/source/2.jpg"></div>
+                                    <p class="m-t-md padder" style="width: 200px;">微信公众平台：搜索 “collegedaily”
+                                        或扫描下面的二维码</p>
+                                </section>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col w-lg lter padder-v-30 bg-auto">
+                    <div class="padder-xs">
+                        <div class="panel panel-default">
+                            <img src="/assets/source/ad_1.png" alt="..." class="img-thumbnail ">
+                        </div>
+                        <button class="btn m-b-xs w-xs btn-info btn-rounded">热门文章</button>
+
+                        <div class="panel b-a">
+
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="" class="thumb-article-md m-r">
+                                        <img src="/assets/img/a2.jpg" class="r r-2x">
+                                    </a>
+
+                                    <div class="article-des">
+                                        <p class=""><a href="" class="text m-xs">禁枪为什么在美国不现实</a></p>
+
+                                        <p>
+                                            <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>2014/12/11
+                                            </a>
+                                            <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>1239</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="thumb-article-md m-r">
+                                        <img src="/assets/img/a2.jpg" class="r r-2x">
+                                    </a>
+
+                                    <div class="article-des">
+                                        <p class=""><a href="" class="text m-xs">禁枪为什么在美国不现实</a></p>
+
+                                        <p>
+                                            <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>2014/12/11
+                                            </a>
+                                            <a class="text-muted right"><i class="fa fa-fw fa-comment-o"></i>1239</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="thumb-article-md m-r">
+                                        <img src="/assets/img/a2.jpg" class="r r-2x">
+                                    </a>
+
+                                    <div class="article-des">
+                                        <p class=""><a href="" class="text m-xs">禁枪为什么在美国不现实</a></p>
+
+                                        <p>
+                                            <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>2014/12/11
+                                            </a>
+                                            <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>1239</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="thumb-article-md m-r">
+                                        <img src="/assets/img/a2.jpg" class="r r-2x">
+                                    </a>
+
+                                    <div class="article-des">
+                                        <p class=""><a href="" class="text m-xs">禁枪为什么在美国不现实</a></p>
+
+                                        <p>
+                                            <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>2014/12/11
+                                            </a>
+                                            <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>1239</a>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <h5 class="font-thin padder text-right"><a href="#">显示更多</a></h5>
+                        </div>
+
+                        <button class="btn m-b-xs w-xs btn-info btn-rounded">最新评论</button>
+
+                        <div class="b-t">
+
+                            <div class="m-l-xs m-t-md">
+                                <div class="m-t-sm m-l-lg m-b-xs">
+                                    <span href="" class="text m-md">jessica</span>
+                                    <span href="" class="text-muted text-base">刚刚</i></span>
+                                </div>
+                                <a class="pull-left thumb-sm avatar">
+                                    <img src="/assets/img/a5.jpg" alt="...">
+                                </a>
+
+                                <div class="m-l-xxl panel b-a">
+
+                                    <div class="panel-heading pos-rlt">
+                                        <span class="arrow left pull-up"></span>
+                                        <a href="">电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了,电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen
+                                            了</a>
+
+                                        <p class="text">评论于</p>
+                                        <a href="" class="text-info m-l-n-sm">《斯坦福留学生是叛国贼吗？》</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-l-xs m-t-md">
+                                <div class="m-t-sm m-l-lg m-b-xs">
+                                    <a href="" class="text m-md">jessica</a>
+                                    <a href="" class="text-muted text-base">刚刚</i></a>
+                                </div>
+                                <a class="pull-left thumb-sm avatar">
+                                    <img src="/assets/img/a5.jpg" alt="...">
+                                </a>
+
+                                <div class="m-l-xxl panel b-a">
+
+                                    <div class="panel-heading pos-rlt">
+                                        <span class="arrow left pull-up"></span>
+                                        <a href="">电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了,电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen
+                                            了</a>
+
+                                        <p class="text">评论于</p>
+                                        <a href="" class="text-info m-l-n-sm">《斯坦福留学生是叛国贼吗？》</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-l-xs m-t-md">
+                                <div class="m-t-sm m-l-lg m-b-xs">
+                                    <a href="" class="text m-md">jessica</a>
+                                    <a href="" class="text-muted text-base">刚刚</i></a>
+                                </div>
+                                <a class="pull-left thumb-sm avatar">
+                                    <img src="/assets/img/a5.jpg" alt="...">
+                                </a>
+
+                                <div class="m-l-xxl panel b-a">
+
+                                    <div class="panel-heading pos-rlt">
+                                        <span class="arrow left pull-up"></span>
+                                        <a href="">电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了,电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen
+                                            了</a>
+
+                                        <p class="text">评论于</p>
+                                        <a href="" class="text-info m-l-n-sm">《斯坦福留学生是叛国贼吗？》</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-l-xs m-t-md">
+                                <div class="m-t-sm m-l-lg m-b-xs">
+                                    <a href="" class="text m-md">jessica</a>
+                                    <a href="" class="text-muted text-base">刚刚</i></a>
+                                </div>
+                                <a class="pull-left thumb-sm avatar">
+                                    <img src="/assets/img/a5.jpg" alt="...">
+                                </a>
+
+                                <div class="m-l-xxl panel b-a">
+
+                                    <div class="panel-heading pos-rlt">
+                                        <span class="arrow left pull-up"></span>
+                                        <a href="">电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了,电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen
+                                            了</a>
+
+                                        <p class="text">评论于</p>
+                                        <a href="" class="text-info m-l-n-sm">《斯坦福留学生是叛国贼吗？》</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="m-l-xs m-t-md">
+                                <div class="m-t-sm m-l-lg m-b-xs">
+                                    <a href="" class="text m-md">jessica</a>
+                                    <a href="" class="text-muted text-base">刚刚</i></a>
+                                </div>
+                                <a class="pull-left thumb-sm avatar">
+                                    <img src="/assets/img/a5.jpg" alt="...">
+                                </a>
+
+                                <div class="m-l-xxl panel b-a">
+
+                                    <div class="panel-heading pos-rlt">
+                                        <span class="arrow left pull-up"></span>
+                                        <a href="">电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了,电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen
+                                            了</a>
+
+                                        <p class="text">评论于</p>
+                                        <a href="" class="text-info m-l-n-sm">《斯坦福留学生是叛国贼吗？》</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+</div>
+<div class="foot-container bg-white-only">
+    <div class="row ">
+        <div class="col-md-4">
+            <div class="list-p-d-md">
+                <h5 class="m-t-xs m-b-xs font-title">北美留学生日报</h5>
+                <ul class="list-group no-bg no-borders pull-in">
+
+                    <li class="list-group-item ">
+                        <a href="">
+                            关于北美留学生日报
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">
+                            <!--<b class="badge bg-info pull-right">9</b>-->
+                            加入我们
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">
+                            联系我们
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">
+                            友情链接
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="list-p-d-md">
+                <h5 class="m-t-xs m-b-xs font-title">投稿吧</h5>
+                <ul class="list-group no-bg no-borders pull-in">
+
+                    <li class="list-group-item ">
+                        <a href="">北美留学生日报提供第一手的留学生相关资讯欢迎优秀的原创稿件
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">
+                            <!--<b class="badge bg-info pull-right">9</b>-->
+                            Email: editor@collegedaily.cc
+                        </a>
+                    </li>
+
+                </ul>
+                <h5 class="m-t-xs m-b-xs font-title">邮件订阅</h5>
+
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="填写Email地址">
+                    <span class="input-group-addon  btn btn-info">订阅</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="list-p-d-md">
+                <h5 class="m-t-xs m-b-xs font-title">客户端下载</h5>
+
+                <div class="m-t-md">
+                          <span class="pull-left thumb-md avatar m-r">
+                            <img src="/assets/source/logo.png" alt="...">
+                          </span>
+                          <span class="clear wrapper-xs-10">
+                            <span>手机下载app</span>
+                            <span class="text-base clear text-ellipsis">Android 4.0 | iOS 6.0 +</span>
+                          </span>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer wrapper b-t bg-black-opacity  text-center bg-footer-light-blue ">
+    <span class="pull-right text-center font-bold"></span>
+    2013© 北美留学生日报 .ALL Rights Reserved.
+</div>
+<script>
+    $(function ($) {
+        $(document).ready(function () {
+            //enabling stickUp on the '.navbar-wrapper' class
+//            $('.navbar-wrapper').stickUp();
+            $('#qRcode').stickUp({
+                marginTop: 'auto'
+            });
+
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    /* ==== slider nameSpace ==== */
+    var slider = function () {
+        /* ==== private methods ==== */
+        function getElementsByClass(object, tag, className) {
+            var o = object.getElementsByTagName(tag);
+            for (var i = 0, n = o.length, ret = []; i < n; i++) {
+                if (o[i].className == className) ret.push(o[i]);
+            }
+            if (ret.length == 1) ret = ret[0];
+            return ret;
+        }
+
+        function setOpacity(obj, o) {
+            if (obj.filters) obj.filters.alpha.opacity = Math.round(o);
+            else obj.style.opacity = o / 100;
+        }
+
+        /* ==== Slider Constructor ==== */
+        function Slider(oCont, speed, iW, iH, oP) {
+            this.slides = [];
+            this.over = false;
+            this.S = this.S0 = speed;
+            this.iW = iW;
+            this.iH = iH;
+            this.oP = oP;
+            this.oc = document.getElementById(oCont);
+            this.frm = getElementsByClass(this.oc, 'div', 'slide');
+            this.NF = this.frm.length;
+            this.resize();
+            for (var i = 0; i < this.NF; i++) {
+                this.slides[i] = new Slide(this, i);
+            }
+            this.oc.parent = this;
+            this.view = this.slides[0];
+            this.Z = this.mx;
+            /* ==== on mouse out event ==== */
+            this.oc.onmouseout = function () {
+                this.parent.mouseout();
+                return false;
+            }
+        }
+
+        Slider.prototype = {
+            /* ==== animation loop ==== */
+            run: function () {
+                this.Z += this.over ? (this.mn - this.Z) * .5 : (this.mx - this.Z) * .5;
+                this.view.calc();
+                var i = this.NF;
+                while (i--) this.slides[i].move();
+            },
+            /* ==== resize  ==== */
+            resize: function () {
+                this.wh = this.oc.clientWidth;
+                this.ht = this.oc.clientHeight;
+                this.wr = this.wh * this.iW;
+                this.r = this.ht / this.wr;
+                this.mx = this.wh / this.NF;
+                this.mn = (this.wh * (1 - this.iW)) / (this.NF - 1);
+            },
+            /* ==== rest  ==== */
+            mouseout: function () {
+                this.over = false;
+                setOpacity(this.view.img, this.oP);
+            }
+        }
+        /* ==== Slide Constructor ==== */
+        Slide = function (parent, N) {
+            this.parent = parent;
+            this.N = N;
+            this.x0 = this.x1 = N * parent.mx;
+            this.v = 0;
+            this.loaded = false;
+            this.cpt = 0;
+            this.start = new Date();
+            this.obj = parent.frm[N];
+            this.txt = getElementsByClass(this.obj, 'div', 'text');
+            this.img = getElementsByClass(this.obj, 'img', 'diapo');
+            this.bkg = document.createElement('div');
+            this.bkg.className = 'backgroundText';
+            this.obj.insertBefore(this.bkg, this.txt);
+            if (N == 0) this.obj.style.borderLeft = 'none';
+            this.obj.style.left = Math.floor(this.x0) + 'px';
+            setOpacity(this.img, parent.oP);
+            /* ==== mouse events ==== */
+            this.obj.parent = this;
+            this.obj.onmouseover = function () {
+                this.parent.over();
+                return false;
+            }
+        }
+        Slide.prototype = {
+            /* ==== target positions ==== */
+            calc: function () {
+                var that = this.parent;
+                // left slides
+                for (var i = 0; i <= this.N; i++) {
+                    that.slides[i].x1 = i * that.Z;
+                }
+                // right slides
+                for (var i = this.N + 1; i < that.NF; i++) {
+                    that.slides[i].x1 = that.wh - (that.NF - i) * that.Z;
+                }
+            },
+            /* ==== HTML animation : move slides ==== */
+            move: function () {
+                var that = this.parent;
+                var s = (this.x1 - this.x0) / that.S;
+                /* ==== lateral slide ==== */
+                if (this.N && Math.abs(s) > .5) {
+                    this.obj.style.left = Math.floor(this.x0 += s) + 'px';
+                }
+                /* ==== vertical text ==== */
+                var v = (this.N < that.NF - 1) ? that.slides[this.N + 1].x0 - this.x0 : that.wh - this.x0;
+                if (Math.abs(v - this.v) > .5) {
+                    this.bkg.style.top = this.txt.style.top = '200px';
+//                            Math.floor(2 + that.ht - (v - that.Z) * that.iH * that.r) + 'px';
+                    this.v = v;
+                    this.cpt++;
+                } else {
+                    if (!this.pro) {
+                        /* ==== adjust speed ==== */
+                        this.pro = true;
+                        var tps = new Date() - this.start;
+                        if (this.cpt > 1) {
+                            that.S = Math.max(2, (28 / (tps / this.cpt)) * that.S0);
+                        }
+                    }
+                }
+                if (!this.loaded) {
+                    if (this.img.complete) {
+                        this.img.style.visibility = 'visible';
+                        this.loaded = true;
+                    }
+                }
+            },
+            /* ==== light ==== */
+            over: function () {
+                this.parent.resize();
+                this.parent.over = true;
+                setOpacity(this.parent.view.img, this.parent.oP);
+                this.parent.view = this;
+                this.start = new Date();
+                this.cpt = 0;
+                this.pro = false;
+                this.calc();
+                setOpacity(this.img, 100);
+            }
+        }
+        /* ==== public method - script initialization ==== */
+        return {
+            init: function () {
+                // create instances of sliders here
+                // parameters : HTMLcontainer name, speed (2 fast - 20 slow), Horizontal ratio, vertical text ratio, opacity
+                this.s1 = new Slider("slider", 12, 1.84 / 3, 1 / 3.2, 100);
+                setInterval("slider.s1.run();", 16);
+            }
+        }
+    }();
+
+    slider.init();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+{% extends "m/mbase.html" %}
+
+{% block meta %}
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://www.collegedaily.cn/"/>
+ <meta name="description"
+          content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+{% endblock %}
+
+{% block content %}
+<div class="app-content-body fade-in-up ">
+            <div class="hbox hbox-auto-xs hbox-auto-sm">
+                <div class="col ">
+                    <div class="wrapper-llg-sm ">
+
+                        <div class="row m-t">
+                            <div class="main-content">
+                                <button class="btn m-b-xs w-xs btn-info btn-rounded ">分类浏览</button>
+
+                                <div class="padder-md bg-white">
+
+                                    <div class="row ">
+                                        {% for cate in cates %}
+                                          {% if forloop.counter0|divisibleby:"2"  %}
+                                              <div class="left col-md-left b-r">
+                                            <div class="panel-heading font-bold text-muted ">
+                                                <span class="topic text-left pos-abt"><a href="#" class="breaking">{{ cate.name }} </a> / column
+                                                </span>
+                                                <div class="postmeta text-right"><a href="/cateinfo/{{ cate.pk }}" class="uname user_sinCera">更多</a>
+                                                </div>
+                                                <div class="b-t m-t-sm"></div>
+                                            </div>
+                                            <ul class="list-group  group-padding-md text-gray">
+                                                {% for blog in cate.blog_set.all|slice:':8'  %}
+                                                <li class="list-group-item text-ellipsis" >
+                                                    <a href="/blog/{{ blog.pk }}/">{{ blog.title|slice:"15" }}</a>
+                                                </li>
+                                                {% endfor %}
+
+                                            </ul>
+
+                                        </div>
+                                          {% else %}
+                                              <div class="left col-md-left ">
+                                            <div class="panel-heading font-bold text-muted ">
+                                                <span class="topic text-left pos-abt"><a href="#" class="breaking">{{ cate.name }} </a> / column
+                                                </span>
+                                                <div class="postmeta text-right"><a href="/cateinfo/{{ cate.pk }}" class="uname user_sinCera">更多</a>
+                                                </div>
+                                                <div class="b-t m-t-sm"></div>
+                                            </div>
+                                            <ul class="list-group  group-padding-md text-gray">
+                                                {% for blog in cate.blog_set.all|slice:':8' %}
+                                                <li class="list-group-item text-ellipsis" >
+                                                    <a href="/blog/{{ blog.pk }}/">{{ blog.title|slice:"15" }}</a>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+
+                                        </div>
+                                          {% endif %}
+                                        {% endfor %}
+
+
+
+                                    </div>
+
+                                </div>
+
+                                <!--浏览结束-->
+                                <!--标签开始-->
+                                <button class="btn m-b-xs w-xs btn-info btn-rounded ">热门标签</button>
+                                <div class="category-tags wrapper-md bg-white">
+                                    <div class="category">
+                                        <div class="left category-left font-bold ">
+                                             <span class="topic left text"><a href="/" class="text text-info">留学生日报</a>/标签 </span>
+                                        </div>
+                                        <div class="tag-main">
+                                        <div class="tags m-b-lg l-h-2x" >
+                                            {% for tag in hottags %}
+                                            <a href="/tag/{{ tag.tag.pk }}" class="label text-muted">{{ tag.tag.name }}</a>
+                                            {% endfor %}
+
+                                        </div>
+                                            </div>
+                                    </div>
+                                    <!--div class="category">
+                                        <div class="left category-left font-bold ">
+                                            <span class="topic left text"><a href="#" class="text text-info">北极社区</a> / press</span>
+                                        </div>
+                                        <div class="tag-main">
+                                            <div class="tags m-b-lg l-h-2x" >
+                                            {% for tag in hottags %}
+                                            <a href="/tag/{{ tag.tag.pk }}" class="label text-muted">{{ tag.tag.name }}</a>
+                                            {% endfor %}
+
+                                            </div>
+                                        </div>
+                                    </div-->
+
+
+                                </div>
+                                <!--标签end-->
+                                <div class="text-center m-t-xs m-b-xs">
+                                    <ul class="pagination pagination-md">
+                                        <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
+                                        <li class="active"><a href="">1</a></li>
+                                        <!--li><a href="">2</a></li>
+                                        <li><a href="">3</a></li>
+                                        <li><a href="">4</a></li>
+                                        <li><a href="">5</a></li-->
+                                        <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+{% endblock %}

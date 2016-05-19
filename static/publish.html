@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://www.collegedaily.cn/"/>
+
+  <meta name="description"
+          content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+{% endblock %}
+
+{% block content %}
+<div class="app-content-body fade-in-up ">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col ">
+            <div class="wrapper-llg-sm ">
+
+                <div class="row m-t">
+                    <div class="panel panel-default">
+                        <div class="panel-heading font-bold "><h4 class="text-info">发表文章</h4></div>
+                        <div class="panel-body">
+                            <form class="bs-example " enctype="multipart/form-data" method="post"  action="/publish/">
+                                <!--div class="form-group">
+                                    <label for="inputTitle"><h4>标题</h4></label>
+                                    <input type="text" class="form-control padder-v-25" id="inputTitle" name="title">
+                                </div-->
+                                <!--div class="form-group"-->
+                                    <!--label><h4>内容</h4></label>
+                                    <div ui-jq="wysiwyg" name="content" class="form-control" style="height:300px;max-height:300px" contenteditable="true"-->
+                                    {{ form.media }}
+                                    {{ form.as_div }}
+                                 <!--/div-->
+                                    <!--div class="form-group">
+                                        <input type="text" name="tag" class="form-control padder-v-25 text-muted" id="" placeholder="添加相关标签，用逗号或回车分割">
+                                    </div-->
+                                    <div class="form-group">
+                                        <!--div class=" left">
+                                            <button type="submit" class="btn btn-default"><span class="text-muted">取消</span></button>
+                                        </div-->
+                                        <div class=" right ">
+                                            <!--button type="submit" class="btn m-b-xs w-xs btn-default"><span class="text-muted">保存草稿</span></button>
+                                            <button type="submit" class="btn m-b-xs w-xs btn-default"><span class="text-muted">预览</span></button-->
+                                            <button type="submit" class="btn m-b-xs w-xs btn-info text-muted">发布</button>
+                                        </div>
+                                    </div>
+
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col w-lg wrapper-sm lter bg-auto">
+
+            <div class="panel panel-default">
+                <a href="{{ ad_1.url }}"> <img src="{{ ad_1.cover.url }}" alt="..." class="img-thumbnail "></a>
+            </div>
+            <button class="btn m-b-xs w-xs btn-info btn-rounded">热门文章</button>
+
+            <div class="panel b-a">
+                <ul class="list-group">
+
+                    {% for pop_blog in pop_blogs %}
+
+                    <li class="list-group-item">
+                                    <a href="/blog/{{pop_blog.blog.pk}}/" class="thumb-article-md m-r">
+                                        {% if  pop_blog.blog.cover%}
+                                        <img src="{{ pop_blog.blog.cover.url }}" class="r r-2x">
+                                        {% else %}
+                                         <img src="/assets/img/a5.jpg" class="r r-2x">
+                                        {% endif %}
+                                    </a>
+
+                        <div class="article-des">
+                            {% autoescape off %}
+                            <p class=""><a href="" class="text m-xs">{{pop_blog.blog.title}}</a></p>
+                            {% endautoescape %}
+
+                            <p>
+                                <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>{{pop_blog.blog.date}}
+                                </a>
+
+                            </p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <h5 class="font-thin padder text-right"><a href="/category/">显示更多</a></h5>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

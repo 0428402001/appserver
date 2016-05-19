@@ -1,0 +1,5 @@
+{{ object.title }}
+{{ object.date | date:'n.j'}}
+{{ object.date | date:'m.j'}}
+{{ object.date | date:'n.d'}}
+{{ object.author }}

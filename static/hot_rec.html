@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://www.collegedaily.cn/"/>
+  <meta name="description"
+          content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+{% endblock %}
+
+{% block content %}
+<div class="app-content-body fade-in-up ">
+            <div class="hbox hbox-auto-xs hbox-auto-sm padder-v-25">
+                <div class="col ">
+                    <!--文章内容-->
+                    <button class="btn m-b-xs w-xs btn-info btn-rounded">热门文章</button>
+
+                    <div class="padder bg-white">
+                        <div class=" m-l-lg m-b padder-v">
+                            <!--文章列表-->
+
+                            {% for post in posts %}
+                            <div>
+                                <a class="pull-left thumb-sm avatar m-l-n-md">
+                                    <img src="/assets/img/a9.jpg" class="img-circle" alt="...">
+                                </a>
+
+                                <div class="m-l-lg">
+                                    <div class="m-b-xs">
+                                        <a href="" class="h4 text-info">{{ post.blog.author }}</a>
+                                    </div>
+                                    <div class="m-b-xs">
+                                        <span class="topic text-left pos-abt"><a href="#" class="breaking">{{ post.blog.category }} </a> / {{ post.blog.tag }}
+                                                </span>
+                                        <div class="text-right m-r-xs">
+                                            <span class="text-muted font-meta-time">
+                                                {{ post.blog.date }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="m-b  b-t left">
+                                        <div class="col w-180">
+                                            {% if post.blog.cover %}
+                                            <img class="wrapper-xxs b-a m-t-sm "  style="width:176px;height:141px;"src="{{ post.blog.cover.url }}"/>
+                                            {% else %}
+                                            <img class="wrapper-xxs b-a m-t-sm "  style="width:176px;height:141px;"src="/assets/source/hot-thumb.jpg"/>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col padder-md">
+                                            <h4 class="text-lt font-bold m-t a-title "><a href="/blog/{{ post.blog.pk }}/">《{{ post.blog.title }}》</a></h4>
+                                            <p>
+                                                {% autoescape off %}
+
+                                                    {{ post.blog.content|striptags|truncatewords_html:"5" }}
+
+                                                {% endautoescape %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="m-t-sm w-full">
+                                        <a href="" class="text-muted m-xs"><i class="icon-action-redo"></i></a>
+                                        <a href="" class="text-muted m-xs"><i class="icon-star"></i></a>
+                                        <a href="" class="text-muted m-xs"><i class="icon-refresh"></i> {{ post.blog.comment.all|length }}</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--文章列表-->
+                            {% endfor %}
+
+
+
+                        </div>
+                    </div>
+                    <div class="text-center m-t-xs m-b-xs">
+                        <ul class="pagination pagination-md">
+                            {% if posts.has_previous %}
+                            <li><a href="?page={{ posts.previous_page_number }}"><i class="fa fa-chevron-left"></i></a></li>
+                            {% endif %}
+
+                            <li class="active"><a href="">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</a></li>
+                            <!--li><a href="">2</a></li>
+                            <li><a href="">3</a></li>
+                            <li><a href="">4</a></li>
+                            <li><a href="">5</a></li-->
+
+
+
+                            {% if posts.has_next %}
+                            <li><a href="?page={{ posts.next_page_number }}"><i class="fa fa-chevron-right"></i></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="col w-lg wrapper-sm lter bg-auto">
+
+                    <div class="panel panel-default">
+                        <a href="{{ ad_1.url }}"> <img src="{{ ad_1.cover.url }}" alt="..." class="img-thumbnail "></a>
+                    </div>
+                    <button class="btn m-b-xs w-xs btn-info btn-rounded">热门文章</button>
+
+                    <div class="panel b-a">
+
+                        <ul class="list-group">
+                                 {% for hot in headlines|slice:":5" %}
+                                <li class="list-group-item">
+                                    <a href="/blog/{{hot.blog.pk}}/" class="thumb-article-md m-r">
+                                        {% if  hot.blog.cover%}
+                                        <img src="{{ hot.blog.cover.url }}" class="r r-2x">
+                                        {% else %}
+                                         <img src="/assets/img/a5.jpg" class="r r-2x">
+                                        {% endif %}
+                                    </a>
+
+                                    <div class="article-des">
+                                        <p class=""><a href="" class="text m-xs">{{ hot.blog.title}}</a></p>
+
+                                        <p>
+                                            <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>{{ hot.blog.date}}
+                                            </a>
+                                            <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>{{ hot.blog.hotness}}</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                        </ul>
+                        <h5 class="font-thin padder text-right"><a href="/category/">显示更多</a></h5>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://www.collegedaily.cc/"/>
+{% endblock %}
+
+{% block content %}
+<div class="app-content-body fade-in-up ">
+    <div class="hbox hbox-auto-xs hbox-auto-sm padder-v-25">
+        <div class="col ">
+            <!--近期活动内容-->
+            <div class="">
+                <ul class="timeline">
+                    <li class="tl-header">
+                        <div class="btn btn-info">Now</div>
+                    </li>
+                    {% for activity in activities%}
+
+                    <li class="tl-item tl-left">
+                        <div class="tl-wrap b-info">
+                            <span class="tl-date">{{activity.time}}</span>
+
+                            <div class="tl-content panel padder b-a block">
+                                <span class="arrow left pull-up hidden-left"></span>
+                                <span class="arrow right pull-up visible-left"></span>
+
+                                <div class="m-t-n-md">
+                                    <h3 class="text-lt  inline">{{activity.time}}</h3> <h4
+                                        class="text-lt  inline text-info">{{activity.topic}}</h4>
+                                </div>
+
+                                <div class=" padder-xxs pull-in b-t b-light">
+
+                                    <div class="hbox  bg">
+                                        <div class="col padder-md">
+                                            <h5 class="text-lt font-bold m-t a-title "><a href="{{activity.url}}">{{activity.title}}</a></h5>
+
+                                            <p class="b-t">
+                                                {{activity.summary}}
+                                            </p>
+                                        </div>
+
+                                        <div class="col w-md-220 ">
+
+                                            <img class="wrapper-xxs b-a m-t-sm img-responsive" src="{{activity.img}}" />
+
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+
+                    <li class="tl-header">
+                        <div class="btn btn-sm btn-info btn-rounded">more</div>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="wrapper-md">
+                <div>
+                    <a href="#"><img src="source/activity-ad.jpg" class="img-full"></a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col w-lg wrapper-sm lter bg-auto">
+
+            <div class="panel panel-default">
+                <img src="source/ad_1.png" alt="..." class="img-thumbnail ">
+            </div>
+            <button class="btn m-b-xs w-xs btn-info btn-rounded">热门文章</button>
+
+            <div class="panel b-a">
+                <ul class="list-group">
+
+                    {% for pop_blog in pop_blogs %}
+
+                    <li class="list-group-item">
+                        <a href="" class="thumb-article-md m-r">
+                            <img src="{{pop_blog.userHead}}" class="r r-2x">
+                        </a>
+
+                        <div class="article-des">
+                            <p class=""><a href="" class="text m-xs">{{pop_blog.abstract}}</a></p>
+
+                            <p>
+                                <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>{{pop_blog.time}}
+                                </a>
+                                <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>{{pop_blog.comments}}</a>
+                            </p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <h5 class="font-thin padder text-right"><a href="#">显示更多</a></h5>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

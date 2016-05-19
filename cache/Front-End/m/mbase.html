@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<!--[if IE 7]> <html lang="en" class="ie7"> <![endif]-->
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="zh"> <!--<![endif]-->
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="description"
+          content="留学生日报,留学,留学生,留学申请,北美,北美留学,北美留学生,美国"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="keywords" content="留学生日报,留学,留学生,留学申请,北美,北美留学,北美留学生,美国">
+    <meta name="description" content="留学生日报, 留学生自己发声的媒体, 分享有趣而真实的留学生活,你值得关注!">
+    <meta name="author" content="Haocheng Shen, CollegeCloud.co">
+    <meta name="baidu_union_verify" content="2a53f5a5a2131f442a764a4e4c251c7c">
+    <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport"/>
+    <meta name="baidu-site-verification" content="NP9Au1LLts" />
+
+    {% block meta %}
+    {% endblock %}
+
+    {% block head %}
+
+    <link rel="shortcut icon" href="/assets/source/favicon.ico" >
+    <link rel="stylesheet" href="/assets/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/animate.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/simple-line-icons.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/font.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/css/mapp.css" type="text/css"/>
+
+    {% endblock %}
+    <!--script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/js/stickUp.min.js"></script-->
+    <title>{% block title %}北美留学生日报{% endblock %}</title>
+</head>
+<body>
+
+
+
+
+  
+    <div class="app-content container">
+        {% block content %}
+        {% endblock %}
+
+
+    </div>
+
+
+
+{% block footer %}
+
+  <div id="j-fullColl-a">
+    <a href="https://appsto.re/cn/kU-W6.i" class="link">
+        <span class="logo"><img src="http://www.collegedaily.cn/assets/source/logo.jpg" width="44" height="44"></span>
+        <p class="txt"><span>留学生日报</span>全世界留学生都在看</p>
+        <span class="btn">IOS 下载</span>
+    </a>
+</div>
+ {% endblock %}
+
+{% block copyright %}
+
+ {% endblock %}
+
+<script>
+
+    $(function(){
+        $('.input_search').focus(function(){
+            $(this).css('width','110%');
+        });
+
+        $('.input_search').focusout(function(){
+            $(this).css('width','100%');
+        });
+
+
+    })
+
+
+
+</script>
+
+</body>
+</html>

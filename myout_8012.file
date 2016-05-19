@@ -1,0 +1,43 @@
+nohup: ignoring input
+nohup: ignoring input
+8012 <type 'str'>
+Traceback (most recent call last):
+  File "main.py", line 71, in <module>
+    main(port)
+  File "main.py", line 63, in main
+    srv.bind(port)
+  File "/usr/local/lib/python2.7/dist-packages/tornado/tcpserver.py", line 171, in bind
+    backlog=backlog)
+  File "/usr/local/lib/python2.7/dist-packages/tornado/netutil.py", line 196, in bind_sockets
+    sock.bind(sockaddr)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+socket.error: [Errno 98] Address already in use
+nohup: ignoring input
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py:3778: SAWarning: Textual SQL expression 'app_favorate.author_id = ...' should be explicitly declared as text('app_favorate.author_id = ...') (this warning may be suppressed after 10 occurrences)
+  {"expr": util.ellipses_string(element)})
+WARNING:tornado.access:404 GET / (121.42.0.84) 1.22ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.63ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.63ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.66ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.63ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.90ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.66ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.63ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.52ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 1.25ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.66ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.85ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.69ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/1de56c0c-563a-4c91-be59-d929b545f8c9.png/%22 (118.194.193.227) 0.49ms
+WARNING:tornado.access:404 GET /%22http://app.collegedaily.cn/media/uploads/163be3f1-5e8b-42bc-92e6-a74fc381e899.jpeg/%22 (118.194.193.227) 0.70ms
+WARNING:tornado.access:404 HEAD / (111.206.241.75) 0.44ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.44ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.46ms
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.75ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.53ms
+/usr/local/lib/python2.7/dist-packages/sqlalchemy/sql/elements.py:3778: SAWarning: Textual SQL expression 'app_favorate.author_id = ...' should be explicitly declared as text('app_favorate.author_id = ...') (this warning may be suppressed after 10 occurrences)
+  {"expr": util.ellipses_string(element)})
+WARNING:tornado.access:404 HEAD / (101.226.162.90) 0.77ms
+WARNING:tornado.access:404 GET / (121.42.0.84) 0.51ms
+WARNING:tornado.access:404 HEAD / (125.88.222.250) 0.75ms

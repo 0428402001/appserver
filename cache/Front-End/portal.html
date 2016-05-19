@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://www.collegedaily.cc/"/>
+{% endblock %}
+
+{% block content %}
+<div class="app-content-body fade-in-up ">
+    <div class="hbox hbox-auto-xs hbox-auto-sm padder-v-25">
+        <div class="col ">
+            <!--背景-->
+            <div style="background:url(img/c4.jpg) center center; background-size:cover" class="m-t-12">
+                <div class="wrapper-lg bg-white-opacity">
+                    <div class="row m-t">
+                        <div class="col-sm-7">
+                            <a href="" class="thumb-lg pull-left m-r" data-toggle="modal" data-target="#settingModal">
+                                <img src="{{person.headImg}}" class="img-circle">
+                            </a>
+
+                            <div class="clear m-b">
+                                <div class="m-b m-t-sm">
+                                    <span class="h3 text-black">{{person.name}}</span>
+                                    <small class="m-l">{{person.position}}</small>
+                                </div>
+                                <h5>{{person.signature}}</h5>
+
+                                <p class="m-b">
+                                    <a href="{{person.twitter_url}}"
+                                       class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i
+                                            class="fa fa-twitter"></i></a>
+                                    <a href="{{person.linkedin_url}}"
+                                       class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i
+                                            class="fa fa-linkedin"></i></a>
+                                    <a href="{{person.weibo_url}}"
+                                       class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i
+                                            class="fa fa-weibo"></i></a>
+                                </p>
+                                <a href="#" class="btn btn-sm btn-success btn-rounded">发表文章</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="pull-right pull-none-xs text-center">
+                                <a href="" class="m-b-md inline m">
+                                    <span class="h3 block font-bold">{{person.articles}}</span>
+                                    <small>文章</small>
+                                </a>
+                                <a href="" class="m-b-md inline m">
+                                    <span class="h3 block font-bold">{{person.views}}</span>
+                                    <small>阅读</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrapper bg-white b-b">
+                <ul class="nav nav-pills nav-sm">
+                    <li class="active"><a href="#">文章列表</a></li>
+                </ul>
+            </div>
+
+            <!--文章内容-->
+
+            <div class="padder">
+                <div class="streamline b-l b-info m-l-lg m-b padder-v">
+                    <!--文章列表-->
+
+                    {% for blog in blogLists %}
+                    <div>
+                        <a class="pull-left thumb-sm avatar m-l-n-md">
+                            <img src="{{blog.author_img}}" class="img-circle" alt="{{blog.author}}">
+                        </a>
+
+                        <div class="m-l-lg">
+                            <div class="m-b-xs">
+                                <a href="{{blog.author_url}}" class="h4 text-info">{{blog.author_name}}</a>
+
+                            </div>
+                            <div class="m-b-xs">
+                                        <span class="topic text-left pos-abt"><a href="{{blog.category_url}}" class="breaking">专栏 </a> / {{blog.category}}
+                                                </span>
+
+                                <div class="text-right m-r-xs">
+
+                                            <span class="text-muted">
+                                                {{blog.category}}
+                                            </span>
+                                    【<a href="#" class="">编辑</a>】
+                                            <span class="dropdown m-l-xs">
+                                                <a href="#" class=" dropdown" data-toggle="dropdown"
+                                                   class="dropdown-toggle clear" aria-expanded="true">更多 <b
+                                                        class="caret"></b></a>
+                                                <ul class="dropdown-menu dropdown-min-width animated fadeInRight m-l-n-lg">
+                                                    <li class="">
+                                                        <a href="#">发表文章</a>
+                                                    </li>
+                                                    <li class="b-t">
+                                                        <a href="#">个人设置</a>
+                                                    </li>
+                                                    <li class="b-t">
+                                                        <a href="#">退出</a>
+                                                    </li>
+                                                    <span class="arrow top"></span>
+                                                </ul>
+                                            </span>
+                                </div>
+                            </div>
+
+                            <div class="m-b b-t-white">
+                                <h3 class="font-bold">{{blog.title}}</h3>
+
+                                <div>
+                                     {{blog.summary}}
+                                </div>
+                                <div class="m-t-sm">
+                                    <a href="" class="text-muted m-xs"><i class="icon-action-redo"></i></a>
+                                    <a href="" class="text-muted m-xs"><i class="icon-star"></i></a>
+                                    <a href="" class="text-muted m-xs"><i class="icon-refresh"></i>{{blog.comments_count}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{% endfor %}}
+
+
+                </div>
+            </div>
+            <div class="text-center m-t-xs m-b-xs">
+                <ul class="pagination pagination-md">
+                    <li><a href="{% if blogs.has_previous %}/?p={{ blogs.previous_page_number }}{% else %}#{% endif %}"><i class="fa fa-chevron-left"></i></a></li>
+                    <!--<li class="active"><a href="">1</a></li>-->
+                    <!--<li><a href="">2</a></li>-->
+                    <!--<li><a href="">3</a></li>-->
+                    <!--<li><a href="">4</a></li>-->
+                    <!--<li><a href="">5</a></li>-->
+                    <li><a href="{% if blogs.has_next %}/?p={{ blogs.next_page_number }}{% else %}#{% endif %}"><i class="fa fa-chevron-right"></i></a></li>
+
+                </ul>
+            </div>
+
+        </div>
+        <!-- Modal 弹窗 -->
+        <div class="modal fade" id="settingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                                class="sr-only">Close</span></button>
+                        <h3 class="modal-title" id="myModalLabel">上传头像</h3>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="img-select-area text-center bg-gray">
+                            <button type="button" class="btn btn-lg  btn-gray-dark">
+                                <span class="glyphicon glyphicon-plus"></span> 选择图片
+                            </button>
+                        </div>
+                        <div class="img-preview clear">
+                            <h5>拖拽或缩放虚线框，生成自己满意的头像</h5>
+                            <a href="" class="wrapper-sm   ">
+                                <img src="source/110*110.jpg" class="img-circle">
+                            </a>
+                            <h5>110 * 110像素</h5>
+                            <a href="" class="wrapper-sm   ">
+                                <img src="source/50*50.jpg" class="img-circle">
+                            </a>
+                            <h5>50 * 150像素</h5>
+                            <a href="" class="wrapper-sm   ">
+                                <img src="source/40*40.jpg" class="img-circle">
+                            </a>
+                            <h5>40 * 40像素</h5>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">保存并关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal end -->
+
+
+        <div class="col w-lg wrapper-sm lter bg-auto">
+
+            <div class="panel panel-default">
+                <img src="source/ad_1.png" alt="..." class="img-thumbnail ">
+            </div>
+            <button class="btn m-b-xs w-xs btn-info btn-rounded">热门文章</button>
+
+            <div class="panel b-a">
+                <ul class="list-group">
+
+                    {% for pop_blog in pop_blogs %}
+
+                    <li class="list-group-item">
+                        <a href="" class="thumb-article-md m-r">
+                            <img src="{{pop_blog.userHead}}" class="r r-2x">
+                        </a>
+
+                        <div class="article-des">
+                            <p class=""><a href="" class="text m-xs">{{pop_blog.abstract}}</a></p>
+
+                            <p>
+                                <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>{{pop_blog.time}}
+                                </a>
+                                <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>{{pop_blog.comments}}</a>
+                            </p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <h5 class="font-thin padder text-right"><a href="#">显示更多</a></h5>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

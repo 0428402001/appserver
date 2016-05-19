@@ -1,0 +1,329 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{blog.title}}_北美留学生日报_留学生日报,留学,留学生,留学申请,华人,北美,北美留学,北美留学生
+{% endblock %}
+
+{% block meta %}
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://www.collegedaily.cn/blog/{{blog.pk}}/"/>
+<meta property="og:title" content="{{blog.title}}"/>
+<meta property="og:description" content="{{blog.abstract | truncatechars:32}}"/>
+ <meta name="description"
+          content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+ {% if  blog.cover%}
+<meta property="og:image" content="{{blog.cover.url}}"/>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="app-content-body fade-in-up ">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col ">
+            <div class="wrapper-llg-sm ">
+                <div class="row ">
+                    <div class="main-content">
+                        <!--blog begin-->
+                        <div class="panel">
+                            <div>
+                                <img src="{{blog.img}}" class="img-full">
+                            </div>
+                            <div class="m-b-xs m-t-md padder-md">
+                                        <span class="topic text-left pos-abt"><a href="#" class="breaking">Daily </a> / {{blog.post_time}}
+                                                </span>
+
+                                <div class="text-right m-r-xs">
+                                            <span class="text-muted font-meta-time">
+                                               {{blog.views}}
+                                            </span>
+                                </div>
+                            </div>
+                            <div class="wrapper-lg">
+                                <h2 class="m-t-none"><a href="">{{act.title}}</a></h2>
+
+                                <div>
+                                    {% if act.begin %}
+                                    <h4><p class="bg-gray wrapper-md">{{act.begin}}</p></h4>
+                                    {% endif %}
+                                    {% autoescape off %}
+                                    <p>{{act.content}}</p>
+                                    {% endautoescape %}
+
+                                    <p class="font-bold font-size-md font-black">
+                                        {{act.signature}}
+                                    </p>
+                                </div>
+                                <div class="line line-lg b-b b-light"></div>
+                                <div class="text-muted">
+                                    <i class="fa fa-user text-muted"></i> by <a href="" class="m-r-sm">{{act.author}}</a>
+                                    <i class="fa fa-clock-o text-muted"></i> {{act.date}}
+                                    <a href="" class="m-l-sm"><i class="fa fa-comment-o text-muted"></i>
+                                        {{act.comment.all|length}} comments</a>
+                                </div>
+
+                            </div>
+                            <!--简介-->
+                            <div class="padder-lg b-b ">
+                                <h4 class="text-muted b-t padder-v">北美留学生日报</h4>
+
+                                <div class="m-t-md m-b-md">
+                                              <span class="pull-left thumb-md avatar m-r">
+                                                <img src="/assets/source/logo.jpg" alt="...">
+                                              </span>
+                                              <span class="clear ">
+                                                <span>中立可观有深度有态度的留学生媒体，以留学生的角度看世界。讲述留学生自己的股市分享真实而有趣的留学生故事。
+                                                中立可观有深度有态度的留学生媒体，以留学生的角度看世界。讲述留学生自己的故事分享真实而有趣的留学生故事</span>
+                                              </span>
+                                </div>
+
+                            </div>
+                            <!-- 简介结束-->
+
+                            <!-- 推荐的博客 start-->
+
+
+                            <div class="padder-lg b-b">
+                                <div class="row m-t">
+                                    {% for blog in more_blogs %}
+
+                                    <div class="col-sm-3 padder-xs">
+                                        <div class="thumbnail thumb-nob">
+                                            <img src="{{blog.img}}" alt="...">
+
+                                            <div class="caption m-t-sm">
+
+                                                <p>{{blog.title}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                            <!-- 推荐的博客 end -->
+
+                            <div class="wrapper-md b-b">
+                                <form name="form" method="post" action="/blog/comment/{{ blog.pk }}/">
+                                    <!--h3>评论<span>()</span></h3-->
+
+                                    <div class="form-group">
+                                        {% if 0 %}
+                                            <textarea name="content" class="form-control" rows="5" placeholder="写下你的评论"></textarea>
+                                        {% else %}
+                                            <!--label>登录后发表评论</label-->
+                                        {% endif %}
+
+
+                                    </div>
+                                    <div class="form-group text-right">
+                                        {% if 0 %}
+                                        <button type="submit" class="btn btn-success">提交评论</button>
+                                        {% endif %}
+                                    </div>
+                                </form>
+                            </div>
+
+
+                            <!--评论区-->
+                            <div class="wrapper-md">
+                                <div>
+
+                                    <!--评论1-->
+                                    {% for comment in blog.comment.all %}
+                                    <div class="m-l-xxl">
+                                        <a class="pull-left thumb-sm">
+                                         {% if comment.author.head %}
+                                            <img src="{{comment.author.head.url}}" class="img-circle">
+                                         {% else %}
+                                            <img src="/assets/img/a5.jpg" class="img-circle">
+                                         {% endif %}
+                                        </a>
+
+                                        <div class="m-l-xxl m-b">
+                                            <div>
+                                                <a href=""><strong>{{comment.author.username}}</strong></a>
+                                                      <span class="text-muted text-xs block m-t-xs">
+                                                        {{comment.time}}
+                                                      </span>
+                                            </div>
+                                            <div class="m-t-sm">{{comment.content}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    <!--评论5-->
+
+                                    <!--<div>-->
+                                    <!--<a class="pull-left thumb-sm">-->
+                                    <!--<img src="img/a2.jpg" class="img-circle">-->
+                                    <!--</a>-->
+
+                                    <!--<div class="m-l-xxl m-b">-->
+                                    <!--<div>-->
+                                    <!--<a href=""><strong>John smith</strong></a>-->
+                                    <!--<span class="text-muted text-xs block m-t-xs">-->
+                                    <!--一个小时之前-->
+                                    <!--</span>-->
+                                    <!--</div>-->
+                                    <!--<blockquote class="m-t">-->
+                                    <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer-->
+                                    <!--posuere erat a ante.</p>-->
+                                    <!--</blockquote>-->
+
+                                    <!--<div class="text-muted ">-->
+                                    <!--<span><i class="fa fa-heart text-danger"></i> <a>125</a></span>-->
+                                    <!--<span class="m-l-md"><a><i class="fa fa-comment-o"></i></a></span>-->
+                                    <!--</div>-->
+
+                                    <!--&lt;!&ndash;评论的评论区2&ndash;&gt;-->
+                                    <!--<div class="m-t-md">-->
+                                    <!--&lt;!&ndash;  对于评论的评论&ndash;&gt;-->
+                                    <!---->
+                                    <!--<div class="m-l-xxl ">-->
+                                    <!--<a class="pull-left thumb-sm">-->
+                                    <!--<img src="img/a1.jpg" class="img-circle">-->
+                                    <!--</a>-->
+
+                                    <!--<div class="m-l-xxl m-b">-->
+                                    <!--<div>-->
+                                    <!--<a href=""><strong>John smith</strong></a>-->
+
+                                    <!--</div>-->
+                                    <!--<div class="m-t-sm">-->
+                                    <!--<blockquote class="m-t">-->
+                                    <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing-->
+                                    <!--elit. Integer posuere erat a ante.</p>-->
+                                    <!--</blockquote>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!---->
+                                    <!--</div>-->
+
+                                    <!--</div>-->
+                                    <!--</div>-->
+
+
+                                </div>
+                            </div>
+
+                            <!--评论区-->
+                            <!--blog end-->
+
+                        </div>
+
+
+                    </div>
+                    <div class="tag-aside">
+                        <button class="btn m-b-xs w-xs btn-info btn-rounded">TAGS</button>
+                        <ul class="list-group">
+                            {% for hot_tag in hot_tags %}
+                            <li class="list-group-item">
+                                <a href="/tag/{{ hot_tag.tag.pk }}">
+                                    {% if hot_tag.count %} <b class="badge bg-info pull-right">{{hot_tag.count}}</b>{% endif %}
+                                    {{hot_tag.tag.name}}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                        <section class="aside-social aside-fixed" id="qRcode">
+
+                            <div class="image text-center "><img alt="Qrcode" src="/assets/source/2.jpg"></div>
+                            <p class="m-t-md padder" style="width: 200px;">微信公众平台：搜索 “collegedaily”
+                                或扫描下面的二维码</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col w-lg lter padder-v-30 bg-auto">
+            <div class="padder-xs">
+                <div class="panel panel-default">
+                    <a href="{{ ad_1.url }}"> <img src="{{ ad_1.cover.url }}" alt="..." class="img-thumbnail "></a>
+                </div>
+                <button class="btn m-b-xs w-xs btn-info btn-rounded">热门文章</button>
+
+                <div class="panel b-a">
+
+                    <ul class="list-group">
+
+                        {% for hot in pop_blogs %}
+
+                                <li class="list-group-item">
+                                    <a href="/blog/{{hot.blog.pk}}/" class="thumb-article-md m-r">
+                                        {% if  hot.blog.cover%}
+                                        <img src="{{ hot.blog.cover.url }}" class="r r-2x">
+                                        {% else %}
+                                         <img src="/assets/img/a5.jpg" class="r r-2x">
+                                        {% endif %}
+                                    </a>
+
+                                    <div class="article-des">
+                                        <p class=""><a href="" class="text m-xs">{{ hot.blog.title}}</a></p>
+
+                                        <p>
+                                            <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>{{ hot.blog.date}}
+                                            </a>
+                                            <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>{{ hot.blog.hotness}}</a>
+                                        </p>
+                                    </div>
+                                </li>
+                        {% endfor %}
+                    </ul>
+                    <h5 class="font-thin padder text-right"><a href="/category/">显示更多</a></h5>
+                </div>
+
+                <!--button class="btn m-b-xs w-xs btn-info btn-rounded">最新评论</button-->
+
+                <div class="b-t">
+                    {% for hot in hots %}
+                    <div class="m-l-xs m-t-md">
+                        <div class="m-t-sm m-l-lg m-b-xs">
+                            <span class="text m-md">{{ hot.author.username }}</span>
+                            <span class="text-muted text-base"><i>{{hot.date | timesince }}前</i></span>
+                        </div>
+                        <a class="pull-left thumb-sm avatar">
+                            <img src="/media/{{ hot.author.head }}" alt="...">
+                        </a>
+
+                        <div class="m-l-xxl panel b-a">
+
+                            <div class="panel-heading pos-rlt">
+                                <span class="arrow left pull-up"></span>
+                                <a href="">{{hot.content}}</a>
+
+                                <p class="text">评论于</p>
+                                <a class="text-info m-l-n-sm" href="/blog/{{hot.blog_set.all.0.pk}}/">{{hot.blog_set.all.0.title| truncatechars:12}}</a>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function ($) {
+        $(document).ready(function () {
+            //enabling stickUp on the '.navbar-wrapper' class
+//            $('.navbar-wrapper').stickUp();
+            $('#qRcode').stickUp({
+                marginTop: 'auto'
+            });
+
+        });
+    });
+
+</script>
+
+{% endblock %}
+

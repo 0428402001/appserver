@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load highlight %}
+<!--=== Header ===-->    
+{% block header %}
+<div class="header margin-bottom-10 col-md-10 col-md-offset-1">
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <img id="logo-header" class="img-responsive" src="/assets/img/logo.png" alt="Logo" style="height:40px; margin-left:-15px;">
+                </a>
+                <form method="get" action="/search/">
+                    <div class="input-group col-md-5 search">
+                        <input type="text" name="q" class="form-control" placeholder="按标题或日期搜索 例:10.25" value="{{query}}">
+                        <span class="input-group-btn">
+                            <input type="submit" class="btn-u" type="button" value="搜索" >
+                        </span>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->          
+        </div>    
+    </div>    
+</div><!--/header-->
+<!--=== End Header ===-->    
+{% endblock %}
+
+{% block content %}
+                        <div class="row m-t">
+                            <div class="main-content">
+                                <div class="tab-container">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="active"><a href="#tab1" data-toggle="tab">搜索结果 <span
+                                                class="badge badge-sm m-l-xs"></span></a></li>
+
+
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab1">
+                                            <div class="articles">
+                                                {% for post in page %}
+                                                 <article class="posts post-1 cf">
+
+                                                    <div class="info cf">
+                                                        <div class="topic left">
+                                                            <span><a href="#" class="breaking">{{ post.object.category }} </a> / column
+                                                            </span>
+                                                        </div>
+                                                        <div class="postmeta left"><a href=""
+                                                                                       class="uname user_sinCera">{{ post.object.author }}</a>
+                                                             <span class="timeago" title=" "></span></div>
+                                                    </div>
+                                                    <div class="left left-col">
+                                                        <div class="image feature-img thumb-180"><a href="/blog/{{ post.object.pk }}"
+                                                                                                    class="thumbnail"><img style="width:170px;height:113px"
+                                                                alt="Blank" class="image lazyload loaded"
+                                                                {% if post.object.cover %}
+                                                                src="{{ post.object.cover.url }}">
+                                                                {% else %}
+                                                                src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider">
+                                                               {% endif %}
+                                                        </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="right-col">
+                                                        <h1><a href="/blog/{{ post.object.pk }}">{{   post.object.title }} </a></h1>
+                                                        <br>
+                                                        {% autoescape off %}
+                                                        <p>{{ post.object.content|striptags|slice:"50" }}</p>
+                                                        {% endautoescape %}
+                                                    </div>
+
+                                                </article>
+
+                                                {% endfor %}
+
+
+
+
+
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="text-center m-t-xs m-b-xs">
+                                    <ul class="pagination pagination-md">
+                            {% if page.has_previous %}
+                            <li><a href="/search/?q={{ query }}&page={{ page.previous_page_number }}"><i class="fa fa-chevron-left"></i></a></li>
+                            {% endif %}
+
+                            <li class="active"><a href="">Page {{ page.number }} of {{ page.paginator.num_pages }}</a></li>
+                            <!--li><a href="">2</a></li>
+                            <li><a href="">3</a></li>
+                            <li><a href="">4</a></li>
+                            <li><a href="">5</a></li-->
+
+
+
+                            {% if page.has_next %}
+                            <li><a href="/search/?q={{ query }}&page={{ page.next_page_number }}"><i class="fa fa-chevron-right"></i></a></li>
+                            {% endif %}
+                                    </ul>
+                                </div>
+
+                            </div>
+                                    <div class="col-md-3 hidden-sm hidden-xs">
+                <div class="margin-bottom-20">
+                    <div class="headline headline-md"><h3>关注微信版日报</h3></div>
+                    <img alt="" src="/assets/source/2.jpg" style="height:160px;">
+                </div>
+            </div>
+                        </div>
+
+
+
+{% endblock %}

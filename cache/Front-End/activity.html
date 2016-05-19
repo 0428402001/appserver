@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://www.collegedaily.cn/"/>
+  <meta name="description"
+          content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+{% endblock %}
+
+{% block content %}
+<div class="app-content-body fade-in-up ">
+            <div class="hbox hbox-auto-xs hbox-auto-sm padder-v-25">
+                <div class="col ">
+                    <!--近期活动内容-->
+                    <div class="">
+                        <ul class="timeline">
+                            <li class="tl-header">
+                                <div class="btn btn-info">Now</div>
+                            </li>
+                            {% for activity in activitys %}
+                            <li class="tl-item tl-left">
+                                <div class="tl-wrap b-info">
+                                    <span class="tl-date">{{ activity.date }}</span>
+
+                                    <div class="tl-content panel padder b-a block">
+                                        <span class="arrow left pull-up hidden-left"></span>
+                                        <span class="arrow right pull-up visible-left"></span>
+
+                                        <div class="m-t-n-md">
+                                            <h3 class="text-lt  inline">{{ activity.date }}</h3> <h4
+                                                class="text-lt  inline text-info">＃{{ activity.addr }}＃</h4>
+                                        </div>
+
+                                        <div class=" padder-xxs pull-in b-t b-light">
+
+                                            <div class="hbox  bg">
+                                                <div class="col padder-md">
+                                                    <h5 class="text-lt font-bold m-t a-title "><a href="/activity_details/{{ activity.pk }}/">{{ activity.title }}</a></h5>
+                                                    {% autoescape off %}
+                                                    <p class="b-t">{{ activity.content|striptags|slice:"100" }}<a href="/activity_details/{{ activity.pk }}/" class="m-l-sm text-info">查看详情</a>
+                                                    {% endautoescape %}
+
+                                                    </p>
+                                                </div>
+
+                                                <div class="col w-md-220 ">
+
+                                                    <img class="wrapper-xxs b-a m-t-sm img-responsive" src="{{ activity.cover.url }}" />
+
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+
+                            <li class="tl-header">
+                                <div class="btn btn-sm btn-default btn-rounded">2014</div>
+                            </li>
+                            <li class="tl-item">
+                                <div class="tl-wrap">
+                                    <span class="tl-date">10.08.2013</span>
+
+                                    <div class="tl-content panel padder b-a">
+                                        <span class="arrow left pull-up hidden-left"></span>
+                                        <span class="arrow right pull-up visible-left"></span>
+
+                                        <div class="text-lt">A good story to hear.</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="tl-header">
+                                <div class="btn btn-icon btn-rounded btn-default"><i class="fa fa-twitter"></i></div>
+                            </li>
+
+                            <li class="tl-header">
+                                <div class="btn btn-sm btn-info btn-rounded">more</div>
+                            </li>
+                        </ul>
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="col w-lg wrapper-sm lter bg-auto">
+
+                    <div class="panel panel-default">
+                        <a href="{{ ad_1.url }}"> <img src="{{ ad_1.cover.url }}" alt="..." class="img-thumbnail "></a>
+                    </div>
+                    <button class="btn m-b-xs w-xs btn-info btn-rounded">热门文章</button>
+
+                    <div class="panel b-a">
+
+                        <ul class="list-group">
+                        {% for hot in headlines|slice:":5" %}
+                             <li class="list-group-item">
+                                    <a href="/blog/{{hot.blog.pk}}/" class="thumb-article-md m-r">
+                                        {% if  hot.blog.cover%}
+                                        <img src="{{ hot.blog.cover.url }}" class="r r-2x">
+                                        {% else %}
+                                         <img src="/assets/img/a5.jpg" class="r r-2x">
+                                        {% endif %}
+                                    </a>
+
+                                    <div class="article-des">
+                                        <p class=""><a href="" class="text m-xs">{{ hot.blog.title}}</a></p>
+
+                                        <p>
+                                            <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>{{ hot.blog.date}}
+                                            </a>
+                                            <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>{{ hot.blog.hotness}}</a>
+                                        </p>
+                                    </div>
+                                </li>
+                         {% endfor %}
+                        </ul>
+                        <h5 class="font-thin padder text-right"><a href="/category/">显示更多</a></h5>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+{% endblock %}

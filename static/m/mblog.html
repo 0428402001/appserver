@@ -1,0 +1,149 @@
+{% extends "m/mbase.html" %}
+
+{% block title %}
+{{blog.title}}_北美留学生日报_留学生日报,留学,留学生,留学申请,华人,北美,北美留学,北美留学生
+{% endblock %}
+
+{% block meta %}
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://www.collegedaily.cn/blog/{{blog.pk}}/"/>
+<meta property="og:title" content="{{blog.title}}"/>
+<meta property="og:description" content="{{blog.abstract | truncatechars:32}}"/>
+ <meta name="description"
+          content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+ {% if  blog.cover%}
+<meta property="og:image" content="{{blog.cover.url}}"/>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="app-content-body fade-in-up ">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col ">
+            <div class="wrapper-llg-sm ">
+                <div class="row ">
+                    <div class="main-content">
+                        <!--blog begin-->
+                        <div class="panel">
+
+                            <div class="m-b-xs m-t-md padder-md">
+                                        <!--span class="topic text-left pos-abt"><a href="#" class="breaking">Daily </a> / {{blog.post_time}}
+                                                </span-->
+
+                                <div class="text-right m-r-xs">
+                                            <span class="text-muted font-meta-time">
+                                               {{blog.views}}
+                                            </span>
+                                </div>
+                            </div>
+                            <div class="wrapper-lg">
+                                <h2 class="m-t-none"><a href="">{{blog.title}}</a></h2>
+
+                                <div>
+                                    {% if blog.begin %}
+                                    <h4><p class="bg-gray wrapper-md">{{blog.begin}}</p></h4>
+                                    {% endif %}
+                                    {% autoescape off %}
+                                    <p>{{blog.content }}</p>
+                                    {% endautoescape %}
+
+                                    <p class="font-bold font-size-md font-black">
+                                        {{blog.signature}}
+                                    </p>
+                                </div>
+
+                                <div class="line line-lg b-b b-light"></div>
+                                <div class="text-md">
+                                            <a class="pull-left thumb-sm">
+                                                <img src="{{ user.head.url }}" class="img-circle">
+                                            </a>
+                                            <div class="m-l-xxl " style="line-height: 33px;">
+                                                <a href=""><strong>{{ blog.author }}</strong></a>
+                                                <span class=" m-l-xs">{{blog.date}}</span>
+                                            </div>
+                                </div>
+                                <p class="share-pic m-t-lg"><img src="/assets/img/share-ad.jpg"></p>
+                                <div class="line line-lg b-b b-light"></div>
+
+                            </div>
+
+
+                            <div class="padder-lg b-b">
+                                        <div class="row m-t">
+                                            {% for hot in pop_blogs %}
+                                              <div class="col-sm-6 padder-xs">
+                                                <div class="thumbnail thumb-nob">
+                                                    <img src="{{ hot.blog.thumb.url }}" alt="...">
+                                                    <div class="caption m-t-sm">
+                                                        <p><a href="/mblog/{{hot.blog.pk}}/">{{ hot.blog.title}}</a></p>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            {% endfor %}
+                                            <!--div class="col-sm-6 padder-xs">
+                                                <div class="thumbnail thumb-nob">
+                                                    <img src="/assets/img/share-p-1.jpg" alt="...">
+                                                    <div class="caption m-t-sm">
+                                                        <p>青睐一线城市</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 padder-xs">
+                                                <div class="thumbnail thumb-nob">
+                                                    <img src="/assets/img/share-p-1.jpg" alt="...">
+
+                                                    <div class="caption m-t-sm">
+
+                                                        <p>毕业生钱包鼓起来的十大MBA</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 padder-xs">
+                                                <div class="thumbnail thumb-nob">
+                                                    <img src="/assets/img/share-p-1.jpg" alt="...">
+
+                                                    <div class="caption m-t-sm">
+
+                                                        <p>青睐一线城市</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 padder-xs">
+                                                <div class="thumbnail thumb-nob">
+                                                    <img src="/assets/img/share-p-1.jpg" alt="...">
+
+                                                    <div class="caption m-t-sm">
+
+                                                        <p>青睐一线城市</p>
+                                                    </div>
+                                                </div>
+                                            </div-->
+                                        </div>
+                                    </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+<script>
+var x=document.getElementsByTagName("img");
+for (i=0;i<x.length;i++)
+{
+x[i].removeAttribute('data-src');
+}
+
+</script>
+
+{% endblock %}
+

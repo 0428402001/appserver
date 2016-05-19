@@ -1,0 +1,382 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://www.collegedaily.cn/"/>
+ <meta name="description"
+          content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+{% endblock %}
+
+{% block content %}
+<div class="app-content-body fade-in-up ">
+            <div class="hbox hbox-auto-xs hbox-auto-sm">
+                <div class="col ">
+                    <div class="wrapper-llg-sm ">
+
+                        <div class="row m-t">
+                            <div class="main-content">
+                                <button class="btn m-b-xs w-xs btn-info btn-rounded ">分类浏览</button>
+
+                                <div class="padder-md bg-white">
+
+                                    <div class="row ">
+                                        {% for cate in cates %}
+                                          {% if forloop.counter0|divisibleby:"2"  %}
+                                              <div class="left col-md-left b-r">
+                                            <div class="panel-heading font-bold text-muted ">
+                                                <span class="topic text-left pos-abt"><a href="#" class="breaking">{{ cate.name }} </a> / column
+                                                </span>
+                                                <div class="postmeta text-right"><a href="/cateinfo/{{ cate.pk }}" class="uname user_sinCera">更多</a>
+                                                </div>
+                                                <div class="b-t m-t-sm"></div>
+                                            </div>
+                                            <ul class="list-group  group-padding-md text-gray">
+                                                {% for blog in cate.blog_set.all|slice:':8'  %}
+                                                <li class="list-group-item text-ellipsis" >
+                                                    <a href="/blog/{{ blog.pk }}/">{{ blog.title|slice:"15" }}</a>
+                                                </li>
+                                                {% endfor %}
+
+                                            </ul>
+
+                                        </div>
+                                          {% else %}
+                                              <div class="left col-md-left ">
+                                            <div class="panel-heading font-bold text-muted ">
+                                                <span class="topic text-left pos-abt"><a href="#" class="breaking">{{ cate.name }} </a> / column
+                                                </span>
+                                                <div class="postmeta text-right"><a href="/cateinfo/{{ cate.pk }}" class="uname user_sinCera">更多</a>
+                                                </div>
+                                                <div class="b-t m-t-sm"></div>
+                                            </div>
+                                            <ul class="list-group  group-padding-md text-gray">
+                                                {% for blog in cate.blog_set.all|slice:':8' %}
+                                                <li class="list-group-item text-ellipsis" >
+                                                    <a href="/blog/{{ blog.pk }}/">{{ blog.title|slice:"15" }}</a>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+
+                                        </div>
+                                          {% endif %}
+                                        {% endfor %}
+
+
+
+                                    </div>
+
+                                </div>
+
+                                <!--浏览结束-->
+                                <!--标签开始-->
+                                <button class="btn m-b-xs w-xs btn-info btn-rounded ">热门标签</button>
+                                <div class="category-tags wrapper-md bg-white">
+                                    <div class="category">
+                                        <div class="left category-left font-bold ">
+                                             <span class="topic left text"><a href="/" class="text text-info">留学生日报</a>/标签 </span>
+                                        </div>
+                                        <div class="tag-main">
+                                        <div class="tags m-b-lg l-h-2x" >
+                                            {% for tag in hottags %}
+                                            <a href="/tag/{{ tag.tag.pk }}" class="label text-muted">{{ tag.tag.name }}</a>
+                                            {% endfor %}
+
+                                        </div>
+                                            </div>
+                                    </div>
+                                    <!--div class="category">
+                                        <div class="left category-left font-bold ">
+                                            <span class="topic left text"><a href="#" class="text text-info">北极社区</a> / press</span>
+                                        </div>
+                                        <div class="tag-main">
+                                            <div class="tags m-b-lg l-h-2x" >
+                                            {% for tag in hottags %}
+                                            <a href="/tag/{{ tag.tag.pk }}" class="label text-muted">{{ tag.tag.name }}</a>
+                                            {% endfor %}
+
+                                            </div>
+                                        </div>
+                                    </div-->
+
+
+                                </div>
+                                <!--标签end-->
+                                <div class="text-center m-t-xs m-b-xs">
+                                    <ul class="pagination pagination-md">
+                                        <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
+                                        <li class="active"><a href="">1</a></li>
+                                        <!--li><a href="">2</a></li>
+                                        <li><a href="">3</a></li>
+                                        <li><a href="">4</a></li>
+                                        <li><a href="">5</a></li-->
+                                        <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="tag-aside">
+                                <button class="btn m-b-xs w-xs btn-info btn-rounded">今日更新</button>
+                                <ul class="list-group">
+                                    {% for blog in new_blogs %}
+                                    <li class="list-group-item">
+                                        <i class="b-r b-l m-r-sm b-2x b-info"></i>
+                                        <a href="/blog/{{blog.pk}}/">
+                                            <!--<b class="badge bg-info pull-right">9</b>-->
+                                            {{ blog.title|slice:"10" }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col w-lg lter padder-v-30 bg-auto">
+                    <div class="wrapper-xs-10">
+                        <div class="panel panel-default">
+                            <a href="{{ ad_1.url }}"> <img src="{{ ad_1.cover.url }}" alt="..." class="img-thumbnail "></a>
+                        </div>
+                        <button class="btn m-b-xs w-xs btn-info btn-rounded">热门文章</button>
+
+                        <div class="panel b-a">
+
+                            <ul class="list-group">
+                                 {% for hot in headlines|slice:":5" %}
+                                <li class="list-group-item">
+                                     <a href="/blog/{{hot.blog.pk}}/" class="thumb-article-md m-r">
+                                        {% if  hot.blog.cover%}
+                                        <img src="{{ hot.blog.cover.url }}" class="r r-2x">
+                                        {% else %}
+                                         <img src="/assets/img/a5.jpg" class="r r-2x">
+                                        {% endif %}
+                                    </a>
+                                    </a>
+
+                                    <div class="article-des">
+                                        <p class=""><a href="" class="text m-xs">{{ hot.blog.title}}</a></p>
+
+                                        <p>
+                                            <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>{{ hot.blog.date}}
+                                            </a>
+                                            <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>{{ hot.blog.hotness}}</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                                <!--li class="list-group-item">
+                                    <a href="" class="thumb-article-md m-r">
+                                        <img src="/assets/img/a2.jpg" class="r r-2x">
+                                    </a>
+
+                                    <div class="article-des">
+                                        <p class=""><a href="" class="text m-xs">禁枪为什么在美国不现实</a></p>
+
+                                        <p>
+                                            <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>2014/12/11
+                                            </a>
+                                            <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>1239</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="thumb-article-md m-r">
+                                        <img src="/assets/img/a2.jpg" class="r r-2x">
+                                    </a>
+
+                                    <div class="article-des">
+                                        <p class=""><a href="" class="text m-xs">禁枪为什么在美国不现实</a></p>
+
+                                        <p>
+                                            <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>2014/12/11
+                                            </a>
+                                            <a class="text-muted right"><i class="fa fa-fw fa-comment-o"></i>1239</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="thumb-article-md m-r">
+                                        <img src="/assets/img/a2.jpg" class="r r-2x">
+                                    </a>
+
+                                    <div class="article-des">
+                                        <p class=""><a href="" class="text m-xs">禁枪为什么在美国不现实</a></p>
+
+                                        <p>
+                                            <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>2014/12/11
+                                            </a>
+                                            <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>1239</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="" class="thumb-article-md m-r">
+                                        <img src="/assets/img/a2.jpg" class="r r-2x">
+                                    </a>
+
+                                    <div class="article-des">
+                                        <p class=""><a href="" class="text m-xs">禁枪为什么在美国不现实</a></p>
+
+                                        <p>
+                                            <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>2014/12/11
+                                            </a>
+                                            <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>1239</a>
+                                        </p>
+                                    </div>
+                                </li-->
+                            </ul>
+                            <h5 class="font-thin padder text-right"><a href="/category/">显示更多</a></h5>
+                        </div>
+
+                        <!--button class="btn m-b-xs w-xs btn-info btn-rounded">最新评论</button-->
+
+                        <div class="b-t">
+                            {% for hot in hots %}
+                            <div class="m-l-xs m-t-md">
+                                <div class="m-t-sm m-l-lg m-b-xs">
+                                    <span href="" class="text m-md">{{ hot.author.nickname }}</span>
+                                    <span href="" class="text-muted text-base"><i>{{ hot.time }}</i></span>
+                                </div>
+                                <a class="pull-left thumb-sm avatar">
+                                    {% if  hot.author.head%}
+                                    <img src="{{ hot.author.head.url }}" alt="...">
+                                    {% else %}
+                                      <img src="/assets/img/user.jpg" alt="...">
+                                    {% endif%}
+                                </a>
+
+                                <div class="m-l-xxl panel b-a">
+
+                                    <div class="panel-heading pos-rlt">
+                                        <span class="arrow left pull-up"></span>
+                                        <a href="">{{ hot.content | truncatechars:12}}</a>
+
+                                        <p class="text">评论于</p>
+                                        <a href="/blog/{{hot.blog_set.all.0.pk}}/" class="text-info m-l-n-sm">{{hot.blog_set.all.0.title | truncatechars:12}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <!--div class="m-l-xs m-t-md">
+                                <div class="m-t-sm m-l-lg m-b-xs">
+                                    <span href="" class="text m-md">jessica</span>
+                                    <span href="" class="text-muted text-base">刚刚</i></span>
+                                </div>
+                                <a class="pull-left thumb-sm avatar">
+                                    <img src="/assets/img/a5.jpg" alt="...">
+                                </a>
+
+                                <div class="m-l-xxl panel b-a">
+
+                                    <div class="panel-heading pos-rlt">
+                                        <span class="arrow left pull-up"></span>
+                                        <a href="">电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了,电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen
+                                            了</a>
+
+                                        <p class="text">评论于</p>
+                                        <a href="" class="text-info m-l-n-sm">《斯坦福留学生是叛国贼吗？》</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-l-xs m-t-md">
+                                <div class="m-t-sm m-l-lg m-b-xs">
+                                    <a href="" class="text m-md">jessica</a>
+                                    <a href="" class="text-muted text-base">刚刚</i></a>
+                                </div>
+                                <a class="pull-left thumb-sm avatar">
+                                    <img src="/assets/img/a5.jpg" alt="...">
+                                </a>
+
+                                <div class="m-l-xxl panel b-a">
+
+                                    <div class="panel-heading pos-rlt">
+                                        <span class="arrow left pull-up"></span>
+                                        <a href="">电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了,电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen
+                                            了</a>
+
+                                        <p class="text">评论于</p>
+                                        <a href="" class="text-info m-l-n-sm">《斯坦福留学生是叛国贼吗？》</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-l-xs m-t-md">
+                                <div class="m-t-sm m-l-lg m-b-xs">
+                                    <a href="" class="text m-md">jessica</a>
+                                    <a href="" class="text-muted text-base">刚刚</i></a>
+                                </div>
+                                <a class="pull-left thumb-sm avatar">
+                                    <img src="/assets/img/a5.jpg" alt="...">
+                                </a>
+
+                                <div class="m-l-xxl panel b-a">
+
+                                    <div class="panel-heading pos-rlt">
+                                        <span class="arrow left pull-up"></span>
+                                        <a href="">电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了,电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen
+                                            了</a>
+
+                                        <p class="text">评论于</p>
+                                        <a href="" class="text-info m-l-n-sm">《斯坦福留学生是叛国贼吗？》</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-l-xs m-t-md">
+                                <div class="m-t-sm m-l-lg m-b-xs">
+                                    <a href="" class="text m-md">jessica</a>
+                                    <a href="" class="text-muted text-base">刚刚</i></a>
+                                </div>
+                                <a class="pull-left thumb-sm avatar">
+                                    <img src="/assets/img/a5.jpg" alt="...">
+                                </a>
+
+                                <div class="m-l-xxl panel b-a">
+
+                                    <div class="panel-heading pos-rlt">
+                                        <span class="arrow left pull-up"></span>
+                                        <a href="">电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了,电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen
+                                            了</a>
+
+                                        <p class="text">评论于</p>
+                                        <a href="" class="text-info m-l-n-sm">《斯坦福留学生是叛国贼吗？》</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="m-l-xs m-t-md">
+                                <div class="m-t-sm m-l-lg m-b-xs">
+                                    <a href="" class="text m-md">jessica</a>
+                                    <a href="" class="text-muted text-base">刚刚</i></a>
+                                </div>
+                                <a class="pull-left thumb-sm avatar">
+                                    <img src="/assets/img/a5.jpg" alt="...">
+                                </a>
+
+                                <div class="m-l-xxl panel b-a">
+
+                                    <div class="panel-heading pos-rlt">
+                                        <span class="arrow left pull-up"></span>
+                                        <a href="">电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了,电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen
+                                            了</a>
+
+                                        <p class="text">评论于</p>
+                                        <a href="" class="text-info m-l-n-sm">《斯坦福留学生是叛国贼吗？》</a>
+                                    </div>
+                                </div>
+                            </div-->
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

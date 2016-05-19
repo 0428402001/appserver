@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="http://www.collegedaily.cc/"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="app-content-body fade-in-up ">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col ">
+            <div class="wrapper-gmd ">
+                <div class="row m-t" style="overflow: hidden;">
+                    <div id="slider">
+                        {% for headline in rest_headlines %}
+
+                        {% if forloop.counter == 1%}
+                        <div class="col-xs-6 col-no-padding">
+                            <div class="photo-section">
+                                <img src="{{headline.blog.cover.url}}" alt="..." class="img-thumbnail img_main"/>
+
+                                <img src="/assets/source/mask22.png" alt="" class="mask">
+                                <a href="/blog/{{headline.blog.pk}}" target="_blank" class="hover-content">
+
+                                    <div class="photo-title">
+                                        <h2 class="font-size-lg">
+                                            {{headline.blog.title}}
+                                        </h2>
+                                    </div>
+                                </a>
+
+
+                            </div>
+                        </div>
+                        {% elif forloop.counter == 2 %}
+                        <div class="col-xs-3 col-no-padding">
+                            <div class="photo-section">
+                                <img src="{{headline.blog.cover.url}}" alt="..." class="img-thumbnail img_second"/>
+                                <img src="/assets/source/mask22.png" alt="" class="mask">
+
+
+                                <a href="/blog/{{headline.blog.pk}}" target="_blank" class="hover-content">
+
+                                    <div class="photo-title">
+                                        <h4 class="font-size-gmd">
+                                            {{headline.blog.title}}
+                                        </h4>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+
+
+                <div class="row m-t">
+                    <div class="main-content">
+                        <div class="tab-container">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="active"><a href="#tab1" data-toggle="tab">最新发布 <span
+                                        class="badge badge-sm m-l-xs">16</span></a></li>
+                                <li><a href="#tab2" data-toggle="tab">WHAT'S HOT <span
+                                        class="badge bg-danger badge-sm m-l-xs">6</span></a></li>
+
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab1">
+                                    <div class="articles">
+                                        {% for blog in blogs %}
+                                        <article class="posts post-1 cf">
+                                            <div class="info cf">
+                                                <div class="topic left">
+                                                            <span><a href="#" class="breaking">专栏 </a> / column
+                                                            </span>
+                                                </div>
+                                                <div class="postmeta right"><a href="/sincera"
+                                                                               class="uname user_sinCera">{{blog.author}}</a>
+                                                    <span class="timeago" title=" ">/ {{blog.date|date:"m/d/Y"}}</span></div>
+                                            </div>
+                                            <div class="left left-col">
+                                                <div class="image feature-img thumb-180"><a href="/blog/{{blog.pk}}/"
+                                                                                            class="thumbnail"><img
+                                                        alt="Blank" class="image lazyload loaded"
+                                                        src="{{blog.cover.url}}"></a>
+                                                </div>
+                                            </div>
+                                            <div class="right-col">
+                                                <h1><a href="/blog/{{blog.pk}}/">{{blog.title}}</a></h1>
+
+                                                <p>{{blog.abstract}}</p>
+                                            </div>
+                                        </article>
+                                        {% endfor %}
+                                    </div>
+
+
+                                </div>
+                                <div class="tab-pane" id="tab2">
+                                    <div class="articles">
+                                        <div class="articles">
+                                            {% for blog in blogs %}
+                                            <article class="posts post-1 cf">
+                                                <div class="info cf">
+                                                    <div class="topic left">
+                                                            <span><a href="#" class="breaking">专栏 </a> / column
+                                                            </span>
+                                                    </div>
+                                                    <div class="postmeta right"><a href="/sincera"
+                                                                                   class="uname user_sinCera">{{blog.author}}</a>
+                                                        <span class="timeago" title=" ">/ {{blog.date|date:"m/d/Y"}}</span></div>
+                                                </div>
+                                                <div class="left left-col">
+                                                    <div class="image feature-img thumb-180"><a href="/blog/{{blog.pk}}/"
+                                                                                                class="thumbnail"><img
+                                                            alt="Blank" class="image lazyload loaded"
+                                                            src="{{blog.cover.url}}"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="right-col">
+                                                    <h1><a href="/blog/{{blog.pk}}/">{{blog.title}}</a></h1>
+
+                                                    <p>{{blog.abstract}}</p>
+                                                </div>
+                                            </article>
+                                            {% endfor %}
+                                        </div>
+
+                                        <section>
+                                            <div class="panel">
+                                                <div>
+                                                    <img src="img/c0.jpg" class="img-full">
+                                                </div>
+                                            </div>
+                                        </section>
+
+                                        <article class="posts post-1 cf">
+
+                                            <div class="info cf">
+                                                <div class="topic left">
+                                                            <span><a href="#" class="entainment">吐槽 </a> / ridicule
+                                                            </span>
+                                                </div>
+                                                <div class="postmeta right"><a href="/sincera"
+                                                                               class="uname user_sinCera">sinCera</a>
+                                                    / <span class="timeago" title=" ">1小时前</span></div>
+                                            </div>
+                                            <div class="left left-col">
+                                                <div class="image feature-img thumb-180 "><a class="thumbnail"
+                                                                                             href="#"><img
+                                                        alt="Blank" class="image lazyload loaded"
+                                                        src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider"></a>
+                                                </div>
+                                            </div>
+                                            <div class="right-col">
+                                                <h1><a>电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了</a></h1>
+
+                                                <p>抄完苹果抄 LG。</p>
+                                            </div>
+
+                                        </article>
+
+
+                                        <article class="posts last post-1 cf">
+
+                                            <div class="info cf">
+                                                <div class="topic left">
+                                                            <span><a href="#" class="entainment">爱情 </a> / love
+                                                            </span>
+                                                </div>
+                                                <div class="postmeta right"><a href="/sincera"
+                                                                               class="uname user_sinCera">sinCera</a>
+                                                    / <span class="timeago" title=" ">1小时前</span></div>
+                                            </div>
+                                            <div class="left left-col">
+                                                <div class="image feature-img thumb-180 "><a class="thumbnail"
+                                                                                             href="#"><img
+                                                        alt="Blank" class="image lazyload loaded"
+                                                        src="http://a.36krcnd.com/photo/2015/f6b83d7079469dbadeb25ef9f718f9c2.jpg!slider"></a>
+                                                </div>
+                                            </div>
+                                            <div class="right-col">
+                                                <h1><a>电视市场依然保有统治地位的三星，明年所有智能产品都要用 Tizen 了</a></h1>
+
+                                                <p>抄完苹果抄 LG。</p>
+                                            </div>
+
+                                        </article>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="text-center m-t-xs m-b-xs">
+                            <ul class="pagination pagination-md">
+                                <li><a href="{% if blogs.has_previous %}/?p={{ blogs.previous_page_number }}{% else %}#{% endif %}"><i class="fa fa-chevron-left"></i></a></li>
+                                <!--<li class="active"><a href="">1</a></li>-->
+                                <!--<li><a href="">2</a></li>-->
+                                <!--<li><a href="">3</a></li>-->
+                                <!--<li><a href="">4</a></li>-->
+                                <!--<li><a href="">5</a></li>-->
+                                <li><a href="{% if blogs.has_next %}/?p={{ blogs.next_page_number }}{% else %}#{% endif %}"><i class="fa fa-chevron-right"></i></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="tag-aside">
+                        <button class="btn m-b-xs w-xs btn-info btn-rounded">TAGS</button>
+                        <ul class="list-group">
+                            {% for hot_tag in hot_tags %}
+                            <li class="list-group-item">
+                                <a href="">
+                                    {% if hot_tag.count %} <b class="badge bg-info pull-right">{{hot_tag.count}}</b>{% endif %}
+                                    {{hot_tag.key}}}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                        <section class="aside-social aside-fixed" id="qRcode">
+
+                            <div class="image text-center "><img alt="Qrcode" src="/assets/img/qr.jpg"></div>
+                            <p class="m-t-md padder" style="width: 200px;">微信公众平台：搜索 “collegedaily”
+                                或扫描下面的二维码</p>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col w-lg lter padder-v-30 bg-auto">
+            <div class="padder-xs">
+                <div class="panel panel-default">
+                    <img src="/assets/source/ad_1.png" alt="..." class="img-thumbnail ">
+                </div>
+                <button class="btn m-b-xs w-xs btn-info btn-rounded">热门文章</button>
+
+                <div class="panel b-a">
+
+                    <ul class="list-group">
+
+                        {% for pop_blog in pop_blogs %}
+
+                        <li class="list-group-item">
+                            <a href="" class="thumb-article-md m-r">
+                                <img src="{{pop_blog.userHead}}" class="r r-2x">
+                            </a>
+
+                            <div class="article-des">
+                                <p class=""><a href="" class="text m-xs">{{pop_blog.abstract}}</a></p>
+
+                                <p>
+                                    <a class="text-muted m-xs"><i class="fa fa-fw fa-clock-o"></i>{{pop_blog.time}}
+                                    </a>
+                                    <a class="text-muted  right"><i class="fa fa-fw fa-comment-o"></i>{{pop_blog.comments}}</a>
+                                </p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <h5 class="font-thin padder text-right"><a href="#">显示更多</a></h5>
+                </div>
+
+                <button class="btn m-b-xs w-xs btn-info btn-rounded">最新评论</button>
+
+                <div class="b-t">
+                    {% for hot in hots %}
+                    <div class="m-l-xs m-t-md">
+                        <div class="m-t-sm m-l-lg m-b-xs">
+                            <span  class="text m-md">jessica</span>
+                            <span  class="text-muted text-base">{{hot.comment.time | timesince }}前</i></span>
+                        </div>
+                        <a class="pull-left thumb-sm avatar">
+                            <img src="/assets/img/a5.jpg" alt="...">
+                        </a>
+
+                        <div class="m-l-xxl panel b-a">
+
+                            <div class="panel-heading pos-rlt">
+                                <span class="arrow left pull-up"></span>
+                                <a href="">{{hot.comment.content}}</a>
+
+                                <p class="text">评论于</p>
+                                <a class="text-info m-l-n-sm" href="/blog/{{hot.comment.blog_set.all.0.pk}}/">{{hot.comment.blog_set.all.0.title |
+                                    truncatechars:12}}</a>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function ($) {
+        $(document).ready(function () {
+            //enabling stickUp on the '.navbar-wrapper' class
+//            $('.navbar-wrapper').stickUp();
+            $('#qRcode').stickUp({
+                marginTop: 'auto'
+            });
+
+        });
+    });
+
+</script>
+<script type="text/javascript">
+
+
+
+
+</script>
+
+{% endblock %}

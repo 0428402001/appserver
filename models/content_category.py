@@ -17,5 +17,6 @@ class ContentCategory(ModelBase):
     cover = Column(VARCHAR(128, charset='utf8'), nullable=True, default='')
     introduction = Column(VARCHAR(1024, charset='utf8'), nullable=True, default='')
     dj_id = Column(INTEGER, nullable=True, default='')
+    sort = Column(INTEGER, nullable=True, default='')
 
 

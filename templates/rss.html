@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--  generator="FEEDCREATOR_VERSION"  -->
+<rss xmlns:sns="http://blog.ifeng.com.cn" version="2.0">
+<channel>
+<title>college_daily</title>
+<link>http://www.collegedaily.cn/</link>
+<description>college_daily</description>
+<copyright>{{copyright}}</copyright>
+<language>zh-cn</language>
+{% for one in clus %}<item>
+<title>{{one['title']}}</title>
+<link>http://app.collegedaily.cn/blog/{{one['id']}}</link>
+<description>{{one['abstract']}}</description>
+<content>{{one['content']}}</content>
+<source>{{one['source']}}</source>
+<pubDate>{{one['date']}}</pubDate>
+</item>
+{% end %}
+</channel>
+</rss>

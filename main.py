@@ -6,7 +6,7 @@ import tornado.ioloop
 import os
 import sys
 
-from ting import TestHandler, StartupImage, Config, Activity, Category, CategoryHot, CategorySubscription,CategorySubscriptionstate,UserProfile,UserClassify, MenuInfo,QueryHot, BlogHot, BlogIndex, Blog, BlogCategory, BlogFavorate, BlogPraise,BlogFavorateUID, BlogQuery, BlogTag, TagBlog, BlogID, CommentHot, Comment, CommentBlog,CommentPraise, CommentPraiseCommentID,CommentReply, CommentReplyComment_id, Message , Setting ,  Test1, Blogview
+from ting import TestHandler, StartupImage, Config, Activity, Category, CategoryHot, CategorySubscription,CategorySubscriptionstate,UserProfile,UserClassify, MenuInfo,QueryHot, BlogHot, BlogIndex, Blog, BlogCategory, BlogFavorate, BlogPraise,BlogFavorateUID, BlogQuery, BlogTag, TagBlog, BlogID, CommentHot, Comment, CommentBlog,CommentPraise, CommentPraiseCommentID,CommentReply, CommentReplyComment_id, Message , MessageAllreadyRead,Setting ,  Blogview, AD, FlushAllCache, FlushSingleBlogContent, FlushHomePageBlog, FlushHomePageBlogIndex, UpdateToken,  PushBlogToAllUsers ,Test2,  Test1, PushBlogToAPPID, Rss, AdsTa
 
 
 
@@ -44,8 +44,20 @@ application = tornado.web.Application(
         (Comment.url_pattern(), Comment),
         (CommentBlog.url_pattern(), CommentBlog),
         (Message.url_pattern(), Message),
+        (MessageAllreadyRead.url_pattern(), MessageAllreadyRead),
+        (AD.url_pattern(), AD),
+        (FlushAllCache.url_pattern(), FlushAllCache),
+        (FlushSingleBlogContent.url_pattern(), FlushSingleBlogContent),
+        (FlushHomePageBlog.url_pattern(), FlushHomePageBlog),
+        (FlushHomePageBlogIndex.url_pattern(), FlushHomePageBlogIndex),
+        (UpdateToken.url_pattern(), UpdateToken),
+        (PushBlogToAllUsers.url_pattern(),PushBlogToAllUsers ),
+        (PushBlogToAPPID.url_pattern(), PushBlogToAPPID),
+        (AdsTa.url_pattern(), AdsTa),
         (Setting.url_pattern(), Setting),
         (Test1.url_pattern(), Test1),
+        (Test2.url_pattern(), Test2),
+        (Rss.url_pattern(), Rss),
 
 
 

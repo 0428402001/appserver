@@ -12,3 +12,4 @@ class ContentHotblog(BASEOBJ):
     __tablename__ = 'content_hotblog'
 
     blog_id = Column(INTEGER, nullable=True,  primary_key = True)
+    sort = Column(INTEGER, nullable=True)

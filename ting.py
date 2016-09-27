@@ -2,9 +2,12 @@
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
+import re
 import json
 import os
 import time
+import subprocess
+import redis
 
 import tornado.httpclient
 import tornado.web
@@ -19,7 +22,11 @@ from tornado.web import HTTPError
 from sqlalchemy import text
 from sqlalchemy import and_ , or_, func, distinct
 
-from models.base_orm import Session
+
+from sqlalchemy.orm import scoped_session, sessionmaker, Session, object_mapper
+from sqlalchemy import create_engine
+
+import dal
 
 from models.app_blog_praise import  AppBlogPraise
 from models.app_comment_praise import  AppCommentPraise
@@ -60,28 +67,74 @@ from models.base_orm import change_to_json_1
 from models.base_orm import change_to_json_2
 
 from business_logic import get_info
+import business_logic
+
+from tornado.httpclient import AsyncHTTPClient
+
+
+from concurrent.futures import ThreadPoolExecutor
+
+
+from redis_cache.redis_con_pool import conn_pool_hot_category 
+from redis_cache.redis_con_pool import conn_pool_hot_blog 
+from redis_cache.redis_con_pool import conn_pool_test
+
+import database
+
+
+engine = create_engine(database.DB_PATH, pool_size = 6, pool_recycle=3600, echo = False)
+#engine = create_engine('mysql://root:yestem@localhost:3306/collapp?charset=utf8', pool_size = 5, pool_recycle=1, echo = False)
+Session = sessionmaker()
+Session.configure(bind=engine)
 
 
 
-#written_by_liujun
+
+#conn_pool_0 = redis.ConnectionPool(host='localhost', port=6379, db=0)
+#redis_r_0 = redis.Redis(connection_pool=conn_pool_0)
+
+conn_pool_blog = redis.ConnectionPool(host='localhost', port=6379, db=0)
+#redis_r_blog = redis.Redis(connection_pool=conn_pool_blog)
+
+conn_pool_relate_blog = redis.ConnectionPool(host='localhost', port=6379, db=1)
+#redis_r_relate_blog = redis.Redis(connection_pool=conn_pool_relate_blog)
+
+conn_home_page_blog_index = redis.ConnectionPool(host='localhost', port=6379, db=2)
+redis_home_page_blog_index = redis.Redis(connection_pool=conn_home_page_blog_index)
+
+
+
+conn_home_page_blog = redis.ConnectionPool(host='localhost', port=6379, db=3)
+redis_home_page_blog = redis.Redis(connection_pool=conn_home_page_blog)
+
+redis_hot_category = redis.Redis(connection_pool=conn_pool_hot_category)  
+
+
+redis_hot_blog = redis.Redis(connection_pool=conn_pool_hot_blog)  
+
+
+def push_message_to_uid(to_uid, subject):
+    cur_session = Session()
+    clu = cur_session.query(AppDevicetoken.device_token).filter(AppDevicetoken.author_id == to_uid).order_by(AppDevicetoken.id.desc()).limit(1).all()
+    if len(clu) == 0:
+        pass
+    else:
+        token = clu[0].device_token
+        mk = os.path.dirname(os.path.abspath("__file__"))
+        ios_dir =  "%s%s"%(mk, "/push/ios_single.py")
+        cmd = ["python",ios_dir, token, subject] 
+        subprocess.Popen(cmd)
+
+
+
 def change_to_int(page):
     try:
         page = page.encode('utf-8')
         page = float(page)
         page = int(page)
-    except:
+    except Exception, e:
         pass
     return page 
-
-
-#class Cache(object):
-#    def get_author_dict():
-#        clu = Session.query(ContentAuth).all()
-#        json_res = change_to_json(clu)
-#        #auth_res = json.loads(json_res)
-#        return json_res
-#
-#    author = get_author_dict()
 
 
 class OrigionHandler(tornado.web.RequestHandler):
@@ -110,7 +163,6 @@ class OrigionHandler(tornado.web.RequestHandler):
             per_page = 20
         per_page = change_to_int(per_page)
         start_page = (page - 1)*per_page
-        #print start_page, per_page
         if start_page < 0:
             start_page = 0
         return [start_page, per_page]
@@ -123,10 +175,6 @@ class TestHandler(OrigionHandler):
         return r'/ting'
 
     def get(self, *args, **kwargs):
-        print self.request
-        #clu = Session.query(ContentAuth.id.label('newcolumn'), ContentAuth.password.label("pa_t")).filter(ContentAuth.id == "1").all()
-        #json_res = change_to_json(clu)
-        #self.write(json_res)
         self.write('ting')
 
 
@@ -134,8 +182,12 @@ class StartupImage(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/startup/image"
+
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
-        clu = Session.query(AppInfo.value.label("url")).filter(AppInfo.key == "url_startup_image").all()
+
+        cur_session = Session()
+        clu = cur_session.query(AppInfo.value.label("url")).filter(AppInfo.key == "url_startup_image").all()
         json_res = change_to_json(clu)
         self.write(json_res)
 
@@ -144,8 +196,10 @@ class Config(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/config"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
-        clu = Session.query(AppInfo).all()
+        cur_session = Session()
+        clu = cur_session.query(AppInfo).all()
         json_res = change_to_json(clu)
         self.write(json_res)
 
@@ -153,8 +207,11 @@ class Activity(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/activity"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
-        clu = Session.query(ContentActivity).all()
+
+        cur_session = Session()
+        clu = cur_session.query(ContentActivity).all()
         json_res = change_to_json(clu)
         self.write(json_res)
 
@@ -163,6 +220,7 @@ class Category(OrigionHandler):#problem
     @classmethod
     def url_pattern(cls):
         return r"/category"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         json_res = get_info(self.request, args, kwargs)
         self.write(json_res)
@@ -173,13 +231,59 @@ class CategoryHot(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/category/hot"
+
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
+
+        uid = self.param("uid")
+
+        redis_record = redis_hot_category.lrange('0', 0, -1)
+        hot_category = []
+        for item in redis_record:
+            hot_category.append(eval(item))
+
+        json_res = change_to_json_2(hot_category)
+
+
+        if uid is None:
+            self.write(json_res)
+        else:
+            clu = business_logic.check_if_category_subscred(uid, hot_category)
+
+            json_res = change_to_json_2(clu)
+            self.write(json_res)
+
+
+
+
+
+class AD(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/ad"
+
+    @tornado.gen.coroutine
+    def get(self, *args, **kwargs):
+
+        import logging
+        def set_log(log_filename, log_message):
+            logger=logging.getLogger()
+            handler=logging.FileHandler(log_filename)
+            logger.addHandler(handler)
+            logger.setLevel(logging.NOTSET)
+            logger.debug(log_message)
+            # 如果没有此句话，则会将同一个message追加到不同的log中
+            logger.removeHandler(handler)
+        message = "AD\t%s\t%s"%(time.ctime(), self.request)
+        set_log("/tmp/log", message)
+        print "ADVERTISE\t%s\t%s"%(time.ctime(), self.request)
         json_res = get_info(self.request, args, kwargs)
+        ad_list = json.loads(json_res)
+        for i in ad_list:
+            i['url'] = "http://app.collegedaily.cn/adsta?url=%s"%i["url"]
+        json_res = change_to_json_2(ad_list)
         self.write(json_res)
 
-
-
-        
 
 
 
@@ -187,31 +291,42 @@ class CategorySubscription(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/category/subscription"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         uid =  self.param("uid")
         json_res = get_info(self.request, args, kwargs)
         self.write(json_res)
 
+    @tornado.gen.coroutine
     def post(self, *args, **kwargs):
+
         func_type = self.param('type')
         uid = self.param('uid')
         category_id = self.param('category_id')
 
         if func_type == 'remove':
-            Session.query(AppSubscription).filter(and_(AppSubscription.author_id == uid, AppSubscription.category_id == category_id)).delete()
-            Session.flush()
+            cur_session = Session()
+            cur_session.query(AppSubscription).filter(and_(AppSubscription.author_id == uid, AppSubscription.category_id == category_id)).delete()
             try:
-                Session.commit()
-            except:
-                Session.rollback()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+                print self.url_pattern(), e
+            finally:
+                cur_session.close()
             clu = {'resutl':1, 'error':'/category/subscription remove success'}
         elif func_type == 'add':
-            Session.add(AppSubscription(author_id = uid, category_id = category_id))
-            Session.flush()
+
+            cur_session = Session()
+            app_sub =AppSubscription(author_id = uid, category_id = category_id)
+            cur_session.add(app_sub)
             try:
-                Session.commit()
-            except:
-                Session.rollback()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+                print self.url_pattern(), e
+            finally:
+                cur_session.close()
             clu = {'resutl':1, 'error':'/category/subscription add success'}
         else:
             clu = {'resutl':0, 'error':'wrong parameter.'}
@@ -230,10 +345,13 @@ class CategorySubscriptionstate(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/category/subscription_state"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
+
+        cur_session = Session()
         uid = self.param('uid')
         category_id = self.param('category_id')
-        clu = Session.query(AppSubscription).filter(text("app_subscription.author_id = :uid and app_subscription.category_id = :category_id")).params(uid = uid, category_id = category_id).all()
+        clu = cur_session.query(AppSubscription).filter(text("app_subscription.author_id = :uid and app_subscription.category_id = :category_id")).params(uid = uid, category_id = category_id).all()
         json_res = change_to_json(clu)
         self.write(json_res)
 
@@ -245,12 +363,17 @@ class UserProfile(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/user/profile"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
-        clu = Session.query(ContentAuth.id, ContentAuth.nickname, ContentAuth.sign,ContentAuth.head,ContentAuth.school,ContentAuth.grade,AuthClassify.name.label("identity")).join(AuthClassify, ContentAuth.identity == AuthClassify.id).filter(text("content_auth.id = :uid")).params(uid = uid).all()
+        cur_session = Session()
+        clu = cur_session.query(ContentAuth.id, ContentAuth.nickname, ContentAuth.sign,ContentAuth.head,ContentAuth.school,ContentAuth.grade,AuthClassify.name.label("identity")).join(AuthClassify, ContentAuth.identity == AuthClassify.id).filter(text("content_auth.id = :uid")).params(uid = uid).all()
         json_res = change_to_json(clu)
         self.write(json_res)
 
+    @tornado.gen.coroutine
     def post(self, *args, **kwargs):
+
+        cur_session = Session()
         sns_uid = self.param('sns_uid')
         sns_type = self.param('sns_type')
         sns_nickname = self.param('sns_nickname')
@@ -266,55 +389,112 @@ class UserProfile(OrigionHandler):
         if password is None:
             password = ''
 
-        print 'sns_uid\t%s\tsun_nickname\t%s\tsns_head\t%s\tdevice_token\t%s\temail\t%s\tpassword\t%s'%(sns_uid, sns_nickname, sns_head, device_token, email, password)
+        print 'sns_uid\t%s\tsun_nickname\t%s\tsns_head\t%s\tdevice_token\t%s\temail\t%s\tpassword\t%s\tsns_type\t%s'%(sns_uid, sns_nickname, sns_head, device_token, email, password, sns_type)
 
 
-        check_result = Session.query(ContentAuth.id).filter(ContentAuth.sns_uid == sns_uid).all()
+        check_result = cur_session.query(ContentAuth.id).filter(ContentAuth.sns_uid == sns_uid).all()
+
         return_uid = -1
         if len(check_result) == 0:
             content_auth_imp = ContentAuth(email = email, password = password, username = sns_nickname, last_login = last_login, date_joined = date_joined, head = sns_head, nickname = sns_nickname, regist_from = 1, sns_type = sns_type, sns_uid = sns_uid)
-            Session.add(content_auth_imp)
-            Session.flush()
+            cur_session.add(content_auth_imp)
             try:
-                Session.commit()
-            except:
-                Session.rollback()
+                cur_session.flush()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+                print "USER/PROFILE_login_problem\t%s\t%s"%(sns_uid. e)
+            finally:
+                pass
             return_uid = content_auth_imp.id
+
+            cur_session.close()
+
         else:
             return_uid = check_result[0].id
-            Session.query(ContentAuth).filter(ContentAuth.id == return_uid).update({ContentAuth.last_login: last_login})
-            Session.flush()
+            cur_session.query(ContentAuth).filter(ContentAuth.id == return_uid).update({ContentAuth.last_login: last_login})
             try:
-                Session.commit()
-            except:
-                Session.rollback()
+                cur_session.flush()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+                print self.url_pattern(), e
+            finally:
+                pass
+                cur_session.close()
+        print "login_in_succed"
 
         #regist device token
         if device_token  is not None:
+            print device_token
+            print return_uid
             dt = time.strftime('%Y-%m-%d %H:%M:%S')
             def datetime_timestamp(dt):
                 time.strptime(dt, '%Y-%m-%d %H:%M:%S')
                 s = time.mktime(time.strptime(dt, '%Y-%m-%d %H:%M:%S'))
                 return int(s)
             d = datetime_timestamp(dt)
-            app_dev_clu = Session.query(AppDevicetoken).filter(and_(AppDevicetoken.author_id == return_uid, AppDevicetoken.device_token == device_token)).all()
+            app_dev_clu = cur_session.query(AppDevicetoken).filter(and_(AppDevicetoken.author_id == return_uid)).all()
             if len(app_dev_clu) == 0:
-                Session.add(AppDevicetoken(author_id = return_uid, device_token = device_token, update_dateline = d))
-                Session.flush()
+                pass
+                cur_session.add(AppDevicetoken(author_id = return_uid, device_token = device_token, update_dateline = d))
                 try:
-                    Session.commit()
-                except:
-                    Session.rollback()
+                    cur_session.flush()
+                    cur_session.commit()
+                except Exception, e:
+                    cur_session.rollback()
+                    print self.url_pattern(), e
+                finally:
+                    cur_session.close()
             else:
-                Session.query(AppDevicetoken).filter(and_(AppDevicetoken.author_id == return_uid, AppDevicetoken.device_token == device_token)).update({AppDevicetoken.update_dateline: d})
-                Session.flush()
+                pass
+                cur_session.query(AppDevicetoken).filter(and_(AppDevicetoken.author_id == return_uid)).update({AppDevicetoken.update_dateline: d, AppDevicetoken.device_token:device_token})
                 try:
-                    Session.commit()
-                except:
-                    Session.rollback()
+                    cur_session.flush()
+                    cur_session.commit()
+                except Exception, e:
+                    cur_session.rollback()
+                    print self.url_pattern(), e
+                finally:
+                    cur_session.close()
         clu = {'uid':return_uid}
         clu_json = change_to_json_2(clu)
         self.write(clu_json)
+
+
+
+class UpdateToken(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/update/token"
+    @tornado.gen.coroutine
+    def post(self, *args, **kwargs):
+        cur_session = Session()
+        uid = self.param('user_uid')
+        device_token = self.param("device_token")
+
+        dt = time.strftime('%Y-%m-%d %H:%M:%S')
+        def datetime_timestamp(dt):
+            time.strptime(dt, '%Y-%m-%d %H:%M:%S')
+            s = time.mktime(time.strptime(dt, '%Y-%m-%d %H:%M:%S'))
+            return int(s)
+        d = datetime_timestamp(dt)
+        clu = cur_session.query(AppDevicetoken.id).filter(and_(AppDevicetoken.author_id == uid)).order_by(AppDevicetoken.id.desc()).limit(1).all()
+        if clu:
+            device_id = clu[0].id
+            cur_session.query(AppDevicetoken).filter(AppDevicetoken.id == device_id).update({AppDevicetoken.update_dateline: d, AppDevicetoken.device_token:device_token})
+            try:
+                cur_session.flush()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+                print self.url_pattern(), e
+            finally:
+                cur_session.close()
+        else:
+            pass
+        self.write('token_updated')
+
 
 
 
@@ -326,8 +506,11 @@ class UserClassify(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/user/classify"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
-        clu = Session.query(AuthClassify).order_by(AuthClassify.id)
+
+        cur_session = Session()
+        clu = cur_session.query(AuthClassify).order_by(AuthClassify.id)
         json_res = change_to_json(clu)
         self.write(json_res)
 
@@ -336,15 +519,17 @@ class MenuInfo(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/menu/info"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
+        cur_session = Session()
         t_di = {}
         uid = self.param("uid")
-        clu = Session.query(AppMessage.id).filter(and_(AppMessage.is_read == "0", AppMessage.message_to == uid))
+        clu = cur_session.query(AppMessage.id).filter(and_(AppMessage.is_read == "0", AppMessage.message_to == uid))
         json_res = change_to_json(clu)
         clu = json.loads(json_res)
         t_di["unread_messages"] = clu
 
-        clu = Session.query(ContentBlog.id).filter(ContentBlog.praise_count > "2")
+        clu = cur_session.query(ContentBlog.id).filter(ContentBlog.praise_count > "2")
         json_res = change_to_json(clu)
         clu = json.loads(json_res)
         t_di["new_blogs"] = clu
@@ -357,6 +542,7 @@ class QueryHot(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/query/hot"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         json_res = get_info(self.request, args, kwargs)
         self.write(json_res)
@@ -367,6 +553,7 @@ class BlogHot(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/blog/hot"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         json_res = get_info(self.request, args, kwargs)
         self.write(json_res)
@@ -376,8 +563,14 @@ class BlogIndex(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/blog/index"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
-        json_res = get_info(self.request, args, kwargs)
+        redis_record = redis_home_page_blog_index.lrange('0', 0, -1)
+        blog_index_s = [] 
+        for item in redis_record:
+            blog_index_s.append(eval(item))
+        json_res = change_to_json_2(blog_index_s)
+        #json_res = get_info(self.request, args, kwargs)
         self.write(json_res)
 
 
@@ -387,8 +580,19 @@ class Blog(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/blog"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
-        json_res = get_info(self.request, args, kwargs)
+        p = self.get_page_index() 
+        p_start = p[0]
+        p_end = p[0] + p[1] -1
+        record = redis_home_page_blog.lrange('0', p_start, p_end)
+        blog_s = []
+        for item in record:
+            blog_s.append(eval(item))
+        json_res = change_to_json_2(blog_s)
+
+        #json_res = get_info(self.request, args, kwargs)
+
         self.write(json_res)
 
 
@@ -396,12 +600,9 @@ class BlogCategory(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/blog/category/(\d*)"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
-        category_id = args[0]
-        p = self.get_page_index() 
-        uid = self.param("uid")
-        clu = Session.query(ContentBlog.id, ContentBlog.title, ContentBlog.author, func.replace(ContentBlog.cover, 'covers', '%s/covers'%self.image_base_url).label('cover'), func.replace(ContentBlog.thumb,'thumb/', '%s/thumb/'%self.image_base_url).label('thumb'), ContentBlog.date, ContentBlog.abstract, ContentBlog.category_id, ContentBlog.is_out, ContentBlog.is_big, ContentBlog.index_pic, ContentBlog.source, ContentBlog.source_url, ContentCategory.name.label("category_name"), ContentTag.name.label("tag_name")).join(ContentCategory, ContentBlog.category_id == ContentCategory.id).join(ContentTag, ContentBlog.category_id == ContentTag.id).filter(ContentBlog.category_id ==  category_id).order_by(ContentBlog.date.desc()).offset(p[0]).limit(p[1]).all()
-        json_res = change_to_json(clu)
+        json_res = get_info(self.request, args, kwargs)
         self.write(json_res)
 
 
@@ -411,6 +612,7 @@ class BlogFavorateUID(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/blog/favorate/(\d*)"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         json_res = get_info(self.request, args, kwargs)
         self.write(json_res)
@@ -425,28 +627,35 @@ class BlogPraise(OrigionHandler):
         return r"/blog/praise"
 
 
+    @tornado.gen.coroutine
     def post(self, *args, **kwargs):
         func_type = self.param('type')
         uid = self.param('uid')
         blog_id = self.param('blog_id')
 
+        cur_session = Session()
         if func_type == 'remove':
-            Session.query(AppBlogPraise).filter(and_(AppBlogPraise.author_id == uid, AppBlogPraise.blog_id == blog_id)).delete()
-            Session.query(ContentBlog).filter(ContentBlog.id == blog_id).update({ContentBlog.praise_count : ContentBlog.praise_count - 1})
-            Session.flush()
+            cur_session.query(AppBlogPraise).filter(and_(AppBlogPraise.author_id == uid, AppBlogPraise.blog_id == blog_id)).delete()
+            cur_session.query(ContentBlog).filter(ContentBlog.id == blog_id).update({ContentBlog.praise_count : ContentBlog.praise_count - 1})
             try:
-                Session.commit()
-            except:
-                Session.rollback()
+                cur_session.flush()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+
+            finally:
+                cur_session.close()
             clu = {'resutl':1, 'error':'/blog/praise remove success'}
         elif func_type == 'add':
-            Session.add(AppBlogPraise(author_id = uid, blog_id = blog_id))
-            Session.query(ContentBlog).filter(ContentBlog.id == blog_id).update({ContentBlog.praise_count : ContentBlog.praise_count + 1})
-            Session.flush()
+            cur_session.add(AppBlogPraise(author_id = uid, blog_id = blog_id))
+            cur_session.query(ContentBlog).filter(ContentBlog.id == blog_id).update({ContentBlog.praise_count : ContentBlog.praise_count + 1})
             try:
-                Session.commit()
-            except:
-                Session.rollback()
+                cur_session.flush()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+            finally:
+                cur_session.close()
             clu = {'resutl':1, 'error':'/blog/praise add success'}
         else:
             clu = {'resutl':0, 'error':'wrong parameter.'}
@@ -462,25 +671,40 @@ class BlogFavorate(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/blog/favorate"
+    @tornado.gen.coroutine
     def post(self, *args, **kwargs):
         func_type = self.param('type')
         uid = self.param('uid')
         blog_id = self.param('blog_id')
+        cur_session = Session()
         if func_type == 'remove':
-            Session.query(AppFavorate).filter(and_(AppFavorate.author_id == uid, AppFavorate.blog_id == blog_id)).delete()
-            Session.flush()
+            cur_session.query(AppFavorate).filter(and_(AppFavorate.author_id == uid, AppFavorate.blog_id == blog_id)).delete()
             try:
-                Session.commit()
-            except:
-                Session.rollback()
+                cur_session.flush()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+                print self.url_pattern(), e
+            finally:
+                cur_session.close()
             clu = {'resutl':1, 'error':'/blog/favorate remove success'}
         elif func_type == 'add':
-            Session.add(AppFavorate(author_id = uid, blog_id = blog_id))
-            Session.flush()
-            try:
-                Session.commit()
-            except:
-                Session.rollback()
+
+            if_exit_clu = cur_session.query(AppFavorate).filter(and_(AppFavorate.author_id == uid, AppFavorate.blog_id == blog_id)).all()
+            if len(if_exit_clu) == 0:
+                cur_session.add(AppFavorate(author_id = uid, blog_id = blog_id))
+
+                try:
+                    cur_session.flush()
+                    cur_session.commit()
+                except Exception, e:
+                    cur_session.rollback()
+                    print self.url_pattern(), e
+                finally:
+                    cur_session.close()
+
+            else:
+                pass
             clu = {'resutl':1, 'error':'/blog/favorate add success'}
         else:
             clu = {'resutl':0, 'error':'wrong parameter.'}
@@ -492,6 +716,7 @@ class BlogQuery(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/blog/query/(.*)"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         json_res = get_info(self.request, args, kwargs)
         self.write(json_res)
@@ -501,9 +726,11 @@ class TagBlog(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/tag/(\d*)"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         blog_id = args[0]
-        clu = Session.query(ContentTag.id.label('id'), ContentTag.name.label('name')).join(ContentBlogTagmany, ContentTag.id == ContentBlogTagmany.tag_id).filter(ContentBlogTagmany.blog_id == blog_id).all()
+        cur_session = Session()
+        clu = cur_session.query(ContentTag.id.label('id'), ContentTag.name.label('name')).join(ContentBlogTagmany, ContentTag.id == ContentBlogTagmany.tag_id).filter(ContentBlogTagmany.blog_id == blog_id).all()
         json_res = change_to_json_1(clu)
         self.write(json_res)
 
@@ -516,10 +743,12 @@ class BlogTag(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/blog/tag/(\d*)"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         tag_id = args[0]
-        clu = Session.query(ContentBlog.id, ContentBlog.title, func.replace(ContentBlog.cover,'covers', '%s/covers'%self.image_base_url).label("cover"), func.replace(ContentBlog.thumb, 'thumb/', '%s/thumb/'%self.image_base_url).label("thumb"),ContentBlog.date,ContentBlog.abstract,ContentBlog.category_id, ContentCategory.name.label("category_name"), ContentBlog.tag_id, ContentTag.name.label("tag_name"), ContentBlog.is_out, ContentBlog.is_big, ContentBlog.index_pic, ContentBlog.source, ContentBlog.source_url).join(ContentCategory, ContentBlog.category_id == ContentCategory.id).join(ContentTag, ContentBlog.tag_id == ContentTag.id).filter(text("content_blog.tag_id = :tag_id")).params(tag_id =  tag_id).all()
-        json_res = change_to_json(clu)
+        cur_session = Session()
+        clu = cur_session.query(ContentBlog.id, ContentBlog.title, func.replace(ContentBlog.cover,'covers', '%s/covers'%self.image_base_url).label("cover"), func.replace(ContentBlog.thumb, 'thumb/', '%s/thumb/'%self.image_base_url).label("thumb"),ContentBlog.date,ContentBlog.abstract,ContentBlog.category_id, ContentCategory.name.label("category_name"), ContentBlog.tag_id, ContentTag.name.label("tag_name"), ContentBlog.is_out, ContentBlog.is_big, ContentBlog.index_pic, ContentBlog.source, ContentBlog.source_url).join(ContentCategory, ContentBlog.category_id == ContentCategory.id).join(ContentTag, ContentBlog.tag_id == ContentTag.id).filter(text("content_blog.tag_id = :tag_id")).params(tag_id =  tag_id).all()
+        json_res = change_to_json_1(clu)
         self.write(json_res)
 
 
@@ -527,46 +756,12 @@ class BlogID(OrigionHandler):#problem
     @classmethod
     def url_pattern(cls):
         return r"/blog/(\d{1,})"
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):#need
-        print self.request.uri
-        blog_id = args[0]
-        uid = self.param('uid')
-        blog_praise = []
-        blog_favorate = []
-        if uid is not None:
-            blog_praise = Session.query(AppBlogPraise.id.label("pid")).filter(and_(AppBlogPraise.blog_id == blog_id, AppBlogPraise.author_id == uid)).all()
-            blog_favorate = Session.query(AppFavorate.id.label("fid")).filter(and_(AppFavorate.blog_id == blog_id, AppFavorate.author_id == uid)).all()
-        comment_cnt_clu = Session.query(func.count(ContentBlogComment.comment_id).label("comment_count")).join(ContentComment, ContentBlogComment.comment_id == ContentComment.id).filter(ContentBlogComment.blog_id == blog_id).all()
-        comment_cnt = comment_cnt_clu[0][0]
-
-        if len(blog_praise) == 0: 
-            is_praise = 0
-        else:
-            is_praise = 1
-        if len(blog_favorate) == 0:
-            is_favorate = 0
-        else:
-            is_favorate = 1
-        blog = Session.query(ContentBlog.id, ContentBlog.title, ContentBlog.author, func.replace(ContentBlog.cover, 'covers', '%s/covers'%self.image_base_url).label('cover'), func.replace(ContentBlog.thumb, 'thumb/', '%s/thumb/'%self.image_base_url).label('thumb'), ContentBlog.date, ContentBlog.category_id, ContentBlog.content, ContentBlog.abstract).filter(ContentBlog.id == blog_id).all()
-        blog_json = change_to_json(blog)
-        blog = json.loads(blog_json)
-        blog['comment_count'] = comment_cnt
-        blog['is_praise'] = is_praise
-        blog['is_favorate'] = is_favorate
-
-        related_blog_clu = Session.query(ContentBlog.id, ContentBlog.title, func.replace(ContentBlog.cover, 'covers','%s/covers'%self.image_base_url).label("cover"), func.replace(ContentBlog.thumb, 'thumb/', '%s/thumb/'%self.image_base_url).label("thumb"),ContentBlog.date,ContentBlog.abstract,ContentBlog.category_id, ContentCategory.name.label("category_name"), ContentBlog.tag_id, ContentTag.name.label("tag_name"), ContentBlog.is_out, ContentBlog.is_big, ContentBlog.index_pic, ContentBlog.source, ContentBlog.source_url).join(ContentCategory, ContentBlog.category_id == ContentCategory.id).join(ContentTag, ContentBlog.tag_id == ContentTag.id).filter(text("content_blog.tag_id in (select tag_id from content_blog where id = :blog_id)")).params(blog_id =  blog_id).all()
-        related_blog_json = change_to_json_1(related_blog_clu)
-        related_blog = json.loads(related_blog_json)
-
-        hot_comment_clu = Session.query(ContentBlogComment.comment_id,  ContentComment.content, ContentComment.author_id, ContentAuth.nickname, ContentComment.praise_count, ContentComment.time).join(ContentComment, ContentBlogComment.comment_id == ContentComment.id).join(ContentAuth, ContentComment.author_id == ContentAuth.id).filter(text("content_comment.visible = 1")).all()
-        hot_comment_json = change_to_json_1(hot_comment_clu)
-        hot_comment = json.loads(hot_comment_json)
-
-
-        clu = {'blog':blog, 'related_blog':related_blog, 'hot_comment':hot_comment}
-        json_res = change_to_json_2(clu)
+        json_res = get_info(self.request, args, kwargs)
         self.write(json_res)
-
+        self.finish()
 
 
 
@@ -574,9 +769,11 @@ class CommentHot(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/comment/hot/(\d*)"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         blog_id = args[0]
-        clu = Session.query(ContentBlogComment.id,  ContentComment.content, ContentComment.author_id, ContentComment.aauthor, ContentComment.time).join(ContentComment, ContentBlogComment.comment_id == ContentComment.id).filter(text("content_blog_comment.blog_id = :blog_id")).params(blog_id =  blog_id).all()
+        cur_session = Session()
+        clu = cur_session.query(ContentBlogComment.id,  ContentComment.content, ContentComment.author_id, ContentComment.aauthor, ContentComment.time).join(ContentComment, ContentBlogComment.comment_id == ContentComment.id).filter(text("content_blog_comment.blog_id = :blog_id")).params(blog_id =  blog_id).all()
         json_res = change_to_json(clu)
         self.write(json_res)
 
@@ -586,22 +783,26 @@ class CommentBlog(OrigionHandler):#problem
     @classmethod
     def url_pattern(cls):
         return r"/comment/(\d*)"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
+        print self.request
         p = self.get_page_index() 
         uid = self.param('uid')
         blog_id = args[0]
-        comments = Session.query(ContentBlogComment.comment_id,  ContentComment.content, ContentComment.author_id, ContentAuth.nickname, ContentComment.praise_count, ContentComment.time, func.replace(ContentAuth.head, 'covers/', '%s/covers'%self.image_base_url).label('head')).join(ContentComment, ContentBlogComment.comment_id == ContentComment.id).join(ContentAuth, ContentComment.author_id == ContentAuth.id).filter(text("content_blog_comment.blog_id = :blog_id and content_comment.visible = 1")).params(blog_id =  blog_id).order_by(ContentComment.id.desc()).offset(p[0]).limit(p[1]).all()
+        cur_session = Session()
+        comments = cur_session.query(ContentBlogComment.comment_id,  ContentComment.content, ContentComment.author_id, ContentAuth.nickname, ContentComment.praise_count, ContentComment.time, func.replace(ContentAuth.head, 'covers/', '%s/covers'%self.image_base_url).label('head')).join(ContentComment, ContentBlogComment.comment_id == ContentComment.id).join(ContentAuth, ContentComment.author_id == ContentAuth.id).filter(text("content_blog_comment.blog_id = :blog_id and content_comment.visible = 1")).params(blog_id =  blog_id).order_by(ContentComment.id.desc()).offset(p[0]).limit(p[1]).all()
         json_res = change_to_json_1(comments)
         if uid is not None:
             comments = json.loads(json_res)
             for index in xrange(len(comments)):
                 comment_id = comments[index]['comment_id']
-                comment_praise = Session.query(AppCommentPraise.id).filter(and_(AppCommentPraise.comment_id ==  comment_id, AppCommentPraise.author_id == uid)).all()
+                comment_praise = cur_session.query(AppCommentPraise.id).filter(and_(AppCommentPraise.comment_id ==  comment_id, AppCommentPraise.author_id == uid)).all()
                 if len(comment_praise) == 0:
                     comments[index]['praise_state'] = 0 
                 else:
                     comments[index]['praise_state'] = 1 
             json_res = change_to_json_2(comments)
+        json_res = "[]"
         self.write(json_res)
 
 
@@ -610,6 +811,7 @@ class Comment(OrigionHandler):#problem
     def url_pattern(cls):
         return r"/comment"
 
+    @tornado.gen.coroutine
     def post(self, *args, **kwargs):
         blog_id = self.param('blog_id')
         content = self.param('content')
@@ -617,19 +819,26 @@ class Comment(OrigionHandler):#problem
         ip = self.request.remote_ip 
         current_time = time.strftime('%Y-%m-%d %H:%M:%S')
         content_comment_imp = ContentComment(content =content , author_id =uid , aauthor =ip , time = current_time)
-        Session.add(content_comment_imp)
-        Session.flush()
+        cur_session = Session()
+        cur_session.add(content_comment_imp)
         try:
-            Session.commit()
-        except:
-            Session.rollback()
-        comment_id = content_comment_imp.id
-        Session.add(ContentBlogComment(blog_id =blog_id , comment_id = comment_id))
-        Session.flush()
+            cur_session.commit()
+            comment_id = content_comment_imp.id
+        except Exception, e:
+            cur_session.rollback()
+            print self.url_pattern(), e
+        finally:
+            cur_session.close()
+
+        cur_session.add(ContentBlogComment(blog_id =blog_id , comment_id = comment_id))
         try:
-            Session.commit()
-        except:
-            Session.rollback()
+            cur_session.flush()
+            cur_session.commit()
+        except Exception, e:
+            cur_session.rollback()
+            print self.url_pattern(), e
+        finally:
+            cur_session.close()
         res = {'result':"1", "error":"/comment add success"}
         res_json = json.dumps(res)
         self.write(res_json)
@@ -640,6 +849,7 @@ class CommentPraiseCommentID(OrigionHandler):#problem
     @classmethod
     def url_pattern(cls):
         return r"/comment/praise/(\d*)"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         comment_id = args[0]
         p = self.get_page_index() 
@@ -654,17 +864,23 @@ class CommentPraiseCommentID(OrigionHandler):#problem
             pass
 
         json_res = get_info(self.request, args, kwargs)
-        #Session.query(AppMessage).filter(AppMessage.id == message_id).update({AppMessage.is_read:1})
-        #Session.flush()
+        cur_session = Session()
+        cur_session.query(AppMessage).filter(AppMessage.id == message_id).update({AppMessage.is_read:1})
         try:
-            Session.commit()
-        except:
-            Session.rollback()
+            cur_session.flush()
+            cur_session.commit()
+        except Exception, e:
+            cur_session.rollback()
+            print self.url_pattern(), e
+
+        finally:
+            cur_session.close()
         self.write(json_res)
 
 
+    @tornado.gen.coroutine
     def post(self, *args, **kwargs):
-        print 222
+        pass
 
 
 
@@ -672,6 +888,7 @@ class CommentPraise(OrigionHandler):#problem
     @classmethod
     def url_pattern(cls):
         return r"/comment/praise"
+    @tornado.gen.coroutine
     def post(self, *args, **kwargs):
         praise_type = self.param("type") 
         uid = self.param("uid")
@@ -680,15 +897,18 @@ class CommentPraise(OrigionHandler):#problem
         comment_id = self.param("comment_id")
         current_time = time.strftime('%Y-%m-%d %H:%M:%S')
 
+        cur_session = Session()
         if praise_type == 'add':
-            Session.add(AppCommentPraise(author_id = uid, comment_id = comment_id))
-            Session.query(ContentComment).filter(ContentComment.id ==  comment_id).update({ContentComment.praise_count : ContentComment.praise_count + 1})
-            Session.flush()
+            cur_session.add(AppCommentPraise(author_id = uid, comment_id = comment_id))
+            cur_session.query(ContentComment).filter(ContentComment.id ==  comment_id).update({ContentComment.praise_count : ContentComment.praise_count + 1})
             try:
-                Session.commit()
-            except:
-                Session.rollback()
-            old_comment = Session.query(ContentComment.author_id, ContentComment.content, ContentComment.praise_count).filter(ContentComment.id == comment_id)
+                cur_session.flush()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+            finally:
+                cur_session.close()
+            old_comment = cur_session.query(ContentComment.author_id, ContentComment.content, ContentComment.praise_count).filter(ContentComment.id == comment_id)
             to_uid = old_comment[0].author_id
             content = old_comment[0].content
             praise_count = old_comment[0].praise_count
@@ -697,23 +917,31 @@ class CommentPraise(OrigionHandler):#problem
                 subject = "%s 等 %s 人赞了您的评论：%s"%(nickname, praise_count, abstr_content)
             else:
                 subject = '%s赞了您的评论： %s'%(nickname, abstr_content)
-            Session.merge(AppMessage(message_from = uid, message_to = to_uid, subject = subject, date = current_time, message_type = 2, blog_id = blog_id, comment_id = comment_id)) 
+            cur_session.merge(AppMessage(message_from = uid, message_to = to_uid, subject = subject, date = current_time, message_type = 2, blog_id = blog_id, comment_id = comment_id)) 
 
-            Session.flush()
             try:
-                Session.commit()
-            except:
-                Session.rollback()
+                cur_session.flush()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+                print self.url_pattern(), e
+            finally:
+                cur_session.close()
 
-            #push_message_to_uid
+            push_message_to_uid(to_uid, subject)
             clu = {'resutl':1, 'error':'/comment/praise add success'}
 
         elif praise_type == 'remove':
-            Session.query(AppCommentPraise).filter(and_(AppCommentPraise.author_id == uid, AppCommentPraise.comment_id == comment_id)).deletee()
-            Session.query(ContentComment).filter(ContentComment.id ==  comment_id).update({ContentComment.praise_count : ContentComment.praise_count - 1})
-            Session.flush()
-            Session.commit()
-            Session.rollback()
+            cur_session.query(AppCommentPraise).filter(and_(AppCommentPraise.author_id == uid, AppCommentPraise.comment_id == comment_id)).deletee()
+            cur_session.query(ContentComment).filter(ContentComment.id ==  comment_id).update({ContentComment.praise_count : ContentComment.praise_count - 1})
+            try:
+                cur_session.flush()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+                print self.url_pattern(), e
+            finally:
+                cur_session.close()
             clu = {'resutl':1, 'error':'/comment/praise remove success'}
         else:
             clu = {'resutl':0, 'error':'wrong parameter.'}
@@ -725,15 +953,20 @@ class CommentReplyComment_id(OrigionHandler):#problem
     @classmethod
     def url_pattern(cls):
         return r"/comment/reply/(\d*)"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         json_res = get_info(self.request, args, kwargs)
         message_id = self.param('message_id')
-        #Session.query(AppMessage).filter(AppMessage.id == message_id).update({AppMessage.is_read: 1})
-       # try:
-       #     Session.flush()
-       #     Session.commit()
-       # except:
-       #     Session.rollback()
+        cur_session = Session()
+        cur_session.query(AppMessage).filter(AppMessage.id == message_id).update({AppMessage.is_read: 1})
+        try:
+            cur_session.flush()
+            cur_session.commit()
+        except Exception, e:
+            cur_session.rollback()
+            print self.url_pattern(), e
+        finally:
+            cur_session.close()
         self.write(json_res)
 
 
@@ -741,6 +974,7 @@ class CommentReply(OrigionHandler):#problem
     @classmethod
     def url_pattern(cls):
         return r"/comment/reply"
+    @tornado.gen.coroutine
     def post(self, *args, **kwargs):
         uid = self.param("uid")
         nickname =  self.param('nickname')
@@ -750,47 +984,63 @@ class CommentReply(OrigionHandler):#problem
         ip = self.request.remote_ip
         current_time = time.strftime('%Y-%m-%d %H:%M:%S')
         content_comment_imp = ContentComment(content =content , author_id =uid , aauthor =ip , time = current_time)
-        Session.add(content_comment_imp)
+        cur_session = Session()
+        cur_session.add(content_comment_imp)
         try:
-            Session.flush()
-            Session.commit()
-        except:
-            Session.rollback()
-        reply_comment_id = content_comment_imp.id
-        Session.add(ContentBlogComment(blog_id =blog_id , comment_id = reply_comment_id))
-        old_comment = Session.query(ContentComment.author_id, ContentComment.content).filter(ContentComment.id ==  comment_id).all()
-        Session.add(AppCommentReply(comment_id = comment_id, reply_id = reply_comment_id))
+            cur_session.flush()
+            cur_session.commit()
+            reply_comment_id = content_comment_imp.id
+        except Exception, e:
+            cur_session.rollback()
+            print self.url_pattern(), e
+        finally: 
+            cur_session.close()
+        cur_session.add(ContentBlogComment(blog_id =blog_id , comment_id = reply_comment_id))
+        old_comment = cur_session.query(ContentComment.author_id, ContentComment.content).filter(ContentComment.id ==  comment_id).all()
+        cur_session.add(AppCommentReply(comment_id = comment_id, reply_id = reply_comment_id))
 
         try:
-            Session.commit()
-            Session.commit()
-        except:
-            Session.rollback()
+            cur_session.flush()
+            cur_session.commit()
+        except Exception, e:
+            cur_session.rollback()
+            print self.url_pattern(), e
+        finally: 
+            cur_session.close()
         to_uid = old_comment[0].author_id
         content = old_comment[0].content
         abstract_content = content[:100]
         subject = '%s等人回复了您的评论：%s'%(nickname, abstract_content)
-        #push_message_to_uid(to_uid, subject)
-        Session.merge(AppMessage(message_from = uid, message_to = to_uid, subject = subject, date = current_time, message_type = 1, blog_id = blog_id, comment_id = comment_id)) 
+        push_message_to_uid(to_uid, subject)
+        cur_session.merge(AppMessage(message_from = uid, message_to = to_uid, subject = subject, date = current_time, message_type = 1, blog_id = blog_id, comment_id = comment_id)) 
         try:
-            Session.flush()
-            Session.commit()
-        except:
-            Session.rollback()
+            cur_session.flush()
+            cur_session.commit()
+        except Exception, e:
+            cur_session.rollback()
+            print self.url_pattern(), e
+        finally: 
+            cur_session.close()
         json_res = json.dumps({"result":1, "error":"/comment/reply success"})#problem
         self.write(json_res)
 
 
 
 class CommentReport(OrigionHandler):#problem
+    @tornado.gen.coroutine
     def post(self, *args, **kwargs):
         uid = self.param('uid')
         comment_id = self.param('comment_id')
-        Session.query(ContentComment).filter(ContentComment.id == comment_id).update({ContentComment.report_count: ContentComment.report_count + 1})
+        cur_session = Session()
+        cur_session.query(ContentComment).filter(ContentComment.id == comment_id).update({ContentComment.report_count: ContentComment.report_count + 1})
         try:
-            Session.commit()
-        except:
-            Session.rollback()
+            cur_session.flush()
+            cur_session.commit()
+        except Exception, e:
+            cur_session.rollback()
+            print self.url_pattern(), e
+        finally: 
+            cur_session.close()
         json_res = json.dumps({"result":1, "error":"/comment/report success"})#problem
         self.write(json_res)
 
@@ -800,9 +1050,24 @@ class Message(OrigionHandler):#message
     @classmethod
     def url_pattern(cls):
         return r"/message/(\d*)"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         json_res = get_info(self.request, args, kwargs)
         self.write(json_res)
+
+
+class MessageAllreadyRead(OrigionHandler):#message
+    @classmethod
+    def url_pattern(cls):
+        return r"/message/allreadyread/(\d*)"
+    @tornado.gen.coroutine
+    def get(self, *args, **kwargs):
+        json_res = get_info(self.request, args, kwargs)
+        self.write(json_res)
+
+
+
+
 
 
 
@@ -810,15 +1075,15 @@ class Blogview(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/blogview/(\d*)"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         blog_id = args[0]
-        clu = Session.query(ContentBlog).filter(ContentBlog.id == blog_id).all()
-        if len(clu) == 0:
-            self.write('没有对应的文章')
-        else:
-            clu_res = change_to_json(clu)
-            clu = json.loads(clu_res)
-            self.render('blog.html', id = clu["id"], title = clu['title'], content = clu['content'], cover = clu['cover'], blog = '2016-5-40', author = clu['author'], date = clu['date'], time = clu['date'])
+        json_res = get_info(self.request, args, kwargs)
+        record = json.loads(json_res)
+        clu = record['blog']
+        relate_blog = record['related_blog'][0:2]
+        comment_cnt = clu['comment_count']
+        self.render('blog.html', id = clu["id"], title = clu['title'], content = clu['content'], cover = clu['cover'], blog = '2016-5-40', author = clu['author'], date = clu['date'], time = clu['date'], abstract = clu['abstract'], comment_cnt = clu['comment_count'], relate_blog = relate_blog)
 
 
 
@@ -826,14 +1091,153 @@ class Setting(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/setting"
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
         uid = self.param('uid') 
+        cur_session = Session()
         if uid is None:
             pass
         else:
-            clu = Session.query(AppDevicetoken.enable_push).filter(text("app_devicetoken.author_id = :uid")).params(uid = uid).all()
+            clu = cur_session.query(AppDevicetoken.enable_push).filter(text("app_devicetoken.author_id = :uid")).params(uid = uid).all()
             json_res = change_to_json(clu)
             self.write(json_res)
+
+
+
+class FlushAllCache(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/flush_all_cache"
+    @tornado.gen.coroutine
+    def get(self, *args, **kwargs):
+        file_dir=os.path.join(os.path.dirname(__file__), "redis_cache/redis_cache/sync_cache.sh"),
+        cmd_str = "sh %s"%file_dir
+        os.system(cmd_str)
+        self.write('%s\tcache_allready_flushed'%cmd_str)
+
+
+class FlushSingleBlogContent(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/flush_single_blog_content/(\d{1,})"
+    @tornado.gen.coroutine
+    def get(self, *args, **kwargs):
+        blog_id = args[0]
+        tt = os.path.dirname(os.path.abspath(__file__))
+        file_dir = "%s/redis_cache/redis_cache/flush_singal_blog.py"%(os.path.dirname(__file__))
+        cmd_str = "python %s %s"%(file_dir, blog_id)
+        os.system(cmd_str)
+        self.write('%s\tcache_allready_flushed'%cmd_str)
+
+class FlushHomePageBlog(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/flush_home_page_blog"
+
+    @tornado.gen.coroutine
+    def get(self, *args, **kwargs):
+        tt = os.path.dirname(os.path.abspath(__file__))
+        file_dir = "%s/redis_cache/redis_cache/flush_home_page_blog.py"%(os.path.dirname(__file__))
+        cmd_str = "python %s"%file_dir
+        os.system(cmd_str)
+        self.write('%s\tcache_allready_flushed'%cmd_str)
+
+
+class FlushHomePageBlogIndex(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/flush_home_page_blog_index"
+
+    @tornado.gen.coroutine
+    def get(self, *args, **kwargs):
+        tt = os.path.dirname(os.path.abspath(__file__))
+        file_dir = "%s/redis_cache/redis_cache/flush_home_page_blog_index.py"%(os.path.dirname(__file__))
+        cmd_str = "python %s"%file_dir
+        os.system(cmd_str)
+        self.write('%s\tcache_allready_flushed'%cmd_str)
+
+
+
+
+class PushBlogToAllUsers(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/push_blog_to_all_users/(\d*)"
+
+    @tornado.gen.coroutine
+    def get(self, *args, **kwargs):
+
+        blog_id = args[0]
+        print "PUSH", time.ctime(),self.request
+        def push_message_to_all_users(subject):
+            app_name = '留学生日报'
+            mk = os.path.dirname(os.path.abspath("__file__"))
+            ios_dir =  "%s%s"%(mk, "/push/push_blog_to_all_users.py")
+            cmd = ["python",ios_dir, blog_id, subject, app_name] 
+            subprocess.Popen(cmd)
+
+
+        engine_for_push = create_engine(database.DB_PATH)
+        Session_for_push = sessionmaker()
+        Session_for_push.configure(bind=engine_for_push)
+
+
+        cur_session = Session_for_push()
+        clu = cur_session.query(ContentBlog.title).filter(ContentBlog.id == blog_id).all()
+        cur_session.close()
+        if not clu:
+            self.write('no_such_blog')
+        else:
+            title = clu[0].title
+            push_message_to_all_users(title)
+            self.write('blog_pushed')
+    
+
+
+
+class PushBlogToAPPID(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/push_blog_to_appid/(\d*)"
+
+    @tornado.gen.coroutine
+    def get(self, *args, **kwargs):
+        blog_id = args[0]
+        print blog_id
+        def push_message_to_appid(subject):
+            app_name = '留学生日报'
+            mk = os.path.dirname(os.path.abspath("__file__"))
+            ios_dir =  "%s%s"%(mk, "/push/push_blog_to_appid.py")
+            cmd = ["python",ios_dir, blog_id, subject, app_name] 
+            subprocess.Popen(cmd)
+
+        cur_session = Session()
+        clu = cur_session.query(ContentBlog.title).filter(ContentBlog.id == blog_id).all()
+        if not clu:
+            self.write('no_such_blog')
+        else:
+            title = clu[0].title
+            push_message_to_appid(title)
+            self.write('blog_pushed')
+    
+
+
+
+class AdsTa(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/adsta"
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
+    def get(self, *args, **kwargs):
+
+        redirect_url = self.param('url')
+        if redirect_url:
+            self.redirect(redirect_url)
+        else:
+            self.write('None')
+
+
 
 
 
@@ -843,12 +1247,10 @@ class Test1(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/test1"
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
     def get(self, *args, **kwargs):
-        self.write(22220)
-       # clu = Session.query(ContentBlog).filter(ContentBlog.id == 712).all()
-       # clu_res = change_to_json(clu)
-       # clu = json.loads(clu_res)
-       # self.render('blog.html', id = clu["id"], title = clu['title'], content = clu['content'], cover = clu['cover'], blog = '2016-5-40', author = clu['author'], date = clu['date'], time = clu['date'])
+        self.write("22220")
 
 
 
@@ -857,9 +1259,58 @@ class Test2(OrigionHandler):
     @classmethod
     def url_pattern(cls):
         return r"/test2"
-    def get(self, *args, **kwargs):
-        clu = Session.query(ContentAuth).all()
-        json_res = change_to_json(clu)
-        self.write(json_res)
 
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
+    def get(self, *args, **kwargs):
+
+        blog_id = "1177"
+        print "PUSH", time.ctime(),self.request
+        def push_message_to_all_users_test(subject):
+            app_name = '留学生日报'
+            mk = os.path.dirname(os.path.abspath("__file__"))
+            ios_dir =  "%s%s"%(mk, "/push/push_blog_to_all_users_test.py")
+            cmd = ["python",ios_dir, blog_id, subject, app_name] 
+            subprocess.Popen(cmd)
+
+
+        engine_for_push = create_engine(database.DB_PATH)
+        Session_for_push = sessionmaker()
+        Session_for_push.configure(bind=engine_for_push)
+
+
+        cur_session = Session_for_push()
+        clu = cur_session.query(ContentBlog.title).filter(ContentBlog.id == blog_id).all()
+        cur_session.close()
+        if not clu:
+            self.write('no_such_blog')
+        else:
+            title = clu[0].title
+            push_message_to_all_users_test(title)
+            self.write('blog_pushed')
+        self.write("10")
+
+
+
+    def on_fetch(self, response):
+        self.write("sleep 6")
+        self.finish()
+
+
+class Rss(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/rss"
+
+
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
+    def get(self, *args, **kwargs):
+        cur_session = Session()
+        clus = cur_session.query(ContentBlog.id, ContentBlog.title, func.replace(ContentBlog.cover,'covers', '%s/covers'%self.image_base_url).label("cover"), func.replace(ContentBlog.thumb, 'thumb/', '%s/thumb/'%self.image_base_url).label("thumb"),ContentBlog.date,ContentBlog.abstract, ContentBlog.content, ContentBlog.source).filter(ContentBlog.hotness == 0).order_by(ContentBlog.id.desc()).limit(30).all()
+        cur_session.close()
+        clu_json = change_to_json_1(clus)
+        clus = json.loads(clu_json)
+        copyright = "本文经授权转载自北美留学生日报，Collegedaily.cn，All Rights Reserved"
+        self.render('rss.html', clus = clus, copyright = copyright)
 

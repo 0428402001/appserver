@@ -16,3 +16,4 @@ class ContentAd(ModelBase):
     title = Column(VARCHAR(256, charset='utf8'), nullable=True, default='')
     cover = Column(VARCHAR(100, charset='utf8'), nullable=True, default='')
     url = Column(VARCHAR(256, charset='utf8'), nullable=True, default='')
+    is_active = Column(INTEGER, nullable=True)

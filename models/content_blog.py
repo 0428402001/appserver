@@ -32,3 +32,5 @@ class ContentBlog(BASEOBJ):
     is_out = Column(INTEGER, nullable=True, default='')  
     source = Column(VARCHAR(100, charset='utf8'), nullable=True, default='')  
     source_url = Column(VARCHAR(100, charset='utf8'), nullable=True, default='')  
+    sort = Column(INTEGER, nullable=True, default='')  
+    publish_time = Column(DateTime, nullable=True, default='')  

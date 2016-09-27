@@ -49,9 +49,11 @@ def change_to_json_1(session_result):
             data = obj.__getattribute__(field)
 
             if isinstance(data, datetime.datetime): 
-                data=data.strftime('%Y-%m-%d %H:%M:%S') 
+                data=data.strftime('%Y-%m-%d') 
+                #data=data.strftime('%Y-%m-%d %H:%M:%S') 
             elif isinstance(data, datetime.date): 
-                data=data.strftime('%Y-%m-%d %H:%M:%S') 
+                data=data.strftime('%Y-%m-%d') 
+                #data=data.strftime('%Y-%m-%d %H:%M:%S') 
 
             fields[field] = data
         Hosts.append(fields)
@@ -108,34 +110,6 @@ class ModelBase(BASEOBJ):
     __table_args__ = {'mysql_engine': 'InnoDB'}
     __table_initialized__ = False
 
-
-
-   # @classmethod
-   # def query_to_list(cls, user_cred, q, kwargs):
-   #     retlist = []
-   #     for row in q.all():
-   #         item = {}
-   #         for k in cls.list_fields(user_cred):
-   #             if k=='name':
-   #                 c = row.get_name()
-   #             else:
-   #                 c = getattr(row, k, None)
-   #             if c is not None:
-   #                 if isinstance(c, datetime.datetime):
-   #                     item[k] = timeutils.isotime(c)
-   #                 else:
-   #                     item[k] = c
-   #         if 'details' not in kwargs or kwargs['details'] in ['True', True]:
-   #             func = getattr(row, 'get_customize_columns', None)
-   #             if func is not None and callable(func):
-   #                 new_item = func(user_cred, kwargs)
-   #             else:
-   #                 new_item = None
-   #             if new_item is not None and len(new_item) > 0:
-   #                 for k in new_item:
-   #                     item[k] = new_item[k]
-   #         retlist.append(item)
-   #     return retlist
 
 
 
@@ -205,8 +179,8 @@ def wrap_db_error(f):
 
 def _create_engine(desc):
     engine_args = {
-                    'pool_recycle': 3600,
-                    'pool_size': 5,
+                    'pool_recycle': 10,
+                    'pool_size': 20,
                     #'echo': True,
                     'echo': False,
                     'convert_unicode': True,
@@ -225,8 +199,8 @@ def _create_engine(desc):
 
 
 
-wanka_engine = _create_engine('mysql://collegedaily:Zhuoxing1989@rdskhmm9d27q0t1etbxsfpublic.mysql.rds.aliyuncs.com:3306/collapp?charset=utf8')
-#wanka_engine = _create_engine('mysql://root:yestem@localhost:3306/mysql?charset=utf8')
+wanka_engine = _create_engine('mysql://collegedaily:Zhuoxing1989@rdskhmm9d27q0t1etbxsf.mysql.rds.aliyuncs.com:3306/collapp?charset=utf8')
+#wanka_engine = _create_engine('mysql://root:yestem@localhost:3306/collapp?charset=utf8')
 
 Session = scoped_session(sessionmaker(bind=wanka_engine,
                                     expire_on_commit=False,

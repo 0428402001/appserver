@@ -4,6 +4,10 @@ import json
 import os
 import time
 
+
+from tornado.concurrent import run_on_executor
+
+from tornado.httpclient import AsyncHTTPClient
 import tornado.httpclient
 import tornado.web
 import tornado.gen
@@ -59,6 +63,12 @@ from models.base_orm import change_to_json_2
 
 import dal
 
+#conn_pool_blog = redis.ConnectionPool(host='localhost', port=6379, db=0)
+#redis_r_blog = redis.Redis(connection_pool=conn_pool_blog)
+
+
+
+
 
 def change_to_int(page):
     try:
@@ -113,20 +123,53 @@ def check_if_category_subscred(uid, clu):
             i['subscribed'] = 0
     return clu
 
+def get_blog_content(blog_id,uid):
+    json_res = dal._get_blog_by_cache(blog_id)
+    if json_res:
+        record = json.loads(json_res)
+    else:
+        print blog_id
+        blog_json = dal._get_blog(blog_id)
+
+        blog = json.loads(blog_json)
+        m = re.findall(r"<[^>]*img[^>]*src[^>]*>", blog["content"])
+        for img in m:
+            old_img = img
+            new_img = re.sub(r"src=\"", "data-original=\"", old_img)
+            blog['content'] = blog['content'].replace(old_img, new_img)
+
+        related_blog_json = dal._get_relate_blog(blog_id)
+        related_blog = json.loads(related_blog_json)
+        comment_cnt = dal._get_cmt_cnt(blog_id)
+
+
+        record = {'blog':blog, 'related_blog':related_blog}
+
+    is_favorate = dal._get_if_favorate(blog_id, uid)
+    is_praise = dal._get_if_praise(blog_id, uid)
+
+    record['blog']['is_favorate'] = is_favorate
+    record['blog']['is_praise'] = is_praise
+
+    res_json = change_to_json_2(record)
+    return res_json
 
 
 
 
 
-#used to handler get method
 def get_info(request, args, kwargs):
     uri = request.uri
     uri = uri.split('?')[0]
     if re.search(r'^/blog/hot$', uri):
         request_arguments = request.arguments
         p = get_page_index(request_arguments)
-        json_res = dal._get_hot_blog(p)
-        return json_res 
+        json_res = dal._get_hot_blog_by_cache(p)
+        if json_res:
+            return json_res
+        else:
+            json_res = dal._get_hot_blog(p)
+            return json_res 
     if re.search(r'^/query/hot$', uri):
         json_res = dal._get_query_hot()
         return  json_res 
@@ -153,14 +196,43 @@ def get_info(request, args, kwargs):
             json_res = change_to_json_2(clu)
             return json_res
 
-    
-    if re.search(r'^/blog$', uri):
+
+    if re.search(r'^/ad$', uri):
         request_arguments = request.arguments
         p = get_page_index(request_arguments)
-        json_res = dal._get_blog(p)
+        json_res = dal._get_ad(p)
         return json_res 
 
+
+
+    
+    if re.search(r'^/blog$', uri):
+        pass
+        request_arguments = request.arguments
+        p = get_page_index(request_arguments)
+        json_res = dal._get_home_page_blog(p)
+        return json_res 
+
+
+    if re.search(r'^/blogview/(\d*)', uri):
+        blog_id = args[0]
+        uid = get_param('uid', request.arguments)
+        return get_blog_content(blog_id, uid)
+
+
+    if re.search(r'^/blog/\d{1,}$', uri):
+        blog_id = args[0]
+        uid = get_param('uid', request.arguments)
+
+        return get_blog_content(blog_id, uid)
+
+
+
+
+
+
     if  re.search(r'^/blog/index$', uri):
+        pass
         request_arguments = request.arguments
         p = get_page_index(request_arguments)
         json_res = dal._get_blog_index(p)
@@ -226,12 +298,56 @@ def get_info(request, args, kwargs):
         uid = args[0]
         request_arguments = request.arguments
         p = get_page_index(request_arguments)
-        messages_json = dal._get_message_from_users(p, uid)
+        messages_json = dal._get_message_from_users_not_read(p, uid)
         messages = json.loads(messages_json)
+
+        message_cnt = len(messages)
+        for mess in messages:
+            mess['message_cnt'] = message_cnt
+
         messages1_json = dal._get_message_from_offical()
         messages1 = json.loads(messages1_json)
-        messages.append(messages1)
+        for mess in messages1:
+            mess['message_cnt'] = message_cnt
+        messages = messages1 + messages
         json_res = change_to_json_2(messages)
         return json_res
 
+
+
+    if re.search(r'^/message/allreadyread/\d*$', uri):
+        uid = args[0]
+        request_arguments = request.arguments
+        p = get_page_index(request_arguments)
+        messages_json = dal._get_message_from_users_allready_read(p, uid)
+        json_res = messages_json
+        return json_res
+
+
+
+
+
+
+    if re.search(r'^/blog/category/\d*$', uri):
+        category_id = args[0]
+        request_arguments = request.arguments
+        p = get_page_index(request_arguments)
+        uid = get_param('uid', request.arguments)
+        json_res = dal._get_blog_category(uid, category_id, p)
+        return json_res
+
+
+    if re.search(r'^/test2$', uri):
+        json_res = dal._get_query_hot()
+        return json_res
+
+
+    if re.search(r'^/test1$', uri):
+        return 222 
+
+
+    if re.search(r'^/rss/\d{1,}$', uri):
+        blog_id = args[0]
+        uid = get_param('uid', request.arguments)
+        return get_blog_content(blog_id, uid)
 

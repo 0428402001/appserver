@@ -355,9 +355,127 @@ class CategorySubscriptionstate(OrigionHandler):
         json_res = change_to_json(clu)
         self.write(json_res)
 
+class UpdateImage(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/update/image"
+    @tornado.gen.coroutine
+    def post(self, *args, **kwargs):
+        if self.request.files:
+            time_samp = time.strftime('%Y-%m-%d-%H:%M:%S')
+            img = self.request.files['img'][0]
+            imgname = img['filename']
+            filepath = os.path.join('/var/www/html/media',time_samp+imgname)
+            with open(filepath,'wb+') as up:
+                up.write(img['body'])
+            head_url = 'http://o6y4guqxy.bkt.clouddn.com/media/'+time_samp+imgname
+            clu = {'head_url':head_url}
+            json_res = change_to_json_2(clu)
+            self.write(json_res)
+
+class UserRegister(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/user/register"
+    @tornado.gen.coroutine
+    def post(self,*args,**kwargs):
+        cur_session = Session()
+        head = self.param("headImage")
+        nickname = self.param('nickname')
+        sex = self.param('sex')
+        device_token = self.param("device_token")
+        phone = self.param('phone')
+        last_login = time.strftime('%Y-%m-%d %H:%M:%S')
+        date_joined = last_login
+
+        email = self.param("email")
+        if email is None:
+            email = ''
+        password = self.param('password')
+        if password is None:
+            password = ''
+
+        check_result = cur_session.query(ContentAuth.id).filter(ContentAuth.phone == phone).all()
+        if len(check_result) == 0:
+            content_auth_imp = ContentAuth(email = email, password = password, username = nickname, last_login = last_login, date_joined = date_joined, head = head, nickname = nickname, regist_from = 0)
+            cur_session.add(content_auth_imp)
+            try:
+                cur_session.flush()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+                print "USER/LOGIN_login_problem\t%s\t%s"%(phone. e)
+            finally:
+                pass
+            return_uid = content_auth_imp.id
+
+            cur_session.close()
+
+        else:
+            return_uid = check_result[0].id
+            cur_session.query(ContentAuth).filter(ContentAuth.id == return_uid).update({ContentAuth.last_login: last_login})
+            try:
+                cur_session.flush()
+                cur_session.commit()
+            except Exception, e:
+                cur_session.rollback()
+                print self.url_pattern(), e
+            finally:
+                pass
+                cur_session.close()
+        print "login_in_succed"
+
+        #regist device token
+        if device_token  is not None:
+            print device_token
+            print return_uid
+            dt = time.strftime('%Y-%m-%d %H:%M:%S')
+            def datetime_timestamp(dt):
+                time.strptime(dt, '%Y-%m-%d %H:%M:%S')
+                s = time.mktime(time.strptime(dt, '%Y-%m-%d %H:%M:%S'))
+                return int(s)
+            d = datetime_timestamp(dt)
+            app_dev_clu = cur_session.query(AppDevicetoken).filter(and_(AppDevicetoken.author_id == return_uid)).all()
+            if len(app_dev_clu) == 0:
+                pass
+                cur_session.add(AppDevicetoken(author_id = return_uid, device_token = device_token, update_dateline = d))
+                try:
+                    cur_session.flush()
+                    cur_session.commit()
+                except Exception, e:
+                    cur_session.rollback()
+                    print self.url_pattern(), e
+                finally:
+                    cur_session.close()
+            else:
+                pass
+                cur_session.query(AppDevicetoken).filter(and_(AppDevicetoken.author_id == return_uid)).update({AppDevicetoken.update_dateline: d, AppDevicetoken.device_token:device_token})
+                try:
+                    cur_session.flush()
+                    cur_session.commit()
+                except Exception, e:
+                    cur_session.rollback()
+                    print self.url_pattern(), e
+                finally:
+                    cur_session.close()
+        clu = {'uid':return_uid}
+        clu_json = change_to_json_2(clu)
+        self.write(clu_json)
 
 
 
+class UserLogin(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/user/login"
+    @tornado.gen.coroutine
+    def get(self,*args,**kwargs):
+        cur_session = Session()
+        phone =  self.param("phone")
+        return_data = cur_session.query(ContentAuth.id).filter(text("content_auth.phone = :phone")).params(phone = phone).all()
+        clu = {'uid':return_data[0].id}
+        json_res = change_to_json_2(clu)
+        self.write(json_res)
 
 class UserProfile(OrigionHandler):
     @classmethod

@@ -6,7 +6,7 @@ import tornado.ioloop
 import os
 import sys
 
-from ting import TestHandler, StartupImage, Config, Activity, Category, CategoryHot, CategorySubscription,CategorySubscriptionstate,UserProfile,UserClassify, MenuInfo,QueryHot, BlogHot, BlogIndex, Blog, BlogCategory, BlogFavorate, BlogPraise,BlogFavorateUID, BlogQuery, BlogTag, TagBlog, BlogID, CommentHot, Comment, CommentBlog,CommentPraise, CommentPraiseCommentID,CommentReply, CommentReplyComment_id, Message , MessageAllreadyRead,Setting ,  Blogview, AD, FlushAllCache, FlushSingleBlogContent, FlushHomePageBlog, FlushHomePageBlogIndex, UpdateToken,  PushBlogToAllUsers ,Test2,  Test1, PushBlogToAPPID, Rss, AdsTa
+from ting import TestHandler, StartupImage, Config, Activity, Category, CategoryHot, CategorySubscription,CategorySubscriptionstate,UserProfile,UserClassify, MenuInfo,QueryHot, BlogHot, BlogIndex, Blog, BlogCategory, BlogFavorate, BlogPraise,BlogFavorateUID, BlogQuery, BlogTag, TagBlog, BlogID, CommentHot, Comment, CommentBlog,CommentPraise, CommentPraiseCommentID,CommentReply, CommentReplyComment_id, Message , MessageAllreadyRead,Setting ,  Blogview, AD, FlushAllCache, FlushSingleBlogContent, FlushHomePageBlog, FlushHomePageBlogIndex, UpdateToken,  PushBlogToAllUsers ,Test2,  Test1, PushBlogToAPPID, Rss, AdsTa,UserLogin,UserRegister,UpdateImage
 
 
 
@@ -20,6 +20,9 @@ application = tornado.web.Application(
         (CategoryHot.url_pattern(), CategoryHot),
         (CategorySubscription.url_pattern(), CategorySubscription),
         (CategorySubscriptionstate.url_pattern(), CategorySubscriptionstate),
+        (UserLogin.url_pattern(), UserLogin),
+        (UpdateImage.url_pattern(), UpdateImage),
+        (UserRegister.url_pattern(), UserRegister),
         (UserProfile.url_pattern(), UserProfile),
         (UserClassify.url_pattern(), UserClassify),
         (MenuInfo.url_pattern(), MenuInfo),

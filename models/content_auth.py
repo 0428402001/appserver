@@ -17,6 +17,7 @@ class ContentAuth(ModelBase):
     username = Column(VARCHAR(30, charset='utf8'), nullable=True, default='')
     last_name = Column(VARCHAR(30, charset='utf8'), nullable=True, default='')
     email = Column(VARCHAR(75, charset='utf8'), nullable=True, default='')
+    phone = Column(VARCHAR(75, charset='utf8'), nullable=True, default='')
     is_staff = Column(Integer, nullable=True, default='')
     is_active = Column(Integer, nullable=True, default=1)
     date_joined = Column(DateTime, nullable=True, default='')

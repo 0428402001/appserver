@@ -20,6 +20,7 @@ class ContentAuth(ModelBase):
     phone = Column(VARCHAR(75, charset='utf8'), nullable=True, default='')
     is_staff = Column(Integer, nullable=True, default='')
     is_active = Column(Integer, nullable=True, default=1)
+    sex = Column(Integer,nullable=True,default=0)
     date_joined = Column(DateTime, nullable=True, default='')
 
     subscribe = Column(Integer, nullable=True, default=False)                         

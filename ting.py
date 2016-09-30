@@ -385,6 +385,10 @@ class UserRegister(OrigionHandler):
         sex = self.param('sex')
         device_token = self.param("device_token")
         phone = self.param('phone')
+        if phone is None:
+            clu = {'uid':-1}
+            self.write(change_to_json_2(clu))
+            return
         last_login = time.strftime('%Y-%m-%d %H:%M:%S')
         date_joined = last_login
 
@@ -397,7 +401,7 @@ class UserRegister(OrigionHandler):
 
         check_result = cur_session.query(ContentAuth.id).filter(ContentAuth.phone == phone).all()
         if len(check_result) == 0:
-            content_auth_imp = ContentAuth(email = email, password = password, username = nickname, last_login = last_login, date_joined = date_joined, head = head, nickname = nickname, regist_from = 0)
+            content_auth_imp = ContentAuth(email = email, password = password, username = nickname, last_login = last_login, date_joined = date_joined, head = head, sex=sex,nickname = nickname, phone=phone,regist_from = 0)
             cur_session.add(content_auth_imp)
             try:
                 cur_session.flush()
@@ -472,9 +476,18 @@ class UserLogin(OrigionHandler):
     def get(self,*args,**kwargs):
         cur_session = Session()
         phone =  self.param("phone")
-        return_data = cur_session.query(ContentAuth.id).filter(text("content_auth.phone = :phone")).params(phone = phone).all()
-        clu = {'uid':return_data[0].id}
-        json_res = change_to_json_2(clu)
+        if phone is None:
+            clu = {'uid':-1}
+            self.write(change_to_json_2(clu))
+            return
+        return_data = cur_session.query(ContentAuth.id,ContentAuth.nickname,ContentAuth.sex,ContentAuth.head).filter(text("content_auth.phone = :phone")).params(phone = phone).all()
+        if len(return_data)>0:
+            #clu = {'uid':return_data[0].id}
+            json_res = change_to_json(return_data)
+        else:
+            clu = {'uid':-1}
+            json_res = change_to_json_2(clu)
+        #json_res = change_to_json_2(clu)
         self.write(json_res)
 
 class UserProfile(OrigionHandler):

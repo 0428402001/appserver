@@ -6,7 +6,7 @@ import tornado.ioloop
 import os
 import sys
 
-from ting import TestHandler, StartupImage, Config, Activity, Category, CategoryHot, CategorySubscription,CategorySubscriptionstate,UserProfile,UserClassify, MenuInfo,QueryHot, BlogHot, BlogIndex, Blog, BlogCategory, BlogFavorate, BlogPraise,BlogFavorateUID, BlogQuery, BlogTag, TagBlog, BlogID, CommentHot, Comment, CommentBlog,CommentPraise, CommentPraiseCommentID,CommentReply, CommentReplyComment_id, Message , MessageAllreadyRead,Setting ,  Blogview, AD, FlushAllCache, FlushSingleBlogContent, FlushHomePageBlog, FlushHomePageBlogIndex, UpdateToken,  PushBlogToAllUsers ,Test2,  Test1, PushBlogToAPPID, Rss, AdsTa,UserLogin,UserRegister,UpdateImage
+from ting import TestHandler, StartupImage, Config, Activity, Category, CategoryHot, CategorySubscription,CategorySubscriptionstate,UserProfile,UserClassify, MenuInfo,QueryHot, BlogHot, BlogIndex, Blog, BlogCategory, BlogFavorate, BlogPraise,BlogFavorateUID, BlogQuery, BlogTag, TagBlog, BlogID, CommentHot, Comment, CommentBlog,CommentPraise, CommentPraiseCommentID,CommentReply, CommentReplyComment_id, Message , MessageAllreadyRead,Setting ,  Blogview, AD, FlushAllCache, FlushSingleBlogContent, FlushHomePageBlog, FlushHomePageBlogIndex, UpdateToken,  PushBlogToAllUsers ,Test2,  Test1, PushBlogToAPPID, Rss, AdsTa,UserLogin,UserRegister,UpdateImage,UserUpdate,SendMsg,ValidateCode
 
 
 
@@ -23,6 +23,7 @@ application = tornado.web.Application(
         (UserLogin.url_pattern(), UserLogin),
         (UpdateImage.url_pattern(), UpdateImage),
         (UserRegister.url_pattern(), UserRegister),
+        (UserUpdate.url_pattern(), UserUpdate),
         (UserProfile.url_pattern(), UserProfile),
         (UserClassify.url_pattern(), UserClassify),
         (MenuInfo.url_pattern(), MenuInfo),
@@ -61,7 +62,8 @@ application = tornado.web.Application(
         (Test1.url_pattern(), Test1),
         (Test2.url_pattern(), Test2),
         (Rss.url_pattern(), Rss),
-
+        (ValidateCode.url_pattern(),ValidateCode),
+        (SendMsg.url_pattern(),SendMsg),
 
 
     ],

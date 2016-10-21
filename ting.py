@@ -59,7 +59,8 @@ from models.content_hotquery import ContentHotquery
 from models.content_hottag import ContentHottag
 from models.content_indexblog import ContentIndexblog
 from models.content_subscribe import ContentSubscribe
-from models.content_tag import ContentTag 
+from models.content_tag import ContentTag
+from models.app_phonecode import AppPhonecode
 
 
 from models.base_orm import change_to_json
@@ -68,6 +69,8 @@ from models.base_orm import change_to_json_2
 
 from business_logic import get_info
 import business_logic
+from sms import send_sms
+import random
 
 from tornado.httpclient import AsyncHTTPClient
 
@@ -373,6 +376,42 @@ class UpdateImage(OrigionHandler):
             json_res = change_to_json_2(clu)
             self.write(json_res)
 
+class UserUpdate(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/user/update"
+    @tornado.gen.coroutine
+    def post(self,*args,**kwargs):
+        cur_session = Session()
+        head = self.param("headImage")
+        nickname = self.param('nickname')
+        sex = self.param('sex')
+        uid = self.param('uid')
+
+        check_result = cur_session.query(ContentAuth.id).filter(ContentAuth.id == uid).all()
+        if len(check_result) == 0:
+            result = -1
+
+        else:
+            return_uid = check_result[0].id
+            cur_session.query(ContentAuth).filter(ContentAuth.id == return_uid).update({ContentAuth.username: nickname,ContentAuth.head: head,ContentAuth.sex: sex,ContentAuth.nickname: nickname,})
+            try:
+                cur_session.flush()
+                cur_session.commit()
+                result = 0
+            except Exception, e:
+                cur_session.rollback()
+                print self.url_pattern(), e
+                result = -2
+            finally:
+                pass
+                cur_session.close()
+        print "login_in_succed"
+
+        clu = {'result':result}
+        clu_json = change_to_json_2(clu)
+        self.write(clu_json)
+
 class UserRegister(OrigionHandler):
     @classmethod
     def url_pattern(cls):
@@ -508,6 +547,7 @@ class UserProfile(OrigionHandler):
         sns_uid = self.param('sns_uid')
         sns_type = self.param('sns_type')
         sns_nickname = self.param('sns_nickname')
+        sns_sex = self.param('sns_sex')
         sns_head = self.param("sns_headImage")
         device_token = self.param("device_token")
         last_login = time.strftime('%Y-%m-%d %H:%M:%S')
@@ -527,7 +567,7 @@ class UserProfile(OrigionHandler):
 
         return_uid = -1
         if len(check_result) == 0:
-            content_auth_imp = ContentAuth(email = email, password = password, username = sns_nickname, last_login = last_login, date_joined = date_joined, head = sns_head, nickname = sns_nickname, regist_from = 1, sns_type = sns_type, sns_uid = sns_uid)
+            content_auth_imp = ContentAuth(email = email, sex = sns_sex,password = password, username = sns_nickname, last_login = last_login, date_joined = date_joined, head = sns_head, nickname = sns_nickname, regist_from = 1, sns_type = sns_type, sns_uid = sns_uid)
             cur_session.add(content_auth_imp)
             try:
                 cur_session.flush()
@@ -588,8 +628,12 @@ class UserProfile(OrigionHandler):
                     print self.url_pattern(), e
                 finally:
                     cur_session.close()
-        clu = {'uid':return_uid}
-        clu_json = change_to_json_2(clu)
+        if return_uid == -1:
+            clu = {'uid':return_uid}
+            clu_json = change_to_json_2(clu)
+        else:
+            return_data = cur_session.query(ContentAuth.id.label('uid'),ContentAuth.nickname,ContentAuth.sex,ContentAuth.head).filter(ContentAuth.id == return_uid).all()
+            clu_json = change_to_json(return_data)
         self.write(clu_json)
 
 
@@ -933,7 +977,7 @@ class CommentBlog(OrigionHandler):#problem
                 else:
                     comments[index]['praise_state'] = 1 
             json_res = change_to_json_2(comments)
-        json_res = "[]"
+        #json_res = "[]"
         self.write(json_res)
 
 
@@ -1367,6 +1411,60 @@ class AdsTa(OrigionHandler):
             self.redirect(redirect_url)
         else:
             self.write('None')
+
+
+class SendMsg(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/sendmsg"
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
+    def post(self, *args, **kwargs):
+        phone = self.param('phone')
+        if phone:
+            number = str(random.randint(1000,9999))
+            text = "您的验证码为" + number
+            send_sms(text,phone)
+            current_time = time.strftime('%Y-%m-%d %H:%M:%S')
+            cur_session = Session()
+            phone_code = AppPhonecode(phone = phone, code = number,add_time = current_time)
+            cur_session.add(phone_code)
+            try:
+                cur_session.commit()
+                code_id = phone_code.id
+                clu = {'resutl':1, 'code_id':code_id}
+            except Exception, e:
+                cur_session.rollback()
+                clu = {'resutl':0, 'error':e}
+                print self.url_pattern(), e
+            finally:
+                cur_session.close()
+        else:
+            clu = {'resutl':0, 'error':'phone is null'}
+        json_res = change_to_json_2(clu)
+        self.write(json_res)
+
+class ValidateCode(OrigionHandler):
+    @classmethod
+    def url_pattern(cls):
+        return r"/validatecode"
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
+    def post(self, *args, **kwargs):
+        code_id = self.param('code_id')
+        code = self.param('code')
+        if code_id and code:
+            cur_session = Session()
+            result = cur_session.query(AppPhonecode.id).filter(and_(AppPhonecode.id == code_id, AppPhonecode.code == code)).all()
+            if not result:
+                clu = {'resutl':0}
+            else:
+                clu = {'resutl':1}
+
+        else:
+            clu = {'resutl':0}
+        json_res = change_to_json_2(clu)
+        self.write(json_res)
 
 
 

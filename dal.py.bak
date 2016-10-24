@@ -314,12 +314,7 @@ def _get_if_favorate(blog_id,uid):
         is_favorate = 1
     return is_favorate
 
-def _get_favorate_count(blog_id):
-    cur_session = Session()
-    blog_favorate = cur_session.query(func.count(AppFavorate.id).label("favorate_count")).filter(AppFavorate.blog_id == blog_id).all()
-    cur_session.close()
-    cnt = blog_favorate[0][0]
-    return cnt
+
 
 def _get_test2():
     cur_session = Session()

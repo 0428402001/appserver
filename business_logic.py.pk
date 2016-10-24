@@ -146,12 +146,10 @@ def get_blog_content(blog_id,uid):
         record = {'blog':blog, 'related_blog':related_blog}
 
     is_favorate = dal._get_if_favorate(blog_id, uid)
-    favorate_count = dal._get_favorate_count(blog_id)
     is_praise = dal._get_if_praise(blog_id, uid)
 
     record['blog']['is_favorate'] = is_favorate
     record['blog']['is_praise'] = is_praise
-    record['blog']['favorate_count'] = favorate_count
 
     res_json = change_to_json_2(record)
     return res_json

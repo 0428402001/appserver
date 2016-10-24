@@ -8,32 +8,34 @@ import urllib
 import random
 
 #服务地址
-host = "sms.253.com"
+host = "222.73.117.140"
 
 #端口号
-port = 80
+port = 8044
 
-#版本号
-version = "v1.1"
+
 
 #查账户信息的URI
-balance_get_uri = "/msg/QueryBalance"
+balance_get_uri = "/bi"
 
 #智能匹配模版短信接口的URI
-sms_send_uri = "/msg/HttpBatchSendSM"
+sms_send_uri = "/mt"
 
-#创蓝账号
-account  = "N5388761"
+un = 'I2094194'
 
-#创蓝密码
-password = "IAxfPQknN6414a"
+pw = 'LJmys8ZVuqdef3'
+
+dc=15
+tf=3
+rf=1
+
 
 def get_user_balance():
     """
     取账户余额
     """
     conn = httplib.HTTPConnection(host, port=port)
-    conn.request('GET', balance_get_uri + "?account=" + account + "&pswd=" + password)
+    conn.request('GET', balance_get_uri + "?un=" + un + "&pw=" + pw)
     response = conn.getresponse()
     response_str = response.read()
     conn.close()
@@ -43,7 +45,7 @@ def send_sms(text, mobile):
     """
     能用接口发短信
     """
-    params = urllib.urlencode({'account': account, 'pswd' : password, 'msg': text, 'mobile':mobile, 'needstatus' : 'true', 'extno' : '' })
+    params = urllib.urlencode({'un': un, 'pw' : pw, 'sm': text, 'da':mobile, 'dc' : dc, 'tf' : tf,'rf':rf })
     headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
     conn = httplib.HTTPConnection(host, port=port, timeout=30)
     conn.request("POST", sms_send_uri, params, headers)
@@ -54,8 +56,8 @@ def send_sms(text, mobile):
 
 if __name__ == '__main__':
 
-    mobile = "+8618600299256"
-    text = "您的验证码为"+str(random.randint(1000,9999))
+    mobile = "8618600299256"
+    text = "【北美留学生日报】您的验证码为"+str(random.randint(1000,9999))
     #text = '您的验证码为1234'
     #text = text.encode("UTF-8")
     #查账户余额

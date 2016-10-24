@@ -69,7 +69,7 @@ from models.base_orm import change_to_json_2
 
 from business_logic import get_info
 import business_logic
-from sms import send_sms
+from sms_inter import send_sms
 import random
 
 from tornado.httpclient import AsyncHTTPClient
@@ -1423,7 +1423,7 @@ class SendMsg(OrigionHandler):
         phone = self.param('phone')
         if phone:
             number = str(random.randint(1000,9999))
-            text = "您的验证码为" + number
+            text = "【北美留学生日报】您的验证码为" + number
             send_sms(text,phone)
             current_time = time.strftime('%Y-%m-%d %H:%M:%S')
             cur_session = Session()
